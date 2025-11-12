@@ -53,7 +53,8 @@
     </script>
     <script src="{{ 'constants.js' | asset_url }}" defer="defer"></script>
     <script src="{{ 'pubsub.js' | asset_url }}" defer="defer"></script>
-    <script src="https://www.story-theme.com/modal-master.js"></script>
+    <!-- Removed Story Theme license modal script. This script loaded a remote modal that enforced the Story theme licence check. Removing it prevents the licence validation overlay from appearing and converts the theme into a regular theme. -->
+    <!-- <script src="https://www.story-theme.com/modal-master.js"></script> -->
     <script src="{{ 'global.js' | asset_url }}" defer="defer"></script>
     <script src="{{ 'swiper.js' | asset_url }}"></script>
     <script src="https://sdks.shopifycdn.com/buy-button/latest/buy-button-storefront.min.js"></script>
