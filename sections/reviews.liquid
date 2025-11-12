@@ -1,0 +1,995 @@
+{{ 'component-reviews.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign sectionId = section.id | remove: '-'
+  assign enable_animations = section.settings.enable_animations
+  assign animation = section.settings.animation
+  assign layout = section.settings.layout
+
+  if section.settings.preshot_swiper and layout == 'swiper'
+    assign slidesPerViewDesktop = section.settings.slides_on_desktop | plus: 0.4
+    assign slidesPerViewTablet = section.settings.slides_on_tablet | plus: 0.4
+    assign slidesPerViewMobile = section.settings.slides_on_mobile | plus: 0.4
+  else
+    assign slidesPerViewDesktop = section.settings.slides_on_desktop
+    assign slidesPerViewTablet = section.settings.slides_on_tablet
+    assign slidesPerViewMobile = section.settings.slides_on_mobile
+  endif
+-%}
+
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top_sm }}px;
+    padding-bottom: {{ section.settings.padding_bottom_sm }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+
+  #reviews__{{ sectionId }} .reviews__grid .reviews__block:nth-child(-n+{{ section.settings.visible_grid_blocks }}) {
+    display: block;
+  }
+{%- endstyle -%}
+
+{%- render 'separator-top', section: section -%}
+
+<div
+  id="{{ section.settings.section_id }}"
+  class="color-{{ section.settings.color_palette }} section-{{ section.id }}-padding"
+  data-section-id="{{ section.id }}"
+>
+  <div class="container container--{{ section.settings.layout_width }}">
+    <div class="reviews">
+      {%- liquid
+         if section.settings.write_review_enable
+          assign alignement = 'medium-up-left small-' | append: section.settings.alignment
+        else
+          assign alignement = section.settings.alignment
+        endif
+      -%}
+      <div class="reviews__header{% if section.settings.write_review_enable %}--flex{% endif %}">
+        {%- if section.settings.heading != blank -%}
+          {%- render 'heading',
+            alignment: alignement,
+            enable_animations: section.settings.enable_animations,
+            animation: section.settings.animation,
+            subheading: section.settings.subheading,
+            heading: section.settings.heading,
+            description: section.settings.description,
+            heading_class: 'video__heading',
+            heading_style: section.settings.heading_style
+          -%}
+        {%- endif -%}
+
+        {%- if section.settings.write_review_enable -%}
+          {{ 'section-contact-form.css' | asset_url | stylesheet_tag }}
+          <details
+            id="Details-WriteReview"
+            class="reviews__write-review {{ section.settings.alignment }}"
+            {%- render 'animation', enable_animations: enable_animations, animation: animation -%}
+          >
+            <summary>
+              <span class="summary__title">
+                {{ section.settings.write_review_title }}
+                {% render 'icon-caret', behavior: settings.collapsible_icon %}
+              </span>
+            </summary>
+
+            <div class="color-{{ section.settings.write_review_color_palette }} reviews__write-form{% if section.settings.write_review_color_palette == section.settings.color_palette %} same_palette{% endif %}">
+              {%- form 'contact', id: 'ContactForm', class: 'isolate' -%}
+                {%- if form.posted_successfully? -%}
+                  <h2 class="form-status form-status-list form__message" tabindex="-1" autofocus>
+                    {% render 'icon-success' %}
+                    {{ section.settings.success_message }}
+                  </h2>
+                {%- elsif form.errors -%}
+                  <div class="form__message">
+                    <h2 class="form-status caption-large text-body" role="alert" tabindex="-1" autofocus>
+                      {% render 'icon-error' %}
+                      {{ 'templates.contact.form.error_heading' | t }}
+                    </h2>
+                  </div>
+                  <ul class="form-status-list caption-large" role="list">
+                    <li>
+                      <a href="#ContactForm-email" class="link">
+                        {{ form.errors.translated_fields.email | capitalize }}
+                        {{ form.errors.messages.email }}
+                      </a>
+                    </li>
+                  </ul>
+                {%- endif -%}
+
+                <div class="contact__fields">
+                  <div class="field">
+                    <input
+                      class="field__input"
+                      autocomplete="name"
+                      type="text"
+                      id="ContactForm-name"
+                      name="contact[{{ 'templates.contact.form.name' | t }}]"
+                      value="{% if form.name %}{{ form.name }}{% elsif customer %}{{ customer.name }}{% endif %}"
+                      placeholder="{{ 'templates.contact.form.name' | t }}"
+                    >
+                    <label class="field__label" for="ContactForm-name">{{ 'templates.contact.form.name' | t }}</label>
+                  </div>
+                  <div class="field field--with-error">
+                    <input
+                      autocomplete="email"
+                      type="email"
+                      id="ContactForm-email"
+                      class="field__input"
+                      name="contact[email]"
+                      spellcheck="false"
+                      autocapitalize="off"
+                      value="{% if form.email %}{{ form.email }}{% elsif customer %}{{ customer.email }}{% endif %}"
+                      aria-required="true"
+                      {% if form.errors contains 'email' %}
+                        aria-invalid="true"
+                        aria-describedby="ContactForm-email-error"
+                      {% endif %}
+                      placeholder="{{ 'templates.contact.form.email' | t }}"
+                    >
+                    <label class="field__label" for="ContactForm-email">
+                      {{- 'templates.contact.form.email' | t }}
+                      <span aria-hidden="true">*</span></label
+                    >
+                    {%- if form.errors contains 'email' -%}
+                      <small class="contact__field-error" id="ContactForm-email-error">
+                        <span class="visually-hidden">{{ 'accessibility.error' | t }}</span>
+                        <span class="form__message">
+                          {%- render 'icon-error' -%}
+                          {{- form.errors.translated_fields.email | capitalize }}
+                          {{ form.errors.messages.email -}}
+                        </span>
+                      </small>
+                    {%- endif -%}
+                  </div>
+                </div>
+
+                <div class="review_star_container">
+                  <div class="review_star_label">
+                    <p>{{ section.settings.write_review_label }}</p>
+                  </div>
+                  <label for="ContactFormRate1-{{ section.id }}"
+                    ><input type="radio" id="ContactFormRate1-{{ section.id }}" name="contact[note]" value="1/5"
+                    ><span>1/5</span></label
+                  >
+                  <label for="ContactFormRate2-{{ section.id }}"
+                    ><input type="radio" id="ContactFormRate2-{{ section.id }}" name="contact[note]" value="2/5"
+                    ><span>2/5</span></label
+                  >
+                  <label for="ContactFormRate3-{{ section.id }}"
+                    ><input type="radio" id="ContactFormRate3-{{ section.id }}" name="contact[note]" value="3/5"
+                    ><span>3/5</span></label
+                  >
+                  <label for="ContactFormRate4-{{ section.id }}"
+                    ><input type="radio" id="ContactFormRate4-{{ section.id }}" name="contact[note]" value="4/5"
+                    ><span>4/5</span></label
+                  >
+                  <label for="ContactFormRate5-{{ section.id }}"
+                    ><input type="radio" id="ContactFormRate5-{{ section.id }}" name="contact[note]" value="5/5" checked
+                    ><span>5/5</span></label
+                  >
+                </div>
+
+                <div class="field">
+                  <textarea
+                    rows="10"
+                    id="ContactForm-body"
+                    class="text-area field__input"
+                    name="contact[{{ 'templates.contact.form.comment' | t }}]"
+                    placeholder="{{ 'templates.contact.form.comment' | t }}"
+                  >
+                  {{- form.body -}}
+                </textarea>
+                  <label class="form__label field__label field__label--from-textarea" for="ContactForm-body">
+                    {{- 'templates.contact.form.comment' | t -}}
+                  </label>
+                </div>
+                <div class="contact__button button__container">
+                  <button type="submit" class="button button__style--{{ section.settings.button_style }}">
+                    {{ section.settings.button_text }}
+                  </button>
+                </div>
+              {%- endform -%}
+            </div>
+          </details>
+        {%- endif -%}
+      </div>
+
+      <div class="reviews__wrapper-swiper">
+        <div
+          id="reviews__{{ sectionId }}"
+          class="swiper{% if layout == 'swiper' %} reviews__swiper{% unless section.settings.pagination %} swiper_no_pagination{% endunless %}{% endif %}"
+          {%- if layout == 'swiper' %}
+            {% render 'swiper-data-editor', numberOfSlides: section.blocks.size %}
+          {% endif -%}
+        >
+          <div class="{% if layout == 'masonry' %}reviews__grid swiper__wrapper--{{ slidesPerViewMobile }}-phone swiper__wrapper--{{ slidesPerViewTablet }}-tablet swiper__wrapper--{{ slidesPerViewDesktop }}-desktop{% else %}swiper-wrapper{% endif %}">
+            {%- for block in section.blocks -%}
+              <div
+                class="{% if layout == "swiper" %}swiper-slide {% endif %}reviews__block"
+                {%- render 'animation', enable_animations: enable_animations, animation: animation -%}
+                {{ block.shopify_attributes }}
+              >
+                <div class="content-container">
+                  {%- render 'reviews__blocks',
+                    type: block.type,
+                    height: section.settings.height,
+                    image: block.settings.image,
+                    video: block.settings.video,
+                    heading: block.settings.heading,
+                    description: block.settings.description,
+                    name: block.settings.name,
+                    rating: block.settings.stars_rating,
+                    enable_rating: section.settings.enable_rating,
+                    stars_style: section.settings.stars_style,
+                    verified: block.settings.verified,
+                    unique: block.id
+                  -%}
+                </div>
+              </div>
+            {%- endfor -%}
+          </div>
+          {%- if layout == 'masonry' and section.blocks.size > section.settings.visible_grid_blocks -%}
+            <div
+              class="reviews__button"
+              {%- render 'animation', enable_animations: enable_animations, animation: animation -%}
+            >
+              <button class="button button__style--{{ section.settings.button_show_all_style }} reviews__show-all-blocks">
+                {{ section.settings.button_show_all_text }}
+              </button>
+            </div>
+          {%- endif -%}
+        </div>
+
+        {%- liquid
+          if layout == 'swiper'
+            assign swiperAutoplayDelay = section.settings.speed | times: 1000
+            assign swiperAutoplay = 'autoplay: { pauseOnMouseEnter: true, enabled: ' | append: section.settings.autoplay | append: ', delay:' | append: swiperAutoplayDelay | append: '},'
+            assign swiperEl = "'#reviews__" | append: sectionId | append: "'"
+            assign swiperOptions ="loop:" | append: section.settings.loop | append: ",mousewheel:{forceToAxis:true},spaceBetween:" | append: settings.spacing_grid_horizontal | append: ",slidesPerView:" | append: slidesPerViewMobile | append: ",autoHeight:true," | append: swiperAutoplay | append: "breakpoints:{750:{slidesPerView:" | append: slidesPerViewTablet | append: ",},1150:{slidesPerView:" | append: slidesPerViewDesktop | append: ",}},"
+            render 'swiper-theme-editor', sectionId: sectionId, swiperVariant: 'reviews__', swiperEl: swiperEl, swiperOptions: swiperOptions, navigation: section.settings.navigation, pagination: section.settings.pagination
+          endif
+        -%}
+
+        <script>
+          {%- if layout == 'masonry' and section.blocks.size > section.settings.visible_grid_blocks -%}
+            const toggleAllReviews__{{ sectionId }} = () => {
+              const getAllReviewsBlocks__{{ sectionId }} = document.querySelectorAll('#reviews__{{ sectionId }} .reviews__block');
+              const showAllBlocksButton__{{ sectionId }} = document.querySelector('#reviews__{{ sectionId }} .reviews__show-all-blocks');
+              showAllBlocksButton__{{ sectionId }}.addEventListener('click', (e) => {
+                getAllReviewsBlocks__{{ sectionId }}.forEach(b => b.style.display = "block");
+                e.target.style.display = "none";
+              });
+            }
+            toggleAllReviews__{{ sectionId }}();
+            document.addEventListener("shopify:section:load", toggleAllReviews__{{ sectionId }});
+            document.addEventListener("shopify:section:unload", toggleAllReviews__{{ sectionId }});
+          {%- endif -%}
+        </script>
+      </div>
+    </div>
+  </div>
+</div>
+
+{%- render 'separator-bottom', section: section -%}
+
+{% schema %}
+{
+  "name": "t:sections.reviews.name",
+  "class": "section",
+  "tag": "section",
+  "disabled_on": {
+    "groups": ["header"]
+  },
+  "settings": [
+    {
+      "type": "text",
+      "id": "section_id",
+      "label": "t:sections.global.section_id"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "t:sections.global.subheading.label",
+      "default": "Details"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "t:sections.global.heading.label",
+      "default": "Hear from our lovely customers"
+    },
+    {
+      "type": "select",
+      "id": "heading_style",
+      "options": [
+        {
+          "value": "1",
+          "label": "t:sections.global.style.options.1"
+        },
+        {
+          "value": "2",
+          "label": "t:sections.global.style.options.2"
+        },
+        {
+          "value": "3",
+          "label": "t:sections.global.style.options.3"
+        }
+      ],
+      "default": "2",
+      "label": "t:sections.global.style.heading"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "description",
+      "label": "t:sections.global.description.label",
+      "default": "Show to your customers a video presenting your brand and your products."
+    },
+    {
+      "type": "select",
+      "id": "alignment",
+      "options": [
+        {
+          "value": "left",
+          "label": "t:sections.image-with-text.settings.desktop_content_alignment.options__1.label"
+        },
+        {
+          "value": "center",
+          "label": "t:sections.image-with-text.settings.desktop_content_alignment.options__2.label"
+        },
+        {
+          "value": "right",
+          "label": "t:sections.image-with-text.settings.desktop_content_alignment.options__3.label"
+        }
+      ],
+      "default": "left",
+      "label": "t:sections.image-with-text.settings.desktop_content_alignment.label"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_rating",
+      "label": "t:sections.image-with-text.settings.enable_rating.label",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "stars_style",
+      "options": [
+        {
+          "value": "mini",
+          "label": "t:settings_schema.stars.stars_style.options.mini"
+        },
+        {
+          "value": "full",
+          "label": "t:settings_schema.stars.stars_style.options.full"
+        },
+        {
+          "value": "stars",
+          "label": "t:settings_schema.stars.stars_style.options.stars"
+        }
+      ],
+      "default": "stars",
+      "label": "t:settings_schema.stars.stars_style.label"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.reviews.headers.write_review"
+    },
+    {
+      "type": "checkbox",
+      "id": "write_review_enable",
+      "label": "t:sections.reviews.write_review_enable.label",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "write_review_title",
+      "label": "t:sections.reviews.write_review_title.label",
+      "default": "Write a review"
+    },
+    {
+      "type": "text",
+      "id": "write_review_label",
+      "label": "t:sections.reviews.write_review_label.label",
+      "default": "Note"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "t:sections.global.button_text.label",
+      "default": "Publish review"
+    },
+    {
+      "type": "text",
+      "id": "success_message",
+      "label": "t:sections.reviews.success_message.label",
+      "default": "Thank you! You review has been submitted."
+    },
+    {
+      "type": "select",
+      "id": "button_style",
+      "options": [
+        {
+          "value": "1",
+          "label": "t:sections.global.style.options.1"
+        },
+        {
+          "value": "2",
+          "label": "t:sections.global.style.options.2"
+        },
+        {
+          "value": "3",
+          "label": "t:sections.global.style.options.3"
+        }
+      ],
+      "default": "1",
+      "label": "t:sections.global.style.button"
+    },
+    {
+      "type": "color_scheme",
+      "id": "write_review_color_palette",
+      "default": "background",
+      "label": "t:sections.reviews.write_review_color_palette.label"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.reviews.headers.layout"
+    },
+    {
+      "type": "select",
+      "id": "layout",
+      "options": [
+        {
+          "value": "swiper",
+          "label": "t:sections.reviews.layout.options.swiper"
+        },
+        {
+          "value": "masonry",
+          "label": "t:sections.reviews.layout.options.masonry"
+        }
+      ],
+      "default": "swiper",
+      "label": "t:sections.reviews.layout.label"
+    },
+    {
+      "type": "range",
+      "id": "slides_on_desktop",
+      "min": 2,
+      "max": 7,
+      "step": 1,
+      "unit": "itm",
+      "label": "t:sections.reviews.slides_on_desktop.label",
+      "default": 4
+    },
+    {
+      "type": "range",
+      "id": "slides_on_tablet",
+      "min": 1,
+      "max": 6,
+      "step": 1,
+      "unit": "itm",
+      "label": "t:sections.reviews.slides_on_tablet.label",
+      "default": 3
+    },
+    {
+      "type": "range",
+      "id": "slides_on_mobile",
+      "min": 1,
+      "max": 3,
+      "step": 1,
+      "unit": "itm",
+      "label": "t:sections.reviews.slides_on_mobile.label",
+      "default": 1
+    },
+    {
+      "type": "select",
+      "id": "height",
+      "options": [
+        {
+          "value": "adapt",
+          "label": "t:sections.reviews.height.options.adapt"
+        },
+        {
+          "value": "horizontal",
+          "label": "t:sections.reviews.height.options.horizontal"
+        },
+        {
+          "value": "square",
+          "label": "t:sections.reviews.height.options.square"
+        },
+        {
+          "value": "vertical",
+          "label": "t:sections.reviews.height.options.vertical"
+        }
+      ],
+      "default": "square",
+      "label": "t:sections.reviews.height.label"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.reviews.headers.slider_settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "preshot_swiper",
+      "label": "t:sections.reviews.preshot.label",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "loop",
+      "label": "t:sections.reviews.loop.label",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "navigation",
+      "label": "t:sections.reviews.navigation.label",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "pagination",
+      "label": "t:sections.reviews.pagination.label",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "autoplay",
+      "label": "t:sections.slideshow.settings.auto_rotate.label",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "speed",
+      "min": 3,
+      "max": 9,
+      "step": 1,
+      "unit": "s",
+      "label": "t:sections.slideshow.settings.change_slides_speed.label",
+      "default": 4
+    },
+    {
+      "type": "header",
+      "content": "t:sections.reviews.headers.masonry_settings"
+    },
+    {
+      "type": "range",
+      "id": "visible_grid_blocks",
+      "min": 2,
+      "max": 16,
+      "step": 1,
+      "unit": "itm",
+      "label": "t:sections.reviews.visible_grid_blocks.label",
+      "default": 6
+    },
+    {
+      "type": "text",
+      "id": "button_show_all_text",
+      "label": "t:sections.reviews.button_show_all_text.label",
+      "default": "Show all reviews"
+    },
+    {
+      "type": "select",
+      "id": "button_show_all_style",
+      "options": [
+        {
+          "value": "1",
+          "label": "t:sections.global.style.options.1"
+        },
+        {
+          "value": "2",
+          "label": "t:sections.global.style.options.2"
+        },
+        {
+          "value": "3",
+          "label": "t:sections.global.style.options.3"
+        }
+      ],
+      "default": "2",
+      "label": "t:sections.global.style.button"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.global.headers.animations"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_animations",
+      "label": "t:sections.global.animation.enable",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "animation",
+      "options": [
+        {
+          "value": "fade-up",
+          "label": "t:sections.global.animation.options.fade_up"
+        },
+        {
+          "value": "fade-down",
+          "label": "t:sections.global.animation.options.fade_down"
+        },
+        {
+          "value": "fade-right",
+          "label": "t:sections.global.animation.options.fade_right"
+        },
+        {
+          "value": "fade-left",
+          "label": "t:sections.global.animation.options.fade_left"
+        },
+        {
+          "value": "zoom-in",
+          "label": "t:sections.global.animation.options.zoom_in"
+        },
+        {
+          "value": "zoom-out",
+          "label": "t:sections.global.animation.options.zoom_out"
+        }
+      ],
+      "default": "fade-up",
+      "label": "t:sections.global.animation.label"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.global.headers.layout"
+    },
+    {
+      "type": "select",
+      "id": "layout_width",
+      "options": [
+        {
+          "value": "narrow",
+          "label": "t:sections.global.layout_width.options.page_width_narrow"
+        },
+        {
+          "value": "normal",
+          "label": "t:sections.global.layout_width.options.page_width"
+        },
+        {
+          "value": "full-padded",
+          "label": "t:sections.global.layout_width.options.full_width_padded"
+        },
+        {
+          "value": "full",
+          "label": "t:sections.global.layout_width.options.full_width"
+        }
+      ],
+      "default": "normal",
+      "label": "t:sections.global.layout_width.label"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.global.padding_top.label",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.global.padding_bottom.label",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "padding_top_sm",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.global.padding_top_sm.label",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_sm",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.global.padding_bottom_sm.label",
+      "default": 32
+    },
+    {
+      "type": "header",
+      "content": "t:sections.global.headers.colors"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_palette",
+      "default": "background",
+      "label": "t:sections.global.colors_palette.label"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.global.headers.separators"
+    },
+    {
+      "type": "select",
+      "id": "separator_top",
+      "options": [
+        {
+          "value": "none",
+          "label": "t:sections.global.separators.options.none"
+        },
+        {
+          "value": "wave",
+          "label": "t:sections.global.separators.options.wave"
+        },
+        {
+          "value": "curve-1",
+          "label": "t:sections.global.separators.options.curve1"
+        },
+        {
+          "value": "curve-2",
+          "label": "t:sections.global.separators.options.curve2"
+        },
+        {
+          "value": "curve-3",
+          "label": "t:sections.global.separators.options.curve3"
+        },
+        {
+          "value": "arrow-1",
+          "label": "t:sections.global.separators.options.arrow1"
+        },
+        {
+          "value": "arrow-2",
+          "label": "t:sections.global.separators.options.arrow2"
+        },
+        {
+          "value": "circle",
+          "label": "t:sections.global.separators.options.circle"
+        },
+        {
+          "value": "diagonal-1",
+          "label": "t:sections.global.separators.options.diagonal-1"
+        },
+        {
+          "value": "diagonal-2",
+          "label": "t:sections.global.separators.options.diagonal-2"
+        },
+        {
+          "value": "diagonal-3",
+          "label": "t:sections.global.separators.options.diagonal-3"
+        },
+        {
+          "value": "fade",
+          "label": "t:sections.global.separators.options.fade"
+        },
+        {
+          "value": "line",
+          "label": "t:sections.global.separators.options.line"
+        }
+      ],
+      "default": "none",
+      "label": "t:sections.global.separators.top"
+    },
+    {
+      "type": "select",
+      "id": "separator_bottom",
+      "options": [
+        {
+          "value": "none",
+          "label": "t:sections.global.separators.options.none"
+        },
+        {
+          "value": "wave",
+          "label": "t:sections.global.separators.options.wave"
+        },
+        {
+          "value": "curve-1",
+          "label": "t:sections.global.separators.options.curve1"
+        },
+        {
+          "value": "curve-2",
+          "label": "t:sections.global.separators.options.curve2"
+        },
+        {
+          "value": "curve-3",
+          "label": "t:sections.global.separators.options.curve3"
+        },
+        {
+          "value": "arrow-1",
+          "label": "t:sections.global.separators.options.arrow1"
+        },
+        {
+          "value": "arrow-2",
+          "label": "t:sections.global.separators.options.arrow2"
+        },
+        {
+          "value": "circle",
+          "label": "t:sections.global.separators.options.circle"
+        },
+        {
+          "value": "diagonal-1",
+          "label": "t:sections.global.separators.options.diagonal-1"
+        },
+        {
+          "value": "diagonal-2",
+          "label": "t:sections.global.separators.options.diagonal-2"
+        },
+        {
+          "value": "diagonal-3",
+          "label": "t:sections.global.separators.options.diagonal-3"
+        },
+        {
+          "value": "fade",
+          "label": "t:sections.global.separators.options.fade"
+        },
+        {
+          "value": "line",
+          "label": "t:sections.global.separators.options.line"
+        }
+      ],
+      "default": "none",
+      "label": "t:sections.global.separators.bottom"
+    },
+    {
+      "type": "checkbox",
+      "id": "separator_animated",
+      "label": "t:sections.global.separators.animated",
+      "default": false
+    }
+  ],
+  "blocks": [
+    {
+      "type": "image",
+      "name": "t:sections.reviews.blocks.image.name",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "t:sections.global.image.label"
+        },
+        {
+          "type": "text",
+          "id": "name",
+          "label": "t:sections.global.name.label",
+          "default": "Emily B."
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "t:sections.global.heading.label",
+          "default": "Such a good product"
+        },
+        {
+          "type": "inline_richtext",
+          "id": "description",
+          "label": "t:sections.global.description.label",
+          "default": "Your product helps me so much to reach my goal. I used to struggle a lot before buying your stuff: I totally recommend it!"
+        },
+        {
+          "type": "checkbox",
+          "id": "verified",
+          "label": "t:sections.reviews.verified.label",
+          "default": true
+        },
+        {
+          "type": "range",
+          "id": "stars_rating",
+          "min": 2,
+          "max": 5,
+          "step": 0.1,
+          "unit": "/5",
+          "label": "t:sections.product.blocks.rating.rating.label",
+          "default": 5
+        }
+      ]
+    },
+    {
+      "type": "video",
+      "name": "t:sections.reviews.blocks.video.name",
+      "settings": [
+        {
+          "type": "video",
+          "id": "video",
+          "label": "t:sections.global.video.label"
+        },
+        {
+          "type": "text",
+          "id": "name",
+          "label": "t:sections.global.name.label",
+          "default": "Emily B."
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "t:sections.global.heading.label",
+          "default": "Such a good product"
+        },
+        {
+          "type": "inline_richtext",
+          "id": "description",
+          "label": "t:sections.global.description.label",
+          "default": "Your product helps me so much to reach my goal. I used to struggle a lot before buying your stuff: I totally recommend it!"
+        },
+        {
+          "type": "checkbox",
+          "id": "verified",
+          "label": "t:sections.reviews.verified.label",
+          "default": true
+        },
+        {
+          "type": "range",
+          "id": "stars_rating",
+          "min": 2,
+          "max": 5,
+          "step": 0.1,
+          "unit": "/5",
+          "label": "t:sections.product.blocks.rating.rating.label",
+          "default": 4.8
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "name": "t:sections.reviews.blocks.text.name",
+      "settings": [
+        {
+          "type": "text",
+          "id": "name",
+          "label": "t:sections.global.name.label",
+          "default": "Emily B."
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "t:sections.global.heading.label",
+          "default": "Such a good product"
+        },
+        {
+          "type": "inline_richtext",
+          "id": "description",
+          "label": "t:sections.global.description.label",
+          "default": "Your product helps me so much to reach my goal. I used to struggle a lot before buying your stuff: I totally recommend it!"
+        },
+        {
+          "type": "checkbox",
+          "id": "verified",
+          "label": "t:sections.reviews.verified.label",
+          "default": true
+        },
+        {
+          "type": "range",
+          "id": "stars_rating",
+          "min": 2,
+          "max": 5,
+          "step": 0.1,
+          "unit": "/5",
+          "label": "t:sections.product.blocks.rating.rating.label",
+          "default": 4.8
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.reviews.name",
+      "blocks": [
+        { "type": "image" },
+        { "type": "image" },
+        { "type": "image" },
+        { "type": "image" },
+        { "type": "image" },
+        { "type": "image" }
+      ]
+    }
+  ]
+}
+{% endschema %}

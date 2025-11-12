@@ -1,0 +1,57 @@
+.collapsible {
+  padding: var(--collapsibles-space-vertical) var(--collapsibles-space-horizontal);
+  border-radius: var(--collapsibles-radius);
+}
+
+.collapsible__container {
+  margin-top: 3rem;
+}
+
+.collapsible summary {
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  gap: 1.4rem;
+}
+
+.collapsible details .collapsible__content {
+  padding-top: 1rem;
+}
+
+.collapsible details .collapsible__icon {
+  transition: transform var(--transitions-delay) var(--transitions-style);
+}
+
+.collapsible details[open] .collapsible__icon {
+  transform: rotate(180deg);
+}
+
+.collapsible__style--1 {
+  box-shadow: var(--collapsible-1-shadow);
+}
+
+.collapsible__style--1 .icon-accordion,
+.collapsible__style--1 .collapsible__title {
+  fill: var(--color-collapsible-1-elements);
+  color: var(--color-collapsible-1-elements);
+}
+
+.collapsible__style--2 {
+  box-shadow: var(--collapsible-2-shadow);
+}
+
+.collapsible__style--2 .icon-accordion,
+.collapsible__style--2 .collapsible__title {
+  fill: var(--color-collapsible-2-elements);
+  color: var(--color-collapsible-2-elements);
+}
+
+.collapsible__style--3 {
+  box-shadow: var(--collapsible-3-shadow);
+}
+
+.collapsible__style--3 .icon-accordion,
+.collapsible__style--3 .collapsible__title {
+  fill: var(--color-collapsible-3-elements);
+  color: var(--color-collapsible-3-elements);
+}

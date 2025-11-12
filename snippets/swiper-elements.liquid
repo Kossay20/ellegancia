@@ -1,0 +1,33 @@
+{%- if settings.swiper_pagination_style == 'scrollbar' and pagination != false and pagination != 'already' -%}
+  <div
+    class="
+      swiper-scrollbar scrollbar__style--{{ settings.swiper_scrollbar_style }}
+      pagination__color--{{ settings.swiper_pagination_color }}
+      scrollbar_{{ unique }}
+    "
+  ></div>
+{%- elsif settings.swiper_pagination_style == 'dots' and pagination != false and pagination != 'already' -%}
+  <div
+    class="
+      swiper-pagination pagination__color--{{ settings.swiper_pagination_color }}
+      pagination_{{ unique }}
+    "
+  ></div>
+{%- endif -%}
+
+{%- if settings.swiper_navigation_style != 'none' and navigation != false and navigation != 'already' -%}
+  <div
+    class="
+      swiper-button-prev navigation__style--{{ settings.swiper_navigation_style }}
+      navigation__position--{{ settings.swiper_navigation_position }}
+      navigation__color--{{ settings.swiper_navigation_color }} prev_{{ unique }}
+    "
+  ></div>
+  <div
+    class="
+      swiper-button-next navigation__style--{{ settings.swiper_navigation_style }}
+      navigation__position--{{ settings.swiper_navigation_position }}
+      navigation__color--{{ settings.swiper_navigation_color }} next_{{ unique }}
+    "
+  ></div>
+{%- endif -%}

@@ -1,0 +1,14 @@
+.tracking .heading__section {
+  margin-bottom: 3rem;
+}
+
+.tracking__wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.tracking__wrapper .button__container {
+  margin-top: 0;
+}

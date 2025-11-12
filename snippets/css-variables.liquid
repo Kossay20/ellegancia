@@ -1,0 +1,904 @@
+<!-- @prettify-ignore -->
+
+{%- liquid
+  assign body_font_bold = settings.body_font | font_modify: 'weight', 'bold'
+  assign body_font_italic = settings.body_font | font_modify: 'style', 'italic'
+  assign body_font_bold_italic = body_font_bold | font_modify: 'style', 'italic'
+  assign subheadings_font_light = settings.headings_font | font_modify: 'weight', 'lighter'
+%}
+
+{% style %}
+  {{ settings.body_font | font_face: font_display: 'swap' }}
+  {{ body_font_bold | font_face: font_display: 'swap' }}
+  {{ body_font_italic | font_face: font_display: 'swap' }}
+  {{ body_font_bold_italic | font_face: font_display: 'swap' }}
+  {{ settings.headings_font | font_face: font_display: 'swap' }}
+  {{ subheadings_font_light | font_face: font_display: 'swap' }}
+
+  {% for scheme in settings.color_schemes -%}
+    {%- liquid
+       assign scheme_classes = scheme_classes | append: ', .color-' | append: scheme.id
+       assign background_dark = scheme.settings.background_secondary | color_darken: 8
+       assign foreground_dark = scheme.settings.text | color_darken: 8
+       assign accent_1_dark = scheme.settings.accent-1 | color_darken: 8
+       assign accent_2_dark = scheme.settings.accent-2 | color_darken: 8
+    -%}
+    {% if forloop.index == 1 -%}
+      :root,
+    {%- endif %}
+    .color-{{ scheme.id }} {
+      --color-background: {{ scheme.settings.background.red }},{{ scheme.settings.background.green }},{{ scheme.settings.background.blue }};
+      --color-background-secondary: {{ scheme.settings.background_secondary.red }},{{ scheme.settings.background_secondary.green }},{{ scheme.settings.background_secondary.blue }};
+      --color-background-dark: {{ background_dark.red }},{{ background_dark.green }},{{ background_dark.blue }};
+
+      {% if scheme.settings.background_gradient != empty %}
+        --gradient-background: {{ scheme.settings.background_gradient }};
+      {% else %}
+        --gradient-background: {{ scheme.settings.background }};
+      {% endif %}
+
+      --color-foreground: {{ scheme.settings.text.red }},{{ scheme.settings.text.green }},{{ scheme.settings.text.blue }};
+      --color-foreground-dark: {{ foreground_dark.red }},{{ foreground_dark.green }},{{ foreground_dark.blue }};
+      --color-foreground-secondary: {{ scheme.settings.text_secondary.red }},{{ scheme.settings.text_secondary.green }},{{ scheme.settings.text_secondary.blue }};
+      --color-accent-1: {{ scheme.settings.accent-1.red }},{{ scheme.settings.accent-1.green }},{{ scheme.settings.accent-1.blue }};
+      --color-accent-1-dark: {{ accent_1_dark.red }},{{ accent_1_dark.green }},{{ accent_1_dark.blue }};
+      --color-accent-2: {{ scheme.settings.accent-2.red }},{{ scheme.settings.accent-2.green }},{{ scheme.settings.accent-2.blue }};
+      --color-accent-2-dark: {{ accent_2_dark.red }},{{ accent_2_dark.green }},{{ accent_2_dark.blue }};
+    }
+  {% endfor %}
+
+  {{ scheme_classes | prepend: 'body' }} {
+    color: rgba(var(--color-foreground-secondary));
+    background-color: rgb(var(--color-background));
+  }
+
+  :root {
+    /* FONTS */
+    --font-body-family: {{ settings.body_font.family }}, {{ settings.body_font.fallback_families }};
+    --font-body-style: {{ settings.body_font.style }};
+    --font-body-weight: {{ settings.body_font.weight }};
+    --font-body-weight-bold: {{ settings.body_font.weight | plus: 300 | at_most: 1000 }};
+    --font-body-scale: {{ settings.body_size | divided_by: 100.0 }};
+
+    --font-heading-family: {{ settings.headings_font.family }}, {{ settings.headings_font.fallback_families }};
+    --font-heading-style: {{ settings.headings_font.style }};
+    --font-heading-weight: {{ settings.headings_font.weight }};
+    --font-heading-weight-bold: {{ settings.headings_font.weight | plus: 300 | at_most: 800 }};
+    --font-heading-weight-thin: {{ settings.headings_font.weight | minus: 300 | at_least: 400 }};
+    --font-heading-letter-spacing: {{ settings.headings_letter_spacing }}px;
+
+    --font-heading-1-scale: {{ settings.heading_1_font_size | divided_by: 100.0 }};
+    --font-heading-2-scale: {{ settings.heading_2_font_size | divided_by: 100.0 }};
+    --font-heading-3-scale: {{ settings.heading_3_font_size | divided_by: 100.0 }};
+
+    /* LAYOUT */
+    --page-width: {{ settings.page_width | divided_by: 10 }}rem;
+    --page-width-narrow: {{ settings.page_width | divided_by: 15 }}rem;
+    --grid-desktop-vertical-spacing: {{ settings.spacing_grid_vertical }}px;
+    --grid-desktop-horizontal-spacing: {{ settings.spacing_grid_horizontal }}px;
+    --grid-mobile-vertical-spacing: {{ settings.spacing_grid_vertical | divided_by: 2 }}px;
+    --grid-mobile-horizontal-spacing: {{ settings.spacing_grid_horizontal | divided_by: 2 }}px;
+
+    /* BORDERS */
+    --border-1: {{ settings.border_1_width }}px solid {{ settings.border_1_color }};
+    --border-2: {{ settings.border_2_width }}px solid {{ settings.border_2_color }};
+    --border-3: {{ settings.border_3_width }}px solid {{ settings.border_3_color }};
+
+    /* SHADOWS */
+    --shadow-1: {{ settings.shadow_1_horizontal_offset }}px {{ settings.shadow_1_vertical_offset }}px {{ settings.shadow_1_blur }}px rgba({{ settings.shadow_1_color.red }}, {{ settings.shadow_1_color.green }}, {{ settings.shadow_1_color.blue }}, {{ settings.shadow_1_opacity | divided_by: 100.0 }});
+    --shadow-2: {{ settings.shadow_2_horizontal_offset }}px {{ settings.shadow_2_vertical_offset }}px {{ settings.shadow_2_blur }}px rgba({{ settings.shadow_2_color.red }}, {{ settings.shadow_2_color.green }}, {{ settings.shadow_2_color.blue }}, {{ settings.shadow_2_opacity | divided_by: 100.0 }});
+    --shadow-3: {{ settings.shadow_3_horizontal_offset }}px {{ settings.shadow_3_vertical_offset }}px {{ settings.shadow_3_blur }}px rgba({{ settings.shadow_3_color.red }}, {{ settings.shadow_3_color.green }}, {{ settings.shadow_3_color.blue }}, {{ settings.shadow_3_opacity | divided_by: 100.0 }});
+
+    --shadow-1-hover: {{ settings.shadow_1_horizontal_offset | divided_by: 2 }}px {{ settings.shadow_1_vertical_offset | divided_by: 2 }}px {{ settings.shadow_1_blur | divided_by: 2 }}px rgba({{ settings.shadow_1_color.red }}, {{ settings.shadow_1_color.green }}, {{ settings.shadow_1_color.blue }}, {{ settings.shadow_1_opacity | divided_by: 150.0 }});
+    --shadow-2-hover: {{ settings.shadow_2_horizontal_offset | divided_by: 2 }}px {{ settings.shadow_2_vertical_offset | divided_by: 2 }}px {{ settings.shadow_2_blur | divided_by: 2 }}px rgba({{ settings.shadow_2_color.red }}, {{ settings.shadow_2_color.green }}, {{ settings.shadow_2_color.blue }}, {{ settings.shadow_2_opacity | divided_by: 150.0 }});
+    --shadow-3-hover: {{ settings.shadow_3_horizontal_offset | divided_by: 2 }}px {{ settings.shadow_3_vertical_offset | divided_by: 2 }}px {{ settings.shadow_3_blur | divided_by: 2 }}px rgba({{ settings.shadow_3_color.red }}, {{ settings.shadow_3_color.green }}, {{ settings.shadow_3_color.blue }}, {{ settings.shadow_3_opacity | divided_by: 150.0 }});
+
+    /* BUTTONS */
+    {%- assign buttons_font_size = 1.6 | times: settings.buttons_font_size | divided_by: 100 -%}
+    --buttons-font: {% if settings.buttons_font == "body" %}var(--font-body-family){% else %}var(--font-heading-family){% endif %};
+    --buttons-font-size: {{ buttons_font_size }}rem;
+    --buttons-space-horizontal: {{ settings.buttons_space_horizontal }}px;
+    --buttons-space-vertical: {{ settings.buttons_space_vertical }}px;
+    --buttons-radius: {% if settings.buttons_radius == "big" %}10rem{% elsif settings.buttons_radius == "middle" %}0.8rem{% else %}0rem{% endif %};
+
+    /* COLLAPSIBLE */
+    --collapsibles-space-horizontal: {{ settings.collapsible_spacing_horizontal | divided_by: 10.0 }}rem;
+    --collapsibles-space-vertical: {{ settings.collapsible_spacing_vertical | divided_by: 10.0 }}rem;
+    --collapsibles-radius: {% if settings.collapsible_radius == "big" %}10rem{% elsif settings.collapsible_radius == "middle" %}0.8rem{% else %}0rem{% endif %};
+    {%- if settings.collapsible_font_family == "heading" -%}
+      --collapsibles-font-family: var(--font-heading-family);
+      --collapsibles-font-weight: var(--font-heading-weight);
+    {%- else -%}
+      --collapsibles-font-family: var(--font-body-family);
+      --collapsibles-font-weight: var(--font-body-weight);
+    {%- endif -%}
+  
+    {%- if settings.collapsible_border_placement == "all" -%}
+  		--collapsibles-border:
+  		{%- if settings.collapsible_border == "border--1" -%}var(--border-1)
+  		{%- elsif settings.collapsible_border == "border--2" -%}var(--border-2)
+  		{%- elsif settings.collapsible_border == "border--3" -%}var(--border-3)
+  		{%- else -%}none{%- endif -%};
+  	--collapsibles-border-bottom:
+  		{%- if settings.collapsible_border == "border--1" -%}var(--border-1)
+  		{%- elsif settings.collapsible_border == "border--2" -%}var(--border-2)
+  		{%- elsif settings.collapsible_border == "border--3" -%}var(--border-3)
+  		{%- else -%}none{%- endif -%};
+  {%- else -%}
+  	--collapsibles-border-bottom:
+  			{%- if settings.collapsible_border == "border--1" -%}var(--border-1)
+  			{%- elsif settings.collapsible_border == "border--2" -%}var(--border-2)
+  			{%- elsif settings.collapsible_border == "border--3" -%}var(--border-3)
+  			{%- else -%}none{%- endif -%};
+  {%- endif -%}
+
+    --collapsible-1-shadow:
+      {%- if settings.collapsible_1_shadow == "shadow--1" -%}var(--shadow-1)
+      {%- elsif settings.collapsible_1_shadow == "shadow--2" -%}var(--shadow-2)
+      {%- elsif settings.collapsible_1_shadow == "shadow--3" -%}var(--shadow-3)
+      {%- else -%}none{%- endif -%};
+    --collapsible-2-shadow:
+      {%- if settings.collapsible_2_shadow == "shadow--1" -%}var(--shadow-1)
+      {%- elsif settings.collapsible_2_shadow == "shadow--2" -%}var(--shadow-2)
+      {%- elsif settings.collapsible_2_shadow == "shadow--3" -%}var(--shadow-3)
+      {%- else -%}none{%- endif -%};
+    --collapsible-3-shadow:
+      {%- if settings.collapsible_3_shadow == "shadow--1" -%}var(--shadow-1)
+      {%- elsif settings.collapsible_3_shadow == "shadow--2" -%}var(--shadow-2)
+      {%- elsif settings.collapsible_3_shadow == "shadow--3" -%}var(--shadow-3)
+      {%- else -%}none{%- endif -%};
+
+    /* SUBHEADINGS */
+    --subheadings-letter-spacing: {{ settings.subheadings_letter_spacing }}px;
+    --subheadings-font-weight: {%- if settings.subheadings_font_weight -%}var(--font-heading-weight-bold){%- else -%}{{ subheadings_font_light }}{%- endif -%};
+
+    /* INPUTS */
+    --inputs-radius: {% if settings.inputs_radius == "big" %}10rem{% elsif settings.inputs_radius == "middle" %}0.8rem{% else %}0rem{% endif %};
+    --inputs-shadow:
+      {%- if settings.inputs_shadow == "shadow--1" -%}var(--shadow-1)
+      {%- elsif settings.inputs_shadow == "shadow--2" -%}var(--shadow-2)
+      {%- elsif settings.inputs_shadow == "shadow--3" -%}var(--shadow-3)
+      {%- else -%}none{%- endif -%};
+    --inputs-border:
+      {%- if settings.inputs_border == "border--1" -%}var(--border-1)
+      {%- elsif settings.inputs_border == "border--2" -%}var(--border-2)
+      {%- elsif settings.inputs_border == "border--3" -%}var(--border-3)
+      {%- else -%}none{%- endif -%};
+    --inputs-focus-behavior: {% if settings.inputs_focus_behavior == "bg_fade_outline" %}rgba(var(--color-foreground), 0.1){% else %}rgb(var(--color-accent-1)){% endif %} solid 2px;
+
+    /* TRANSITIONS */
+    --transitions-delay: .3s;
+    --transitions-style: ease;
+
+    /* MEDIA CONTAINERS */
+    --media-container-radius: {% if settings.media_container_radius == "big" %}10rem{% elsif settings.media_container_radius == "middle" %}0.8rem{% else %}0rem{% endif %};
+    --media-container-shadow:
+      {%- if settings.media_container_shadow == "shadow--1" -%}var(--shadow-1)
+      {%- elsif settings.media_container_shadow == "shadow--2" -%}var(--shadow-2)
+      {%- elsif settings.media_container_shadow == "shadow--3" -%}var(--shadow-3)
+      {%- else -%}none{%- endif -%};
+    --media-container-border:
+      {%- if settings.media_container_border == "border--1" -%}var(--border-1)
+      {%- elsif settings.media_container_border == "border--2" -%}var(--border-2)
+      {%- elsif settings.media_container_border == "border--3" -%}var(--border-3)
+      {%- else -%}none{%- endif -%};
+
+    /* CONTENT CONTAINERS */
+    --content-container-radius: {% if settings.content_container_radius == "big" %}10rem{% elsif settings.content_container_radius == "middle" %}0.8rem{% else %}0rem{% endif %};
+    --content-container-shadow:
+      {%- if settings.content_container_shadow == "shadow--1" -%}var(--shadow-1)
+      {%- elsif settings.content_container_shadow == "shadow--2" -%}var(--shadow-2)
+      {%- elsif settings.content_container_shadow == "shadow--3" -%}var(--shadow-3)
+      {%- else -%}none{%- endif -%};
+    --content-container-border:
+      {%- if settings.content_container_border == "border--1" -%}var(--border-1)
+      {%- elsif settings.content_container_border == "border--2" -%}var(--border-2)
+      {%- elsif settings.content_container_border == "border--3" -%}var(--border-3)
+      {%- else -%}none{%- endif -%};
+
+    /* PRODUCT CARD */
+    --product-card-radius: {% if settings.product_card_radius == "big" %}10rem{% elsif settings.product_card_radius == "middle" %}0.8rem{% else %}0rem{% endif %};
+    --product-card-shadow:
+      {%- if settings.product_card_shadow == "shadow--1" -%}var(--shadow-1)
+      {%- elsif settings.product_card_shadow == "shadow--2" -%}var(--shadow-2)
+      {%- elsif settings.product_card_shadow == "shadow--3" -%}var(--shadow-3)
+      {%- else -%}none{%- endif -%};
+    --product-card-border:
+      {%- if settings.product_card_border == "border--1" -%}var(--border-1)
+      {%- elsif settings.product_card_border == "border--2" -%}var(--border-2)
+      {%- elsif settings.product_card_border == "border--3" -%}var(--border-3)
+      {%- else -%}none{%- endif -%};
+    --product-card-text-alignment: {{ settings.product_card_text_alignment }};
+
+    /* COLLECTION CARD */
+    --collection-card-radius: {% if settings.collection_card_radius == "big" %}10rem{% elsif settings.collection_card_radius == "middle" %}0.8rem{% else %}0rem{% endif %};
+    --collection-card-shadow:
+      {%- if settings.collection_card_shadow == "shadow--1" -%}var(--shadow-1)
+      {%- elsif settings.collection_card_shadow == "shadow--2" -%}var(--shadow-2)
+      {%- elsif settings.collection_card_shadow == "shadow--3" -%}var(--shadow-3)
+      {%- else -%}none{%- endif -%};
+    --collection-card-border:
+      {%- if settings.collection_card_border == "border--1" -%}var(--border-1)
+      {%- elsif settings.collection_card_border == "border--2" -%}var(--border-2)
+      {%- elsif settings.collection_card_border == "border--3" -%}var(--border-3)
+      {%- else -%}none{%- endif -%};
+    --collection-card-text-alignment: {{ settings.collection_card_text_alignment }};
+
+    /* BLOG CARD */
+    --blog-card-radius: {% if settings.blog_card_radius == "big" %}10rem{% elsif settings.blog_card_radius == "middle" %}0.8rem{% else %}0rem{% endif %};
+    --blog-card-shadow:
+      {%- if settings.blog_card_shadow == "shadow--1" -%}var(--shadow-1)
+      {%- elsif settings.blog_card_shadow == "shadow--2" -%}var(--shadow-2)
+      {%- elsif settings.blog_card_shadow == "shadow--3" -%}var(--shadow-3)
+      {%- else -%}none{%- endif -%};
+    --blog-card-border:
+      {%- if settings.blog_card_border == "border--1" -%}var(--border-1)
+      {%- elsif settings.blog_card_border == "border--2" -%}var(--border-2)
+      {%- elsif settings.blog_card_border == "border--3" -%}var(--border-3)
+      {%- else -%}none{%- endif -%};
+    --blog-card-text-alignment: {{ settings.blog_card_text_alignment }};
+
+    /* DRAWER */
+    --drawer-shadow:
+      {%- if settings.drawer_shadow == "shadow--1" -%}var(--shadow-1)
+      {%- elsif settings.drawer_shadow == "shadow--2" -%}var(--shadow-2)
+      {%- elsif settings.drawer_shadow == "shadow--3" -%}var(--shadow-3)
+      {%- else -%}none{%- endif -%};
+    --drawer-border:
+        {%- if settings.drawer_border == "border--1" -%}var(--border-1)
+        {%- elsif settings.drawer_border == "border--2" -%}var(--border-2)
+        {%- elsif settings.drawer_border == "border--3" -%}var(--border-3)
+        {%- else -%}0{%- endif -%};
+    --drawer-border-mobile: {%- if settings.drawer_width == "full_width" -%}0
+        {%- else -%}var(--drawer-border){%- endif -%};
+    --drawer-width: {%- if settings.drawer_width == "small" -%}calc(100vw - 4rem){%- else -%}100vw{%- endif -%};
+
+    /* CART */
+    --cart-modules-shadow:
+      {%- if settings.cart_modules_shadow == "shadow--1" -%}var(--shadow-1)
+      {%- elsif settings.cart_modules_shadow == "shadow--2" -%}var(--shadow-2)
+      {%- elsif settings.cart_modules_shadow == "shadow--3" -%}var(--shadow-3)
+      {%- else -%}none{%- endif -%};
+    --cart-modules-border:
+      {%- if settings.cart_modules_border == "border--1" -%}var(--border-1)
+      {%- elsif settings.cart_modules_border == "border--2" -%}var(--border-2)
+      {%- elsif settings.cart_modules_border == "border--3" -%}var(--border-3)
+      {%- else -%}none{%- endif -%};
+  }
+
+  /************* BUTTONS *************/
+  :root,
+  .button__style--1 {
+    {% case settings.button_1_palette %}
+      {% when 'accent-1' %}
+        --button-1-background: var(--color-accent-1);
+        --button-1-color: var(--color-background);
+        --button-1-background-hover: var(--color-accent-1-dark);
+      {% when 'accent-2' %}
+        --button-1-background: var(--color-accent-2);
+        --button-1-color: var(--color-background);
+        --button-1-background-hover: var(--color-accent-2-dark);
+      {% when 'text' %}
+        --button-1-background: var(--color-foreground);
+        --button-1-color: var(--color-background);
+        --button-1-background-hover: var(--color-foreground-dark);
+      {% when 'bg_fade' %}
+        --button-1-background: var(--color-background-secondary);
+        --button-1-color: var(--color-foreground);
+        --button-1-background-hover: var(--color-background-dark);
+      {% when 'accent-1-outline' %}
+        --button-1-background: transparent;
+        --button-1-color: var(--color-accent-1);
+        --button-1-background-hover: var(--color-accent-1);
+      {% when 'accent-2-outline' %}
+        --button-1-background: transparent;
+        --button-1-color: var(--color-accent-2);
+        --button-1-background-hover: var(--color-accent-2);
+      {% when 'text-outline' %}
+        --button-1-background: transparent;
+        --button-1-color: var(--color-foreground);
+        --button-1-background-hover: var(--color-foreground-dark);
+    {% endcase %}
+  }
+
+  :root,
+  .button__style--2 {
+    {% case settings.button_2_palette %}
+      {% when 'accent-1' %}
+        --button-2-background: var(--color-accent-1);
+        --button-2-color: var(--color-background);
+        --button-2-background-hover: var(--color-accent-1-dark);
+      {% when 'accent-2' %}
+        --button-2-background: var(--color-accent-2);
+        --button-2-color: var(--color-background);
+        --button-2-background-hover: var(--color-accent-2-dark);
+      {% when 'text' %}
+        --button-2-background: var(--color-foreground);
+        --button-2-color: var(--color-background);
+        --button-2-background-hover: var(--color-foreground-dark);
+      {% when 'bg_fade' %}
+        --button-2-background: var(--color-background-secondary);
+        --button-2-color: var(--color-foreground);
+        --button-2-background-hover: var(--color-background-dark);
+      {% when 'accent-1-outline' %}
+        --button-2-background: transparent;
+        --button-2-color: var(--color-accent-1);
+        --button-2-background-hover: var(--color-accent-1);
+      {% when 'accent-2-outline' %}
+        --button-2-background: transparent;
+        --button-2-color: var(--color-accent-2);
+        --button-2-background-hover: var(--color-accent-2);
+      {% when 'text-outline' %}
+        --button-2-background: transparent;
+        --button-2-color: var(--color-foreground);
+        --button-2-background-hover: var(--color-foreground-dark);
+    {% endcase %}
+  }
+
+  :root,
+  .button__style--3 {
+    {% case settings.button_3_palette %}
+      {% when 'accent-1' %}
+        --button-3-background: var(--color-accent-1);
+        --button-3-color: var(--color-background);
+        --button-3-background-hover: var(--color-accent-1-dark);
+      {% when 'accent-2' %}
+        --button-3-background: var(--color-accent-2);
+        --button-3-color: var(--color-background);
+        --button-3-background-hover: var(--color-accent-2-dark);
+      {% when 'text' %}
+        --button-3-background: var(--color-foreground);
+        --button-3-color: var(--color-background);
+        --button-3-background-hover: var(--color-foreground-dark);
+      {% when 'bg_fade' %}
+        --button-3-background: var(--color-background-secondary);
+        --button-3-color: var(--color-foreground);
+        --button-3-background-hover: var(--color-background-dark);
+      {% when 'accent-1-outline' %}
+        --button-3-background: transparent;
+        --button-3-color: var(--color-accent-1);
+        --button-3-background-hover: var(--color-accent-1);
+      {% when 'accent-2-outline' %}
+        --button-3-background: transparent;
+        --button-3-color: var(--color-accent-2);
+        --button-3-background-hover: var(--color-accent-2);
+      {% when 'text-outline' %}
+        --button-3-background: transparent;
+        --button-3-color: var(--color-foreground);
+        --button-3-background-hover: var(--color-foreground-dark);
+    {% endcase %}
+  }
+
+  .button__style--1 {
+    background-color: rgba(var(--button-1-background), 1);
+    color: rgba(var(--button-1-color), 1);
+    {%- unless settings.button_1_palette contains 'outline' -%}
+      {% case settings.button_1_border %}
+        {% when 'none' %}
+          border-color: transparent;
+        {% when 'border--1' %}
+          border: var(--border-1);
+        {% when 'border--2' %}
+          border: var(--border-2);
+        {% when 'border--3' %}
+          border: var(--border-3);
+      {% endcase %}
+    {%- endunless -%}
+    {% case settings.button_1_shadow %}
+      {% when 'none' %}
+        box-shadow: none;
+      {% when 'shadow--1' %}
+        box-shadow: var(--shadow-1);
+      {% when 'shadow--2' %}
+        box-shadow: var(--shadow-2);
+      {% when 'shadow--3' %}
+        box-shadow: var(--shadow-3);
+    {% endcase %}
+    {% case settings.button_1_palette %}
+      {% when 'accent-1-outline' %}
+        border: 2px solid rgb(var(--button-1-color));
+      {% when 'accent-2-outline' %}
+        border: 2px solid rgb(var(--button-1-color));
+      {% when 'text-outline' %}
+        border: 2px solid rgb(var(--button-1-color));
+    {% endcase %}
+  }
+
+  .button__style--2 {
+    background-color: rgba(var(--button-2-background), 1);
+    color: rgba(var(--button-2-color), 1);
+    {%- unless settings.button_2_palette contains 'outline' -%}
+      {% case settings.button_2_border %}
+        {% when 'none' %}
+          border-color: transparent;
+        {% when 'border--1' %}
+          border: var(--border-1);
+        {% when 'border--2' %}
+          border: var(--border-2);
+        {% when 'border--3' %}
+          border: var(--border-3);
+      {% endcase %}
+    {%- endunless -%}
+    {% case settings.button_2_shadow %}
+      {% when 'none' %}
+        box-shadow: none;
+      {% when 'shadow--1' %}
+        box-shadow: var(--shadow-1);
+      {% when 'shadow--2' %}
+        box-shadow: var(--shadow-2);
+      {% when 'shadow--3' %}
+        box-shadow: var(--shadow-3);
+    {% endcase %}
+    {% case settings.button_2_palette %}
+      {% when 'accent-1-outline' %}
+        border: 2px solid rgb(var(--button-2-color));
+      {% when 'accent-2-outline' %}
+        border: 2px solid rgb(var(--button-2-color));
+      {% when 'text-outline' %}
+        border: 2px solid rgb(var(--button-2-color));
+    {% endcase %}
+  }
+
+  .button__style--3,
+  .shopify-payment-button__button--unbranded {
+    background-color: rgba(var(--button-3-background), 1);
+    color: rgba(var(--button-3-color), 1);
+    {%- unless settings.button_3_palette contains 'outline' -%}
+      {% case settings.button_3_border %}
+        {% when 'none' %}
+          border-color: transparent;
+        {% when 'border--1' %}
+          border: var(--border-1);
+        {% when 'border--2' %}
+          border: var(--border-2);
+        {% when 'border--3' %}
+          border: var(--border-3);
+      {% endcase %}
+    {%- endunless -%}
+    {% case settings.button_3_shadow %}
+      {% when 'none' %}
+        box-shadow: none;
+      {% when 'shadow--1' %}
+        box-shadow: var(--shadow-1);
+      {% when 'shadow--2' %}
+        box-shadow: var(--shadow-2);
+      {% when 'shadow--3' %}
+        box-shadow: var(--shadow-3);
+    {% endcase %}
+    {% case settings.button_3_palette %}
+      {% when 'accent-1-outline' %}
+        border: 2px solid rgb(var(--button-3-color));
+      {% when 'accent-2-outline' %}
+        border: 2px solid rgb(var(--button-3-color));
+      {% when 'text-outline' %}
+        border: 2px solid rgb(var(--button-3-color));
+    {% endcase %}
+  }
+
+  .button__style--1:hover,
+  .button__style--2:hover,
+  .button__style--3:hover,
+  .shopify-payment-button__button--unbranded:hover {
+    {% if settings.buttons_hover_translate %}
+      transform: translateY(-3px);
+    {% endif %}
+  }
+
+  .button__style--1:hover {
+    {% if settings.buttons_hover_shadow %}
+      {% case settings.button_1_shadow %}
+        {% when 'shadow--1' %}
+          box-shadow: var(--shadow-1-hover);
+        {% when 'shadow--2' %}
+          box-shadow: var(--shadow-2-hover);
+        {% when 'shadow--3' %}
+          box-shadow: var(--shadow-3-hover);
+      {% endcase %}
+    {% endif %}
+    {% case settings.buttons_hover_effect %}
+      {% when 'darker' %}
+        {%- if settings.button_1_palette contains 'outline' -%}
+          border-color: rgba(var(--button-1-background-hover), 1);
+          color: rgba(var(--button-1-background-hover), 1);
+        {%- else -%}
+          background-color: rgba(var(--button-1-background-hover), 1);
+        {%- endif -%}
+      {% when 'lighter' %}
+        {%- if settings.button_1_palette contains 'outline' -%}
+          border-color: rgba(var(--button-1-background-hover), 0.8);
+          color: rgba(var(--button-1-background-hover), 0.8);
+        {%- else -%}
+          background-color: rgba(var(--button-1-background), 0.8);
+        {%- endif -%}
+      {% when 'accent' %}
+        {%- if settings.button_1_palette contains 'outline' -%}
+          border-color: rgba(var(--color-accent-1), 1);
+          color: rgba(var(--color-accent-1), 1);
+        {%- else -%}
+          background-color: rgba(var(--color-accent-1), 1);
+        {%- endif -%}
+      {% when 'outline' %}
+          border: 2px solid rgba(var(--button-1-background-hover), 1);
+          color: rgba(var(--button-1-background-hover), 1);
+          background-color: rgba(var(--button-1-background-hover), 0.0);
+    {% endcase %}
+  }
+
+  .button__style--2:hover {
+    {% if settings.buttons_hover_shadow %}
+      {% case settings.button_2_shadow %}
+        {% when 'shadow--1' %}
+          box-shadow: var(--shadow-1-hover);
+        {% when 'shadow--2' %}
+          box-shadow: var(--shadow-2-hover);
+        {% when 'shadow--3' %}
+          box-shadow: var(--shadow-3-hover);
+      {% endcase %}
+    {% endif %}
+    {% case settings.buttons_hover_effect %}
+      {% when 'darker' %}
+        {%- if settings.button_2_palette contains 'outline' -%}
+          border-color: rgba(var(--button-2-background-hover), 1);
+          color: rgba(var(--button-2-background-hover), 1);
+        {%- else -%}
+          background-color: rgba(var(--button-2-background-hover), 1);
+        {%- endif -%}
+      {% when 'lighter' %}
+        {%- if settings.button_2_palette contains 'outline' -%}
+          border-color: rgba(var(--button-2-background-hover), 0.8);
+          color: rgba(var(--button-2-background-hover), 0.8);
+        {%- else -%}
+          background-color: rgba(var(--button-2-background), 0.8);
+        {%- endif -%}
+      {% when 'accent' %}
+        {%- if settings.button_2_palette contains 'outline' -%}
+          border-color: rgba(var(--color-accent-1), 1);
+          color: rgba(var(--color-accent-1), 1);
+        {%- else -%}
+          background-color: rgba(var(--color-accent-1), 1);
+        {%- endif -%}
+      {% when 'outline' %}
+        border: 2px solid rgba(var(--button-2-background), 1);
+        color: rgba(var(--button-2-background), 1);
+        background-color: rgba(var(--button-2-background), 0.0);
+    {% endcase %}
+  }
+
+  .button__style--3:hover,
+  .shopify-payment-button__button--unbranded:hover {
+    {% if settings.buttons_hover_shadow %}
+      {% case settings.button_3_shadow %}
+        {% when 'shadow--1' %}
+          box-shadow: var(--shadow-1-hover);
+        {% when 'shadow--2' %}
+          box-shadow: var(--shadow-2-hover);
+        {% when 'shadow--3' %}
+          box-shadow: var(--shadow-3-hover);
+      {% endcase %}
+    {% endif %}
+    {% case settings.buttons_hover_effect %}
+      {% when 'darker' %}
+        {%- if settings.button_3_palette contains 'outline' -%}
+          border-color: rgba(var(--button-3-background-hover), 1);
+          color: rgba(var(--button-3-background-hover), 1);
+        {%- else -%}
+          background-color: rgba(var(--button-3-background-hover), 1);
+        {%- endif -%}
+      {% when 'lighter' %}
+        {%- if settings.button_3_palette contains 'outline' -%}
+          border-color: rgba(var(--button-3-background-hover), 0.8);
+          color: rgba(var(--button-3-background-hover), 0.8);
+        {%- else -%}
+          background-color: rgba(var(--button-3-background), 0.8);
+        {%- endif -%}
+      {% when 'accent' %}
+        {%- if settings.button_3_palette contains 'outline' -%}
+          border-color: rgba(var(--color-accent-1), 1);
+          color: rgba(var(--color-accent-1), 1);
+        {%- else -%}
+          background-color: rgba(var(--color-accent-1), 1);
+        {%- endif -%}
+      {% when 'outline' %}
+        border: 2px solid rgba(var(--button-3-background), 1);
+        color: rgba(var(--button-3-background), 1);
+        background-color: rgba(var(--button-3-background), 0.0);
+    {% endcase %}
+  }
+
+  {%- if settings.enable_max_width_container -%}
+    /************* LAYOUT *************/
+    @media only screen and (min-width: {{ settings.max_width_container }}px) {
+      body {
+        max-width: {{ settings.max_width_container }}px;
+        margin: 0 auto !important;
+        border-left: 1px solid rgb(var(--color-background-secondary));
+        border-right: 1px solid rgb(var(--color-background-secondary));
+      }
+    }
+  {%- endif -%}
+
+  /************* HEADINGS *************/
+  .heading__style--1,
+  .heading__style--2,
+  .heading__style--3 {
+    {% if settings.headings_uppercase %}
+      text-transform: uppercase;
+    {% endif %}
+    letter-spacing: {{ settings.headings_letter_spacing }}px;
+  }
+
+  .heading__style--1 {
+    font-size: calc(2.4rem * {{ settings.heading_1_font_size | divided_by: 100.0 }});
+    {% if settings.heading_1_separator %}
+      position: relative;
+      padding-bottom: {{ settings.heading_separator_spacing | divided_by: 10.0 }}rem;
+    {% endif %}
+  }
+
+  {% if settings.heading_1_separator %}
+    .heading__style--1::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      height: 3px;
+      width: 10rem;
+      background-color:
+        {%- if settings.heading_1_separator_color == "accent-1" -%}
+          rgba(var(--color-accent-1))
+          {%- elsif settings.heading_1_separator_color == "accent-2" -%}
+          rgba(var(--color-accent-2))
+          {%- elsif settings.heading_1_separator_color == "background-2" -%}
+          rgba(var(--color-background-secondary))
+        {%- elsif settings.heading_1_separator_color == "text" -%}
+          rgba(var(--color-foreground))
+        {%- endif -%};
+    }
+  {% endif %}
+
+  .heading__style--2 {
+    font-size: calc(2.4rem * {{ settings.heading_2_font_size | divided_by: 100.0 }});
+    {% if settings.heading_2_separator %}
+      position: relative;
+      padding-bottom: {{ settings.heading_separator_spacing | divided_by: 10.0 }}rem;
+    {% endif %}
+  }
+
+  {% if settings.heading_2_separator %}
+    .heading__style--2::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      height: 3px;
+      width: 10rem;
+      background-color:
+        {%- if settings.heading_2_separator_color == "accent-1" -%}
+          rgba(var(--color-accent-1))
+          {%- elsif settings.heading_2_separator_color == "accent-2" -%}
+          rgba(var(--color-accent-2))
+          {%- elsif settings.heading_2_separator_color == "background-2" -%}
+          rgba(var(--color-background-secondary))
+        {%- elsif settings.heading_2_separator_color == "text" -%}
+          rgba(var(--color-foreground))
+        {%- endif -%};
+    }
+  {% endif %}
+
+  .heading__style--3 {
+    font-size: calc(2.4rem * {{ settings.heading_3_font_size | divided_by: 100.0 }});
+    {% if settings.heading_3_separator %}
+      position: relative;
+      padding-bottom: {{ settings.heading_separator_spacing | divided_by: 10.0 }}rem;
+    {% endif %}
+  }
+
+  {% if settings.heading_3_separator %}
+    .heading__style--3::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      height: 3px;
+      width: 10rem;
+      background-color:
+        {%- if settings.heading_3_separator_color == "accent-1" -%}
+          rgba(var(--color-accent-1))
+          {%- elsif settings.heading_3_separator_color == "accent-2" -%}
+          rgba(var(--color-accent-2))
+          {%- elsif settings.heading_3_separator_color == "background-2" -%}
+          rgba(var(--color-background-secondary))
+        {%- elsif settings.heading_3_separator_color == "text" -%}
+          rgba(var(--color-foreground))
+        {%- endif -%};
+    }
+  {% endif %}
+
+  /************* COLLAPSIBLES *************/
+  .collapsible {
+    border{% if settings.collapsible_border_placement == "bottom" %}-bottom{% endif %}: var(--collapsibles-border);
+    {% if settings.collapsible_border_placement == "all" %}
+      margin-bottom: 1.4rem;
+    {% endif %}
+  }
+
+  {% if settings.collapsible_border_placement == "all" %}
+    .collapsible:last-child {
+      margin-bottom: 0;
+    }
+  {% endif %}
+
+  :root,
+  .collapsible__style--1 {
+    {% case settings.collapsible_1_palette %}
+      {% when "accent" %}
+        background-color: rgb(var(--color-accent-1));
+        --color-collapsible-1-elements: rgb(var(--color-background));
+        color: var(--color-collapsible-1-elements);
+      {% when "text" %}
+        background-color: rgb(var(--color-foreground));
+        --color-collapsible-1-elements: rgb(var(--color-background));
+        color: var(--color-collapsible-1-elements);
+      {% when "bg_fade" %}
+        background-color: rgb(var(--color-background-secondary));
+        --color-collapsible-1-elements: rgb(var(--color-foreground));
+        color: var(--color-collapsible-1-elements);
+      {% when "transparent" %}
+        background-color: rgb(transparent);
+        --color-collapsible-1-elements: rgb(var(--color-foreground));
+        color: var(--color-collapsible-1-elements);
+    {% endcase %}
+  }
+
+  :root,
+  .collapsible__style--2 {
+    {% case settings.collapsible_2_palette %}
+      {% when "accent" %}
+        background-color: rgb(var(--color-accent-1));
+        --color-collapsible-2-elements: rgb(var(--color-background));
+        color: var(--color-collapsible-2-elements);
+      {% when "text" %}
+        background-color: rgb(var(--color-foreground));
+        --color-collapsible-2-elements: rgb(var(--color-background));
+        color: var(--color-collapsible-2-elements);
+      {% when "bg_fade" %}
+        background-color: rgb(var(--color-background-secondary));
+        --color-collapsible-2-elements: rgb(var(--color-foreground));
+        color: var(--color-collapsible-2-elements);
+      {% when "transparent" %}
+        background-color: rgb(transparent);
+        --color-collapsible-2-elements: rgb(var(--color-foreground));
+        color: var(--color-collapsible-2-elements);
+    {% endcase %}
+  }
+
+  :root,
+  .collapsible__style--3 {
+    {% case settings.collapsible_3_palette %}
+      {% when "accent" %}
+        background-color: rgb(var(--color-accent-1));
+        --color-collapsible-3-elements: rgb(var(--color-background));
+        color: var(--color-collapsible-3-elements);
+      {% when "text" %}
+        background-color: rgb(var(--color-foreground));
+        --color-collapsible-3-elements: rgb(var(--color-background));
+        color: var(--color-collapsible-3-elements);
+      {% when "bg_fade" %}
+        background-color: rgb(var(--color-background-secondary));
+        --color-collapsible-3-elements: rgb(var(--color-foreground));
+        color: var(--color-collapsible-3-elements);
+      {% when "transparent" %}
+        background-color: rgb(transparent);
+        --color-collapsible-3-elements: rgb(var(--color-foreground));
+        color: var(--color-collapsible-3-elements);
+    {% endcase %}
+  }
+
+  {%- if settings.collapsible_hover_secondary -%}
+    .accordion summary:hover,
+    .accordion details[open]>summary {
+      background-color: rgb(var(--color-background-secondary));
+    }
+  {%- endif -%}
+
+  /************* SUBHEADING *************/
+  p.subheading {
+    {%- if settings.subheadings_uppercase -%}
+      text-transform: uppercase;
+    {%- endif -%}
+    font-size: calc(2rem * {{ settings.subheadings_font_size | divided_by: 100.0 }});
+    letter-spacing: var(--subheadings-letter-spacing);
+    font-weight: var(--subheadings-font-weight);
+    color:
+    {%- case settings.subheadings_color -%}
+      {%- when 'accent-1' -%}
+        rgb(var(--color-accent-1));
+      {%- when 'accent-2' -%}
+        rgb(var(--color-accent-2));
+      {%- when 'headings' -%}
+        rgb(var(--color-foreground));
+      {%- when 'text' -%}
+        rgb(var(--color-foreground-secondary));
+    {%- endcase -%}
+  }
+
+  {%- assign color_swatches = settings.color_swatches | downcase | split: ' ' -%}
+  .swatch--{{ color_swatches }} {}
+  {%- for swatch in color_swatches -%}
+    .swatch--{{ swatch | replace: " ", "-" | split: ":" | first }} {
+      background-color: {{ swatch | replace: " ", "-" | split: ":" | last }} !important;
+    }
+    .product__input-button:checked+.swatch--{{ swatch | replace: " ", "-" | split: ":" | first }} {
+      outline-color: {{ swatch | replace: " ", "-" | split: ":" | last }} !important;
+    }
+  {%- endfor -%}
+
+  /************* DRAWER *************/
+  .drawer {
+    {%- if settings.drawer_background_behavior == 'overlay' -%}
+      background-color: rgba(var(--color-foreground),.4);
+    {%- elsif settings.drawer_background_behavior == 'blur' -%}
+      background-color: rgba(var(--color-foreground),.4);
+      backdrop-filter: blur(1rem);
+      -webkit-backdrop-filter: blur(1rem);
+    {%- elsif settings.drawer_background_behavior == 'transparent' -%}
+      background: transparent;
+    {%- endif -%}
+  }
+
+  /************* SECURITY *************/
+  {%- if settings.disable_selection_text -%}
+    html, body {
+      -webkit-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+    }
+  {%- endif -%}
+
+  {% if settings.enable_page_transitions %}
+    /************** FADER PAGE TRANSITIONS **************/
+    #fader {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 999;
+      pointer-events: none;
+      background: rgb(var(--color-background));
+      animation-duration: var(--transitions-delay);
+      animation-timing-function: ease-in-out;
+    }
+
+    @keyframes fade-out {
+      from { opacity: 1; }
+      to { opacity: 0; }
+    }
+
+    @keyframes fade-in {
+      from {  opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    #fader.fade-out {
+      opacity: 0;
+      animation-name: fade-out;
+    }
+
+    #fader.fade-in {
+      opacity: 1;
+      animation-name: fade-in;
+    }
+
+    {% if settings.page_loader != blank %}
+      #fader.fade-out { display: flex; align-items: center; justify-content: center; }
+      #fader.fade-out img { max-width: 70%; width: 350px; margin: 0 auto; display: block; height: auto; }
+    {% endif %}
+  {% endif %}
+
+  {%- if settings.swiper_pagination_style != 'none' -%}
+    .swiper:not(.swiper_no_pagination) {
+      padding: 0 0 2rem !important;
+    }
+  {%- endif -%}
+{% endstyle %}

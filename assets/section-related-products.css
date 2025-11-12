@@ -1,0 +1,7 @@
+.related-products {
+  display: block;
+}
+
+.related-products .card__content {
+  width: auto;
+}

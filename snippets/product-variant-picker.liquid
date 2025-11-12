@@ -1,0 +1,255 @@
+{% comment %}
+  Renders product variant-picker
+
+  Accepts:
+  - product: {Object} product object.
+  - block: {Object} passing the block information.
+  - product_form_id: {String} Id of the product form to which the variant picker is associated.
+  - update_url: {Boolean} whether or not to update url when changing variants. If false, the url isn't updated. Default: true (optional).
+  Usage:
+  {% render 'product-variant-picker', product: product, block: block, product_form_id: product_form_id %}
+{% endcomment %}
+
+{%- unless product.has_only_default_variant -%}
+  {%- if block.settings.size_guide -%}
+    {%- capture size_guide -%}
+      <p 
+        class="open-modal size_guide{% if block.settings.size_guide_placement != 'label' %} size_guide--under{% endif %}"
+        data-open-modal="sizeGuideModal{{ unique }}"
+        {% if block.settings.size_guide_placement != 'label' -%}
+          {%- render 'animation', enable_animations: enable_animations, animation: animation -%}
+        {%- endif -%}
+      >
+        {%- render 'icons', icon: 'ruler' -%}
+        <span>{{- block.settings.size_guide_text -}}</span>
+      </p>
+    {%- endcapture -%}
+
+    <div class="modal-content hidden" id="sizeGuideModal{{ unique }}">
+      <div
+        class="size_guide_image global-media-settings{% if block.settings.size_guide_image != blank %} media{% else %} placeholder{% endif %}"
+        style="padding-bottom: {{ 1 | divided_by: block.settings.size_guide_image.aspect_ratio | times: 100 }}%;"
+      >
+        {%- if block.settings.size_guide_image != blank -%}
+          {%- capture sizes -%}
+            (min-width: {{ settings.page_width }}px) {{ settings.page_width | minus: 100 | divided_by: 2 }}px,
+            (min-width: 750px) calc((100vw - 130px) / 2), calc((100vw - 50px) / 2)
+          {%- endcapture -%}
+          {{
+            block.settings.size_guide_image
+            | image_url: width: 1500
+            | image_tag: loading: 'lazy', class: 'image--modal', sizes: sizes, widths: '165, 360, 535, 750, 1070, 1500'
+          }}
+        {%- else -%}
+          {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+        {%- endif -%}
+      </div>
+    </div>
+  {%- endif -%}
+
+  {%- if block.settings.picker_type == 'button' or block.settings.picker_type == 'radio' -%}
+    {%- assign swatches_names = settings.color_swatches | downcase | replace: ' ', '-' -%}
+    <variant-radios
+      id="variant-radios-{{ section.id }}"
+      class="no-js-hidden product__variants--{{ block.settings.picker_type }}{% if block.settings.flex %} product__variants--flex{% endif %}"
+      data-section="{{ section.id }}"
+      data-url="{{ product.url }}"
+      {% if update_url == false %}
+        data-update-url="false"
+      {% endif %}
+      {{ block.shopify_attributes }}
+    >
+      {%- for option in product.options_with_values -%}
+        <fieldset
+          class="
+            js product-form__input
+            product__variants-checked--{{ block.settings.checked_color }}
+            product__variants-width--{{ block.settings.custom_width }}
+            {%- if block.settings.size_guide
+              and block.settings.size_guide_placement == 'label'
+              and block.settings.size_guide_trigger == option.name
+            %} product__variants-size {% endif -%}
+          "
+        >
+          {%- unless block.settings.hide_label -%}
+            <legend
+              class="product__option-label form__label"
+              {% render 'animation', enable_animations: enable_animations, animation: animation -%}
+            >
+              {{ option.name }}
+              {%- if block.settings.size_guide
+                and block.settings.size_guide_placement == 'label'
+                and block.settings.size_guide_trigger == option.name
+              -%}
+                {{ size_guide }}
+              {%- endif -%}
+            </legend>
+          {%- endunless -%}
+          <div
+            class="product__option-container{% if block.settings.bg_secondary %} product__option-bg{% endif %}"
+            {% render 'animation', enable_animations: enable_animations, animation: animation -%}
+          >
+            {% render 'product-variant-options',
+              product: product,
+              option: option,
+              block: block,
+              swatches_names: swatches_names
+            %}
+          </div>
+        </fieldset>
+      {%- endfor -%}
+
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'custom_variant' -%}
+          <div class="product-form__input field product__variant--field-{{ block.settings.variant_type }}">
+            <input
+              class="field__input"
+              form="product-form-{{ section.id }}"
+              type="{{ block.settings.variant_type }}"
+              id="Variants-{{ block.id }}"
+              name="properties[{{- block.settings.variant_title -}}]"
+              value=""
+              placeholder="{{ block.settings.placeholder }}"
+            >
+            <label
+              class="field__label{% if block.settings.variant_type == "file" %} field__label--variant-file{% endif %}"
+              id="LabelVariants-{{ block.id }}"
+              for="Variants-{{ block.id }}"
+            >
+              {{- block.settings.variant_title -}}
+            </label>
+            {%- if block.settings.variant_type == 'file' -%}
+              <img id="FileVariants-{{ block.id }}" src="#" loading="lazy" width="100" height="100" class="product__variants-file-image" style="display: none;">
+            {%- endif -%}
+          </div>
+          {%- if block.settings.variant_type == 'file' -%}
+            <script>
+              const updateFileUpload = () => {
+               document.getElementById('Variants-{{ block.id }}').addEventListener('change', function() {
+                  const file = this.files[0];
+                  const label = document.querySelector('#LabelVariants-{{ block.id }}');
+                  const preview = document.getElementById('FileVariants-{{ block.id }}');
+                  label.textContent = file.name;
+                  if (file.type.startsWith('image/')) {
+                      const reader = new FileReader();
+                      reader.onload = function(e) {
+                          preview.src = e.target.result;
+                          preview.style.display = 'block';
+                      };
+                      reader.readAsDataURL(file);
+                  } else {
+                      preview.style.display = 'none';
+                  }
+               });
+              }
+              updateFileUpload();
+            </script>
+          {%- endif -%}
+        {%- endif -%}
+      {%- endfor -%}
+
+      <script type="application/json">
+        {{ product.variants | json }}
+      </script>
+    </variant-radios>
+  {%- else -%}
+    <variant-selects
+      id="variant-selects-{{ section.id }}"
+      class="no-js-hidden{% if block.settings.flex %} product__variants--flex{% endif %}"
+      data-section="{{ section.id }}"
+      data-url="{{ product.url }}"
+      {% if update_url == false %}
+        data-update-url="false"
+      {% endif %}
+      {{ block.shopify_attributes }}
+    >
+      {%- for option in product.options_with_values -%}
+        <div class="product-form__input product-form__input--dropdown">
+          {%- unless block.settings.hide_label -%}
+            <label
+              class="form__label"
+              for="Option-{{ section.id }}-{{ forloop.index0 }}"
+              {% render 'animation', enable_animations: enable_animations, animation: animation -%}
+            >
+              {{ option.name }}
+            </label>
+          {%- endunless -%}
+          <div
+            class="select"
+            {% render 'animation', enable_animations: enable_animations, animation: animation -%}
+          >
+            <select
+              id="Option-{{ section.id }}-{{ forloop.index0 }}"
+              class="select__select"
+              name="options[{{ option.name | escape }}]"
+              form="{{ product_form_id }}"
+            >
+              {% render 'product-variant-options', product: product, option: option, block: block %}
+            </select>
+            {% render 'icon-caret', behavior: 'arrow' %}
+          </div>
+        </div>
+      {%- endfor -%}
+
+      <script type="application/json">
+        {{ product.variants | json }}
+      </script>
+    </variant-selects>
+  {%- endif -%}
+  {%- if block.settings.size_guide and block.settings.size_guide_placement != 'label' -%}
+    {{ size_guide }}
+  {%- endif -%}
+{%- endunless -%}
+
+<noscript class="product-form__noscript-wrapper-{{ section.id }}">
+  <div class="product-form__input{% if product.has_only_default_variant %} hidden{% endif %}">
+    <label class="form__label" for="Variants-{{ section.id }}">
+      {{- 'products.product.product_variants' | t -}}
+    </label>
+    <div class="select">
+      <select
+        name="id"
+        id="Variants-{{ section.id }}"
+        class="select__select"
+        form="{{ product_form_id }}"
+      >
+        {%- for variant in product.variants -%}
+          <option
+            {% if variant == product.selected_or_first_available_variant %}
+              selected="selected"
+            {% endif %}
+            {% if variant.available == false %}
+              disabled
+            {% endif %}
+            value="{{ variant.id }}"
+          >
+            {%- liquid
+              echo variant.title
+              echo variant.price | money | strip_html | prepend: ' - '
+              if variant.available == false
+                echo 'products.product.sold_out' | t | prepend: ' - '
+              endif
+              if variant.quantity_rule.increment > 1
+                echo 'products.product.quantity.multiples_of' | t: quantity: variant.quantity_rule.increment | prepend: ' - '
+              endif
+              if variant.quantity_rule.min > 1
+                echo 'products.product.quantity.minimum_of' | t: quantity: variant.quantity_rule.min | prepend: ' - '
+              endif
+              if variant.quantity_rule.max != null
+                echo 'products.product.quantity.maximum_of' | t: quantity: variant.quantity_rule.max | prepend: ' - '
+              endif
+              # TODO: enable theme-check once `item_count_for_variant` is accepted as valid filter
+              # theme-check-disable
+              assign cart_quantity = cart | item_count_for_variant: variant.id
+              # theme-check-enable
+              if cart_quantity > 0
+                echo 'products.product.quantity.in_cart_html' | t: quantity: cart_quantity | prepend: ' - '
+              endif
+            -%}
+          </option>
+        {%- endfor -%}
+      </select>
+      {% render 'icon-caret' %}
+    </div>
+  </div>
+</noscript>

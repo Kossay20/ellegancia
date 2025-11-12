@@ -1,0 +1,35 @@
+.popup-newsletter__image-container {
+  min-height: 20rem;
+  width: 100%;
+  position: relative;
+}
+
+.popup-newsletter__image-container img {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  border-top-left-radius: var(--content-container-radius);
+  border-top-right-radius: var(--content-container-radius);
+}
+
+.popup-newsletter__meta {
+  padding: 1.5rem;
+}
+
+.popup-newsletter__form {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.popup-newsletter__description {
+  margin-bottom: 1rem;
+}
+
+.popup-newsletter__disclaimer {
+  font-size: 1.2rem;
+  opacity: 0.7;
+  margin-top: 0.5rem;
+}

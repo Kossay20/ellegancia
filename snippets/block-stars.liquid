@@ -1,0 +1,53 @@
+{%- if style != 'none' -%}
+  {% style %}
+    :root,
+    .stars {
+      --stars-color: {%- if settings.stars_color == 'yellow' -%}239, 202, 0
+        {%- elsif settings.stars_color == 'green' -%}0, 182, 122
+        {%- elsif settings.stars_color == 'accent' -%}var(--color-accent-1)
+        {%- elsif settings.stars_color == 'text' -%}var(--color-foreground){%- endif -%};
+      --stars-text-color: {%- if settings.stars_text_color == 'stars' -%}var(--stars-color){%- else -%}var(--color-foreground){%- endif -%};
+    }
+
+    .stars__items-{{ unique }}::before {
+        --percent: calc({{ rating | default: 5 }}/5*100%);
+        background: linear-gradient(90deg, rgb(var(--stars-color)) var(--percent), rgba(var(--color-foreground), 0.2) var(--percent));
+    }
+
+    {%- if style == 'mini' -%}
+      .stars__text--stars_color {
+        color: rgb(var(--stars-color));
+      }
+    {%- endif -%}
+  {% endstyle %}
+
+  <div class="stars stars__color--{{ settings.stars_color }} stars__style--{{ style | default: 'stars' }}">
+    {%- capture meter -%}
+    <meter
+      class="stars__items stars__items-{{ unique }}"
+      min="0"
+      max="5"
+      value="{{ rating | default: 5 }}"
+      title="{{ rating | default: 5 }} out of 5 stars"
+    >
+      {{ rating | default: 5 }} out of 5
+    </meter>
+  {%- endcapture -%}
+
+    {%- if style == 'mini' -%}
+      <p class="stars__mini">
+        <span class="stars__text stars__text--note">{{ rating | default: 5 }}</span
+        ><span class="stars__text--stars_color">★</span>
+      </p>
+
+    {%- elsif style == 'full' -%}
+      <div class="stars__full">
+        <p class="stars__text stars__text--note">{{ rating | default: 5 }}/5</p>
+        {{ meter }}
+      </div>
+
+    {%- else -%}
+      {{ meter }}
+    {%- endif -%}
+  </div>
+{%- endif -%}

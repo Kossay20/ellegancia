@@ -1,0 +1,13 @@
+.header-secondary .swiper-slide {
+  width: auto;
+}
+
+.header_secondary__link {
+  color: rgb(var(--color-foreground-secondary));
+  text-decoration: none;
+  transition: color var(--transitions-delay) ease;
+}
+
+.header_secondary__link:hover {
+  color: rgba(var(--color-foreground-secondary), 0.7);
+}

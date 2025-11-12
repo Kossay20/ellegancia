@@ -1,0 +1,120 @@
+.image-hotspot .heading__section {
+  margin-bottom: 3rem;
+}
+
+.image-hotspot__media--desktop {
+  display: none;
+}
+
+.image-hotspot__media--mobile {
+  display: block;
+}
+
+.image-hotspot__media--small {
+  height: 20rem;
+}
+
+.image-hotspot__media--medium {
+  height: 30rem;
+}
+
+.image-hotspot__media--large {
+  height: 50rem;
+}
+
+.image-hotspot__wrapper {
+  position: relative;
+}
+
+.hotspot {
+  position: absolute;
+  z-index: 1;
+}
+
+.hotspot__button {
+  width: 3.5rem;
+  height: 3.5rem;
+  border-radius: 50%;
+  background-color: rgba(var(--color-foreground), .6);
+  transition: var(--transitions-delay) all ease;
+}
+
+.hotspot__button::after {
+  content: "";
+  position: absolute;
+  cursor: pointer;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 50%;
+  background-color: rgba(var(--color-background), 1);
+  transition: var(--transitions-delay) all ease;
+}
+
+.hotspot__button:hover::after {
+  width: 2rem;
+  height: 2rem;
+}
+
+.hotspot__content {
+  width: 30rem;
+  max-width: 90vw;
+  position: absolute;
+  transform: translateX(-40%);
+  opacity: 0;
+  visibility: hidden;
+  transition: var(--transitions-delay) all ease;
+}
+
+.hotspot__content-top--above {
+  bottom: 0;
+  padding-bottom: 140%;
+}
+
+.hotspot__content-top--under {
+  top: 0;
+  padding-top: 140%;
+}
+
+.hotspot:hover .hotspot__content {
+  opacity: 1;
+  visibility: visible;
+}
+
+.hotspot__wrapper {
+  background: rgba(var(--color-background), .75);
+  backdrop-filter: blur(10px);
+  padding: 1.5rem 1.8rem;
+}
+
+.hotspot__wrapper>*:not(:last-child) {
+  margin-bottom: 1rem;
+}
+
+.hotspot__text {
+  line-height: 1.3;
+}
+
+@media only screen and (min-width: 750px) {
+  .image-hotspot__media--desktop {
+    display: block;
+  }
+
+  .image-hotspot__media--mobile {
+    display: none;
+  }
+
+  .image-hotspot__media--small {
+    height: 30rem;
+  }
+
+  .image-hotspot__media--medium {
+    height: 40rem;
+  }
+
+  .image-hotspot__media--large {
+    height: 60rem;
+  }
+}

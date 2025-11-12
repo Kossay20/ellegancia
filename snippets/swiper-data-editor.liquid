@@ -1,0 +1,8 @@
+{% if request.design_mode -%}
+  data-slides-on-mobile="{{ section.settings.slides_on_mobile }}" data-slides-on-tablet="
+  {{- section.settings.slides_on_tablet -}}
+  " data-slides-on-desktop="{{ section.settings.slides_on_desktop }}" data-preshot="
+  {{- section.settings.preshot_swiper -}}
+  " data-number-of-slides="{{ numberOfSlides | default: section.blocks.size }}" data-loop="{{ section.settings.loop }}"
+  data-autoplay="{{ section.settings.autoplay }}" data-autoplay-delay="{{ section.settings.speed }}"
+{%- endif %}

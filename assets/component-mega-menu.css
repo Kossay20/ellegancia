@@ -1,0 +1,132 @@
+.mega-menu {
+  position: static;
+}
+
+.mega-menu__content {
+  background-color: rgb(var(--color-background));
+  border-left: 0;
+  border-radius: 0;
+  border-right: 0;
+  left: 0;
+  overflow-y: auto;
+  position: absolute;
+  right: 0;
+  top: 100%;
+}
+
+.shopify-section-header-sticky .mega-menu__content {
+  max-height: calc(100vh - var(--header-bottom-position-desktop, 20rem) - 4rem);
+}
+
+.header-wrapper--border-bottom .mega-menu__content {
+  border-top: 0;
+}
+
+.js .mega-menu__content {
+  opacity: 0;
+  transform: translateY(-1.5rem);
+}
+
+.mega-menu[open] .mega-menu__content {
+  opacity: 1;
+  transform: translateY(0);
+
+}
+
+.mega-menu__list {
+  display: flex;
+  justify-content: space-between;
+  gap: 5rem;
+  list-style: none;
+}
+
+.mega-menu__list .mega-menu__all-menus {
+  padding: 5rem 0 5rem 5rem;
+  display: flex;
+  gap: 5rem;
+  flex-wrap: wrap;
+}
+
+.mega-menu__images {
+  display: flex;
+}
+
+.mega-menu__images a {
+  width: 23rem;
+  text-decoration: none;
+}
+
+.mega-menu__images a,
+.mega-menu__image {
+  height: 100%;
+}
+
+.mega-menu__image {
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  display: flex;
+  flex-direction: column;
+  justify-content: end;
+  padding: 3rem;
+  color: rgb(var(--color-background));
+}
+
+.mega-menu__image-title {
+  font-size: 1.6rem;
+  font-weight: bolder;
+  color: rgb(var(--color-background));
+  margin-bottom: 0.4rem;
+}
+
+.mega-menu__image-button {
+  font-size: 1.4rem;
+  color: rgba(var(--color-background), 0.8);
+}
+
+.mega-menu__link {
+  color: rgba(var(--color-foreground), 0.75);
+  display: block;
+  font-size: 1.3rem;
+  line-height: calc(1 + 0.3 / var(--font-body-scale));
+  padding-bottom: 0.6rem;
+  padding-top: 0.6rem;
+  text-decoration: none;
+  transition: text-decoration var(--duration-short) ease;
+  word-wrap: break-word;
+}
+
+.mega-menu__link--level-2 {
+  font-size: 1.4rem;
+  font-weight: bolder;
+}
+
+.mega-menu__link--level-2:not(:only-child) {
+  margin-bottom: 0.8rem;
+}
+
+.header--top-center .mega-menu__list {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  column-gap: 0;
+}
+
+.header--top-center .mega-menu__list>li {
+  width: 16%;
+  padding-right: 2.4rem;
+}
+
+.mega-menu__link:hover,
+.mega-menu__link--active {
+  color: rgb(var(--color-foreground));
+  text-decoration: underline;
+}
+
+.mega-menu__link--active:hover {
+  text-decoration-thickness: 0.2rem;
+}
+
+.mega-menu__list--condensed .mega-menu__link {
+  font-weight: normal;
+}

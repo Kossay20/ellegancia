@@ -1,0 +1,60 @@
+{% # theme-check-disable ParserBlockingJavaScript %}
+<script src="{{ 'froogaloop.js' | asset_url }}"></script>
+{% # theme-check-enable ParserBlockingJavaScript %}
+
+<script>
+  const updateStories = () => {
+    const getAllStories = document.querySelectorAll('.stories__button');
+
+    getAllStories.forEach((button) => {
+      button.addEventListener('click', (e) => {
+        popup = document.getElementById(e.currentTarget.dataset.story);
+        if (popup) {
+          popup.style.visibility = 'visible';
+          popup.style.opacity = 1;
+        }
+      });
+    });
+
+    pauseVideos = () => {
+      getAllStories.forEach((story) => {
+        document.getElementById(story.dataset.story).style.visibility = 'hidden';
+        document.getElementById(story.dataset.story).style.opacity = 0;
+        if (document.getElementById(story.dataset.player).classList.contains('js-vimeo')) {
+          $f(document.getElementById(story.dataset.player)).api('pause');
+        }
+        if (document.getElementById(story.dataset.player).classList.contains('js-youtube')) {
+          document
+            .getElementById(story.dataset.player)
+            .contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*');
+        }
+        if (document.getElementById(story.dataset.player).classList.contains('js-custom')) {
+          document
+            .getElementById(story.dataset.player)
+            .pause();
+        }
+      });
+    };
+    document.addEventListener('DOMContentLoaded', pauseVideos);
+
+    const hideModal = (elClicked) => {
+      document.querySelectorAll(elClicked).forEach((btnClose) => {
+        btnClose.addEventListener('click', (e) => {
+          console.log(e);
+          if (e.target.className === "story__popup" || e.target.className.animVal === "icon icon-close" || e.target.className.animVal === "icon-close-path") pauseVideos();
+        });
+      });
+    };
+
+    hideModal('.story__popup');
+    hideModal('.story__popup-close');
+  };
+  updateStories();
+
+  document.addEventListener('shopify:section:load', () => {
+    updateStories();
+  });
+  document.addEventListener('shopify:section:unload', () => {
+    updateStories();
+  });
+</script>

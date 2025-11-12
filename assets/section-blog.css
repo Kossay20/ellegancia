@@ -1,0 +1,133 @@
+.blog {
+  position: relative;
+}
+
+.blog .heading__section {
+  margin-bottom: 3rem;
+}
+
+/* Line hover effect */
+.card--article-hover-line .card__media::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  width: 0%;
+  left: 50%;
+  transform: translateX(-50%);
+  height: 2px;
+  background: rgb(var(--color-accent-1));
+  transition: var(--transitions-delay) ease width;
+}
+
+.card--article-hover-line:hover .card__media::after {
+  width: 100%;
+}
+
+/* Zoom image hover effect */
+.card--article-hover-zoom .card__media img {
+  left: 50% !important;
+  transform: translateX(-50%);
+  transition: var(--transitions-delay) ease width, var(--transitions-delay) ease max-width;
+}
+
+.card--article-hover-zoom:hover .card__media img {
+  max-width: 105%;
+  width: 105%;
+}
+
+/* Translate Y hover effect */
+.card--article-hover-translate {
+  transition: var(--transitions-delay) ease transform;
+}
+
+.card--article-hover-translate:hover {
+  transform: translateY(-3px);
+}
+
+.card__product-link {
+  color: rgb(var(--color-foreground-secondary))
+}
+
+.card--article a:not(.button) {
+  display: block;
+  position: relative;
+  text-decoration: none;
+}
+
+.card--article .card__content {
+  padding-top: 1.6rem;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+}
+
+.blog__style--card .card__content {
+  padding: 1.6rem;
+  background: rgb(var(--color-background-secondary));
+}
+
+.blog__style--card .global-media-settings {
+  overflow: hidden;
+}
+
+.blog__style--card .global-media-settings img {
+  border-radius: 0;
+}
+
+.card__article-informations {
+  display: flex;
+  flex-direction: column;
+  gap: .8rem;
+}
+
+.card__alignment--center .card__article-informations:not(.with_date) {
+  justify-content: center;
+  text-align: center;
+}
+
+.card__alignment--center .card--article .card__content {
+  text-align: center;
+}
+
+.card__alignment--center .article-card__excerpt {
+  text-align: center;
+}
+
+.card--article .heading--2-lines {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.card__article-date {
+  line-height: 1.2;
+}
+
+.card__article-author {
+  margin-top: 2px;
+  font-size: 1.2rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: rgba(var(--color-foreground-secondary), .6);
+}
+
+.article-card__excerpt {
+  margin-top: 1rem;
+  font-size: 1.3rem;
+}
+
+@media only screen and (min-width: 750px) {
+  .card__alignment--center .card--article .card__content {
+    text-align: left;
+  }
+
+  .card__article-informations {
+    align-items: start;
+    justify-content: space-between;
+    flex-direction: row;
+  }
+}

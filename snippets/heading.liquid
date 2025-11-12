@@ -1,0 +1,34 @@
+{%- liquid
+  case heading_style
+    when "1"
+      assign heading_level = settings.heading_1_level
+    when "2"
+      assign heading_level = settings.heading_2_level
+    when "3"
+      assign heading_level = settings.heading_3_level
+  endcase
+-%}
+<div class="heading__section {{ alignment }}">
+  {%- if subheading != blank -%}
+    <p class="h3 subheading"
+      {%- render "animation", enable_animations: enable_animations, animation: animation -%}>
+      {{ subheading }}
+    </p>
+  {%- endif -%}
+  {%- if heading != blank -%}
+    <h{%- if heading_level == "1" %}1{%- elsif heading_level == "2" %}2{%- elsif heading_level == "3" %}3{%- endif %}
+      class="heading heading__style--{{ heading_style }} {{ heading_class }}"
+      {%- render "animation", enable_animations: enable_animations, animation: animation -%}>
+      <span>{{ heading }}</span>
+      {%- if enable_slides -%}
+        {{ slides }}
+      {%- endif -%}
+    </h{%- if heading_level == "1" -%}1{%- elsif heading_level == "2" -%}2{%- elsif heading_level == "3" -%}3{%- endif -%}>
+  {%- endif -%}
+  {%- if description != blank -%}
+    <p class="heading__description"
+      {%- render "animation", enable_animations: enable_animations, animation: animation -%}>
+      {{ section.settings.description }}
+    </p>
+  {%- endif -%}
+</div>

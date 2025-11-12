@@ -1,0 +1,23 @@
+<div class="button__extra">
+  {%- if settings.button_show_payment_badges and settings.button_image == blank -%}
+    <div class="button__extra--payment-badges">
+      {% for type in shop.enabled_payment_types -%}
+        {{ type | payment_type_svg_tag }}
+      {% endfor %}
+    </div>
+  {%- elsif settings.button_image != blank -%}
+    {{
+      settings.button_image
+      | image_url: width: 400
+      | image_tag: loading: 'lazy', class: 'button__extra--image'
+    }}
+  {%- endif -%}
+  <div class="button__extra--rating">
+    {%- render 'block-stars',
+      unique: unique,
+      rating: settings.button_rating,
+      style: settings.button_stars_style
+    -%}
+    <p class="button__extra--text stars__text">{{ settings.button_rating_text }}</p>
+  </div>
+</div>

@@ -1,0 +1,23 @@
+<script>
+  const makeTabs = () => {
+    const allTabsButton = document.querySelectorAll('.tab__button');
+    const allTabsInner = document.querySelectorAll('.tab__content');
+
+    allTabsButton.forEach((btn) => {
+      btn.addEventListener('click', (e) => {
+        allTabsInner.forEach((inner) => (inner.style.display = 'none'));
+        allTabsButton.forEach((btn) => btn.classList.remove('active'));
+        e.currentTarget.classList.add('active');
+        document.getElementById(e.currentTarget.dataset.tab).style.display = 'block';
+      });
+    });
+  };
+  makeTabs();
+
+  document.addEventListener('shopify:section:load', () => {
+    makeTabs();
+  });
+  document.addEventListener('shopify:section:unload', () => {
+    makeTabs();
+  });
+</script>

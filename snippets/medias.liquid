@@ -1,0 +1,97 @@
+{%- liquid
+  if superGlue
+    assign swiperSpacing = 0
+    assign swiperSpacingDesktop = 0
+  else
+    assign swiperSpacing = 6
+    assign swiperSpacingDesktop = 12
+  endif
+-%}
+
+<div class="product__media--inner">
+  {%- if product != blank -%}
+    {% comment %} Main medias {% endcomment %}
+    <div class="product__main-medias">
+      <div
+        id="{{ swiperMediaEl }}{{ unique }}"
+        class="swiper{% if thumbnails != true %} swiper_no_pagination{% endif %} product__swiper product__medias-wrapper"
+        {% render 'swiper-data-editor', numberOfSlides: product.media.size -%}
+        data-swiper-id="{{ swiperMediaEl }}{{ unique }}"
+      >
+        <div class="swiper-wrapper product__grid">
+          {%- for media in product.media -%}
+            {%- liquid
+              if sameHeight
+                if forloop.first
+                  assign height = media.preview_image.aspect_ratio
+                endif
+              else
+                assign height = media.preview_image.aspect_ratio
+              endif
+            -%}
+            <div class="swiper-slide product__slide">
+              {%- render 'media', media: media, height: height, enable_zoom: enable_zoom -%}
+            </div>
+          {%- endfor -%}
+        </div>
+      </div>
+      {%- liquid
+        if product.media.size > 1
+          render 'swiper-elements', unique: unique, pagination: pagination, navigation: navigation
+        endif
+      -%}
+    </div>
+
+    {%- if product.media.size > 1 -%}
+      {% comment %} Thumbnails {% endcomment %}
+      <div
+        id="{{ swiperThumbsEl }}{{ unique }}"
+        class="swiper swiper_no_pagination product__swiper product__thumbs-wrapper{% if thumbnails %} product__thumbs-only_desktop{% endif %}"
+        {% render 'swiper-data-editor', numberOfSlides: product.media.size -%}
+        data-swiper-id="{{ swiperThumbsEl }}{{ unique }}"
+      >
+        <div class="swiper-wrapper product__grid">
+          {%- for media in product.media -%}
+            {%- liquid
+              if sameHeight
+                if forloop.first
+                  assign height = media.preview_image.aspect_ratio
+                endif
+              else
+                assign height = media.preview_image.aspect_ratio
+              endif
+            -%}
+            <div class="swiper-slide product__slide">
+              {%- render 'media', media: media, height: height -%}
+            </div>
+          {%- endfor -%}
+        </div>
+      </div>
+    {%- endif -%}
+
+    {%- liquid
+      if product.media.size > 1
+        assign swiperEl = "'#" | append: swiperThumbsEl | append: unique | append: "'"
+        assign swiperOptions ="loop:false,mousewheel:{forceToAxis:true},spaceBetween:" | append: swiperSpacing | append: ",slidesPerView:4,autoHeight:true,breakpoints:{750:{spaceBetween:" | append: swiperSpacingDesktop | append: "}},"
+        render 'swiper-theme-editor', sectionId: unique, swiperVariant: swiperThumbsEl, swiperEl: swiperEl, swiperOptions: swiperOptions, numberOfBlocks: product.media.size, navigation: false, pagination: false
+        assign thumbs = 'thumbs:{autoScrollOffset:1,swiper:' | append: swiperThumbsEl | append: unique | append: ',},'
+      endif
+
+      if enable_zoom
+        assign zoom = 'zoom: true,'
+      endif
+      assign swiperEl = "'#" | append: swiperMediaEl | append: unique | append: "'"
+      if preShotSwiper and product.media.size > 1
+        assign slidesPerView = 1.2
+      else
+        assign slidesPerView = 1
+      endif
+      assign swiperOptions ="loop:false,mousewheel:{forceToAxis:true},spaceBetween:" | append: swiperSpacing | append: ",slidesPerView:" | append: slidesPerView | append: ",autoHeight:true," | append: thumbs | append: zoom | append: "breakpoints:{750:{spaceBetween:" | append: swiperSpacingDesktop | append: "}},"
+      render 'swiper-theme-editor', sectionId: unique, swiperVariant: swiperMediaEl, swiperEl: swiperEl, swiperOptions: swiperOptions, numberOfBlocks: product.media.size, navigation: 'already', pagination: 'already'
+    -%}
+  {%- else -%}
+    <div class="global-media-settings placeholder">
+      {{ 'product-1' | placeholder_svg_tag }}
+    </div>
+  {%- endif -%}
+</div>

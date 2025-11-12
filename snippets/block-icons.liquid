@@ -1,0 +1,151 @@
+{%- liquid
+  if block.settings.icons_style == 'grid'
+    assign width_height_custom_icon = 36
+  else
+    assign width_height_custom_icon = 20
+  endif
+  assign width_height_custom_image = width_height_custom_icon | times: 2
+
+  assign itemCount = 0
+  if block.settings.icon_1_text != blank
+    assign itemCount = itemCount | plus: 1
+  endif
+  if block.settings.icon_2_text != blank
+    assign itemCount = itemCount | plus: 1
+  endif
+  if block.settings.icon_3_text != blank
+    assign itemCount = itemCount | plus: 1
+  endif
+  if block.settings.icon_4_text != blank
+    assign itemCount = itemCount | plus: 1
+  endif
+
+  assign show_shipping = false
+  if block.settings.show_shipping_delay
+    assign show_shipping = true
+    assign ship_min = block.settings.ship_min
+    assign ship_max = block.settings.ship_max
+    assign ship_weekend = block.settings.ship_weekend
+  endif
+-%}
+
+{%- if block.settings.icon_1_custom_icon != blank
+  or block.settings.icon_2_custom_icon != blank
+  or block.settings.icon_3_custom_icon != blank
+  or block.settings.icon_4_custom_icon != blank
+-%}
+  {%- style -%}
+    .icon__custom-icon {
+      width: {{ width_height_custom_icon }}px;
+      height: {{ width_height_custom_icon }}px;
+    }
+  {%- endstyle -%}
+{%- endif -%}
+
+<div class="block-icons block-icons--{{ block.settings.icons_style }} block-icons__fill--{{ block.settings.fill_color }} with-{{ itemCount }}-item">
+  {%- if block.settings.icon_1_text != blank -%}
+    <div
+      class="block-icons--item"
+      {%- render 'animation', enable_animations: enable_animations, animation: animation -%}
+    >
+      {%- if block.settings.icon_1_custom_icon != blank -%}
+        {{
+          block.settings.icon_1_custom_icon
+          | image_url: width: width_height_custom_image
+          | image_tag: loading: 'lazy', class: 'icon__icon icon__custom-icon'
+        }}
+      {%- else -%}
+        {% render 'icons', icon: block.settings.icon_1_icon_type, width: width_height_custom_icon %}
+      {%- endif -%}
+      <p class="icon__text">{{ block.settings.icon_1_text }}</p>
+    </div>
+  {%- endif -%}
+
+  {%- if block.settings.icon_2_text != blank -%}
+    <div
+      class="block-icons--item"
+      {%- render 'animation', enable_animations: enable_animations, animation: animation -%}
+    >
+      {%- if block.settings.icon_2_custom_icon != blank -%}
+        {{
+          block.settings.icon_2_custom_icon
+          | image_url: width: width_height_custom_image
+          | image_tag: loading: 'lazy', class: 'icon__icon icon__custom-icon'
+        }}
+      {%- else -%}
+        {% render 'icons', icon: block.settings.icon_2_icon_type, width: width_height_custom_icon %}
+      {%- endif -%}
+      <p class="icon__text">{{ block.settings.icon_2_text }}</p>
+    </div>
+  {%- endif -%}
+
+  {%- if block.settings.icon_3_text != blank -%}
+    <div
+      class="block-icons--item"
+      {%- render 'animation', enable_animations: enable_animations, animation: animation -%}
+    >
+      {%- if block.settings.icon_3_custom_icon != blank -%}
+        {{
+          block.settings.icon_3_custom_icon
+          | image_url: width: width_height_custom_image
+          | image_tag: loading: 'lazy', class: 'icon__icon icon__custom-icon'
+        }}
+      {%- else -%}
+        {% render 'icons', icon: block.settings.icon_3_icon_type, width: width_height_custom_icon %}
+      {%- endif -%}
+      <p class="icon__text">{{ block.settings.icon_3_text }}</p>
+    </div>
+  {%- endif -%}
+
+  {%- if block.settings.icon_4_text != blank -%}
+    <div
+      class="block-icons--item{% if show_shipping %} block-icons--item-with-shipping-delay{% endif %}"
+      {%- render 'animation', enable_animations: enable_animations, animation: animation -%}
+    >
+      {%- if block.settings.icon_4_custom_icon != blank -%}
+        {{
+          block.settings.icon_4_custom_icon
+          | image_url: width: width_height_custom_image
+          | image_tag: loading: 'lazy', class: 'icon__icon icon__custom-icon'
+        }}
+      {%- else -%}
+        {% render 'icons', icon: block.settings.icon_4_icon_type, width: width_height_custom_icon %}
+      {%- endif -%}
+      {%- assign minDelay = '<span id="minDelayShipping">...</span>' -%}
+      {%- assign maxDelay = '<span id="maxDelayShipping">...</span>' -%}
+      <p class="icon__text{% if show_shipping %} icon__text-with-shipping-delay{% endif %} ship_min{{ ship_min }}">
+        {{ block.settings.icon_4_text | replace: '$min', minDelay | replace: '$max', maxDelay }}
+      </p>
+      {%- if show_shipping -%}
+        {% comment %} theme-check-disable {% endcomment %}
+        <script src="{{ 'date.js' | asset_url }}"></script>
+        {% comment %} theme-check-enable {% endcomment %}
+        <script>
+          const showShippingDelay = () => {
+            const textMin = document.getElementById('minDelayShipping');
+            const textMax = document.getElementById('maxDelayShipping');
+            let startDate = Date.today().addDays({{ ship_min }});
+            {%- unless ship_weekend -%}
+              if (startDate.is().saturday() || startDate.is().sunday()) {
+                startDate = startDate.next().monday();
+              };
+            {%- endunless -%}
+            let endDate = Date.today().addDays({{ ship_max }});
+            {%- unless ship_weekend -%}
+              if (endDate.is().saturday() || endDate.is().sunday()) {
+                endDate = endDate.next().monday();
+              };
+            {%- endunless -%}
+            textMin.textContent = startDate.toString('dd/MM');
+            textMax.textContent = endDate.toString('dd/MM');
+          }
+          showShippingDelay();
+          document.addEventListener('shopify:section:load', () => { showShippingDelay(); });
+          document.addEventListener('shopify:section:unload', () => { showShippingDelay(); });
+          document.addEventListener('shopify:block:select', () => { showShippingDelay(); });
+          document.addEventListener('shopify:block:deselect', () => { showShippingDelay(); });
+        </script>
+      {%- endif -%}
+    </div>
+  {%- endif -%}
+</div>

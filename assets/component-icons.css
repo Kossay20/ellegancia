@@ -1,0 +1,188 @@
+.icons__wrapper--swiper {
+  overflow: visible;
+  position: relative;
+}
+
+.icons .heading__section {
+  margin-bottom: 3rem;
+}
+
+.icons .content-container {
+  padding: 1.7rem;
+  background-color: rgb(var(--color-background-secondary));
+}
+
+.icons__wrapper {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  column-gap: var(--grid-mobile-horizontal-spacing);
+  row-gap: var(--grid-mobile-vertical-spacing);
+}
+
+.icon__block:not(.icon__mini) .icon,
+.icon__block:not(.icon__mini) img,
+.icon__block:not(.icon__mini) .icon__heading {
+  margin-bottom: 1rem;
+}
+
+.icon__block .icon,
+.icon__block img {
+  width: 5rem;
+  height: auto;
+  fill: rgb(var(--color-accent-1));
+}
+
+.icon__block.icon__mini .icon,
+.icon__block.icon__mini img {
+  width: 3rem;
+}
+
+.partners__block img {
+  max-width: 100%;
+  object-fit: contain;
+  margin: 0 auto;
+  display: block;
+  height: auto;
+}
+
+.icon__block .icon__description {
+  line-height: 1.4;
+}
+
+.icon__mini {
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  gap: 1rem;
+}
+
+.icon__text {
+  font-size: 1.4rem;
+}
+
+@media only screen and (max-width: 649px) {
+
+  .icons__wrapper--swiper .swiper-button-prev,
+  .icons__wrapper--swiper .swiper-button-next,
+  .icons__wrapper--swiper .swiper-button-prev,
+  .icons__wrapper--swiper .swiper-button-next {
+    display: none;
+  }
+}
+
+@media only screen and (min-width: 750px) {
+  .icons__wrapper {
+    column-gap: var(--grid-desktop-horizontal-spacing);
+    row-gap: var(--grid-desktop-vertical-spacing);
+  }
+
+  .icon__block .icon,
+  .icon__block img {
+    width: 5.5rem;
+  }
+
+  .icon__block.icon__mini .icon,
+  .icon__block.icon__mini img {
+    width: 3.5rem;
+  }
+}
+
+@media (max-width: 750px) {
+  .icons__wrapper--1-phone .icons__item {
+    width: calc((100% - (var(--grid-mobile-horizontal-spacing) * (1 - 1))) / 1);
+  }
+
+  .icons__wrapper--2-phone .icons__item {
+    width: calc((100% - (var(--grid-mobile-horizontal-spacing) * (2 - 1))) / 2);
+  }
+
+  .icons__wrapper--3-phone .icons__item {
+    width: calc((100% - (var(--grid-mobile-horizontal-spacing) * (3 - 1))) / 3);
+  }
+}
+
+@media (min-width: 751px) and (max-width: 989px) {
+  .icons__wrapper--1-tablet .icons__item {
+    width: calc((100% - (var(--grid-desktop-horizontal-spacing) * (1 - 1))) / 1);
+  }
+
+  .icons__wrapper--2-tablet .icons__item {
+    width: calc((100% - (var(--grid-desktop-horizontal-spacing) * (2 - 1))) / 2);
+  }
+
+  .icons__wrapper--3-tablet .icons__item {
+    width: calc((100% - (var(--grid-desktop-horizontal-spacing) * (3 - 1))) / 3);
+  }
+
+  .icons__wrapper--4-tablet .icons__item {
+    width: calc((100% - (var(--grid-desktop-horizontal-spacing) * (4 - 1))) / 4);
+  }
+
+  .icons__wrapper--5-tablet .icons__item {
+    width: calc((100% - (var(--grid-desktop-horizontal-spacing) * (5 - 1))) / 5);
+  }
+
+  .icons__wrapper--6-tablet .icons__item {
+    width: calc((100% - (var(--grid-desktop-horizontal-spacing) * (6 - 1))) / 6);
+  }
+
+  .icons__wrapper--7-tablet .icons__item {
+    width: calc((100% - (var(--grid-desktop-horizontal-spacing) * (7 - 1))) / 7);
+  }
+
+  .icons__wrapper--8-tablet .icons__item {
+    width: calc((100% - (var(--grid-desktop-horizontal-spacing) * (8 - 1))) / 8);
+  }
+
+  .icons__wrapper--9-tablet .icons__item {
+    width: calc((100% - (var(--grid-desktop-horizontal-spacing) * (9 - 1))) / 9);
+  }
+
+  .icons__wrapper--10-tablet .icons__item {
+    width: calc((100% - (var(--grid-desktop-horizontal-spacing) * (10 - 1))) / 10);
+  }
+}
+
+@media (min-width: 990px) {
+  .icons__wrapper--1-desktop .icons__item {
+    width: calc((100% - (var(--grid-desktop-horizontal-spacing) * (1 - 1))) / 1);
+  }
+
+  .icons__wrapper--2-desktop .icons__item {
+    width: calc((100% - (var(--grid-desktop-horizontal-spacing) * (2 - 1))) / 2);
+  }
+
+  .icons__wrapper--3-desktop .icons__item {
+    width: calc((100% - (var(--grid-desktop-horizontal-spacing) * (3 - 1))) / 3);
+  }
+
+  .icons__wrapper--4-desktop .icons__item {
+    width: calc((100% - (var(--grid-desktop-horizontal-spacing) * (4 - 1))) / 4);
+  }
+
+  .icons__wrapper--5-desktop .icons__item {
+    width: calc((100% - (var(--grid-desktop-horizontal-spacing) * (5 - 1))) / 5);
+  }
+
+  .icons__wrapper--6-desktop .icons__item {
+    width: calc((100% - (var(--grid-desktop-horizontal-spacing) * (6 - 1))) / 6);
+  }
+
+  .icons__wrapper--7-desktop .icons__item {
+    width: calc((100% - (var(--grid-desktop-horizontal-spacing) * (7 - 1))) / 7);
+  }
+
+  .icons__wrapper--8-desktop .icons__item {
+    width: calc((100% - (var(--grid-desktop-horizontal-spacing) * (8 - 1))) / 8);
+  }
+
+  .icons__wrapper--9-desktop .icons__item {
+    width: calc((100% - (var(--grid-desktop-horizontal-spacing) * (9 - 1))) / 9);
+  }
+
+  .icons__wrapper--10-desktop .icons__item {
+    width: calc((100% - (var(--grid-desktop-horizontal-spacing) * (10 - 1))) / 10);
+  }
+}

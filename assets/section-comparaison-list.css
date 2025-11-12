@@ -1,0 +1,81 @@
+.comparaison-list .heading__section {
+  margin-bottom: 3rem;
+}
+
+.comparaison__table {
+  border-radius: var(--content-container-radius);
+  overflow: hidden;
+}
+
+.comparaison__table>div {
+  display: flex;
+  align-items: stretch;
+  justify-content: space-between;
+}
+
+.comparaison__table>div.comparaison__row:nth-child(odd) {
+  background-color: rgba(var(--color-foreground), .1);
+  border-radius: var(--content-container-radius);
+}
+
+.comparaison__table>div.comparaison__heading .comparaison__text--before {
+  background-color: rgba(var(--color-foreground), .1);
+  border-top-left-radius: var(--content-container-radius);
+  border-top-right-radius: var(--content-container-radius);
+}
+
+.comparaison__table>div:nth-child(even) .comparaison__text--before {
+  background-color: rgba(var(--color-foreground), .2);
+}
+
+.comparaison__table>div:last-child:nth-child(even) .comparaison__text--before,
+.comparaison__table>div:last-child:nth-child(odd) .comparaison__text--before {
+  min-height: 3.2rem;
+  border-bottom-left-radius: var(--content-container-radius);
+  border-bottom-right-radius: var(--content-container-radius);
+}
+
+.comparaison__table>div:last-child:nth-child(even) .comparaison__text--before {
+  background-color: rgba(var(--color-foreground), .2);
+}
+
+.comparaison__table>div:last-child:nth-child(odd) .comparaison__text--before {
+  background-color: rgba(var(--color-foreground), .1);
+}
+
+.comparaison__table>.comparaison__heading {
+  justify-content: end;
+}
+
+.comparaison__table>.comparaison__heading .comparaison__text {
+  justify-content: center;
+}
+
+.comparaison__table .comparaison__text {
+  width: 20%;
+  text-align: center;
+  padding: 1rem 1.3rem;
+  display: flex;
+  align-items: center;
+}
+
+.comparaison__table .comparaison__text--before {
+  color: rgb(var(--color-accent-1));
+  font-weight: bolder;
+}
+
+.comparaison__table>div>.comparaison__text:first-child {
+  width: 60%;
+  text-align: left;
+}
+
+.comparaison__text .icon {
+  display: block;
+  width: 2rem;
+  height: 2rem;
+  margin: auto;
+}
+
+.comparaison__text {
+  line-height: 1.3;
+}

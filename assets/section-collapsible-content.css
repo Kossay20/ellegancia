@@ -1,0 +1,19 @@
+.collapsible-content .heading__section {
+  width: 100%;
+}
+
+.collapsible-content .heading__description {
+  margin-bottom: 2rem;
+}
+
+.collapsible-content .collapsible__wrapper {
+  width: 100%;
+  margin-top: 0;
+}
+
+.collapsible__custom-icon {
+  width: 2rem;
+  height: auto;
+  aspect-ratio: 1/1;
+  object-fit: cover;
+}

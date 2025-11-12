@@ -1,0 +1,118 @@
+.collection-list {
+  overflow: hidden;
+}
+
+.collection-list.wrapper__visible {
+  overflow: visible;
+}
+
+.collection-list__swiper {
+  padding-bottom: 1rem;
+  overflow: visible !important;
+  padding-right: 1.2rem;
+}
+
+.collection-list__link {
+  display: block;
+  text-decoration: none;
+}
+
+.collection-list__link--no-shadow {
+  display: block;
+  text-decoration: none;
+  overflow: hidden;
+}
+
+.collection-list__item-meta-under {
+  padding: .8rem 1rem 1.2rem;
+  background: rgb(var(--color-background-secondary));
+  text-align: center;
+}
+
+.collection-list__item-heading-under {
+  font-weight: bolder;
+  font-size: 1.8rem;
+  line-height: 1.2;
+  transition: var(--transitions-delay) all ease;
+}
+
+.collection-list__link:hover .collection-list__item-heading-under {
+  letter-spacing: 1.3px;
+}
+
+.collection-list__item--under img {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.collection-list__item-meta-hover {
+  z-index: 1;
+}
+
+.collection-list__item-heading-hover {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgb(var(--color-background));
+  font-weight: bolder;
+  height: 100%;
+  font-size: 2.2rem;
+  line-height: 1.2;
+  z-index: 9;
+  transition: var(--transitions-delay) all ease;
+}
+
+.collection-list__link:hover .collection-list__item-heading-hover {
+  transform: translateY(-3px) scale(1.2);
+}
+
+.collection-list .heading__section {
+  margin-bottom: 3rem;
+}
+
+.collection-list__item {
+  overflow: hidden !important;
+}
+
+.collection-list__item--horizontal:not(.placeholder) {
+  padding-bottom: 56.25%;
+}
+
+.collection-list__item--square:not(.placeholder) {
+  padding-bottom: 100%;
+}
+
+.collection-list__item--vertical:not(.placeholder) {
+  padding-bottom: 150%;
+}
+
+.collection-list__item--hover .collection-list__item {
+  position: relative;
+}
+
+.collection-list__item--hover .collection-list__item::after {
+  position: absolute;
+  content: "";
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  border-radius: var(--media-container-radius);
+  background-color: rgba(var(--color-foreground), .5);
+}
+
+@media only screen and (min-width: 750px) {
+  .collection-list__item-heading-under {
+    font-size: 2.2rem;
+  }
+}
+
+.collection-list__item-grid:not(:last-child) {
+  padding-bottom: var(--grid-mobile-vertical-spacing);
+}
+
+@media only screen and (min-width: 650px) {
+  .collection-list__wrapper .collection-list__item-grid {
+    padding-bottom: var(--grid-desktop-vertical-spacing);
+  }
+}

@@ -1,0 +1,728 @@
+{{ 'section-bundle.css' | asset_url | stylesheet_tag }}
+{{ 'section-collection.css' | asset_url | stylesheet_tag }}
+{{ 'component-card.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign collection = section.settings.collection
+  assign sectionId = section.id | remove: '-'
+
+  assign enable_animations = section.settings.enable_animations
+  assign animation = section.settings.animation
+
+  assign percentage_amount = 0
+  assign savings = 0
+  assign total = 0
+  assign price = 0
+  assign difference = 0
+  assign trigger = section.settings.product_trigger | downcase
+
+  for product in collection.products
+    assign title = product.title | downcase
+    if trigger == title
+      if section.settings.percentage_offer == 100
+        if product.compare_at_price_min > product.price_min
+          assign savings = savings | plus: product.compare_at_price_min
+          assign total = total | plus: product.compare_at_price_min
+        else
+          assign savings = savings | plus: product.price_min
+          assign total = total | plus: product.price_min
+        endif
+      else
+        assign percentage_offer = section.settings.percentage_offer | times: 0.01
+        assign percentage_amount = percentage_amount | plus: product.price_min | times: percentage_offer
+        assign price = price | plus: product.price_min | minus: percentage_amount
+        if product.compare_at_price_min > product.price_min
+          assign difference = product.compare_at_price_min | minus: product.price_min
+          assign savings = savings | plus: difference | plus: percentage_amount
+          assign total = total | plus: product.compare_at_price_min
+        else
+          assign savings = savings | plus: percentage_amount
+          assign total = total | plus: product.price_min
+        endif
+      endif
+    else
+      assign price = price | plus: product.price_min
+      if product.compare_at_price_min > product.price_min
+        assign total = total | plus: product.compare_at_price_min
+        assign difference = product.compare_at_price_min | minus: product.price_min
+        assign savings = savings | plus: difference
+      else
+        assign total = total | plus: product.price_min
+      endif
+    endif
+  endfor
+-%}
+
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top_sm }}px;
+    padding-bottom: {{ section.settings.padding_bottom_sm }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+
+{%- render 'separator-top', section: section -%}
+
+<div id="{{ section.settings.section_id }}"
+  class="color-{{ section.settings.color_palette }} section-{{ section.id }}-padding"
+  data-section-id="{{ section.id }}"
+>
+  <div class="container container--{{ section.settings.layout_width }}">
+    <div class="bundle">
+      <product-form class="product-form">
+        <div class="product-form__error-message-wrapper" role="alert" hidden="">
+          {% render 'icon-error' %}
+          <span class="product-form__error-message"></span>
+        </div>
+        <form
+          action="/cart/add"
+          id="product-form-{{ section.id }}"
+          method="post"
+          enctype="multipart/form-data"
+          class="form bundle__form bundle__form--small-{{ section.settings.mobile_content_alignment }} bundle__form--medium-up-{{ section.settings.desktop_content_alignment }}"
+          novalidate="novalidate"
+          data-type="add-to-cart-form"
+        >
+          <input type="hidden" name="form_type" value="product">
+          <input type="hidden" name="utf8" value="✓">
+          <div class="bundle__meta small-{{ section.settings.mobile_content_alignment }} medium-up-{{ section.settings.desktop_content_alignment }}">
+            {%- if section.settings.heading != blank -%}
+              {%- render 'heading',
+                alignment: section.settings.alignment,
+                enable_animations: enable_animations,
+                animation: animation,
+                subheading: section.settings.subheading,
+                heading: section.settings.heading,
+                heading_class: 'bundle__heading',
+                heading_style: section.settings.heading_style
+              -%}
+            {%- endif -%}
+
+            <div
+              class="bundle__price"
+              {%- render 'animation', enable_animations: enable_animations, animation: animation -%}
+            >
+              {% if total > price -%}
+                <span class="bundle__compare-at-price">
+                  <del>{{ total | money_without_trailing_zeros }}</del>
+                </span>
+              {%- endif %}
+              <span class="bundle__price{% if total > price %} bundle__on-sale{% endif %}">
+                {{- price | money_without_trailing_zeros -}}
+              </span>
+            </div>
+
+            <div
+              class="bundle__button button__container product-form__buttons"
+              {%- render 'animation', enable_animations: enable_animations, animation: animation -%}
+            >
+              {% if section.settings.direct_checkout %}
+                <input type="hidden" name="return_to" value="/checkout/">
+              {% endif %}
+
+              <button
+                type="submit"
+                name="add"
+                id="ProductSubmitButton-{{ section.id }}"
+                class="product-form__submit button button__style--{{ section.settings.button_style }}"
+              >
+                <span>
+                  {{- section.settings.button_text -}}
+                </span>
+                <div class="loading-overlay__spinner hidden">
+                  <svg
+                    aria-hidden="true"
+                    focusable="false"
+                    class="spinner"
+                    viewBox="0 0 66 66"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <circle class="path" fill="none" stroke-width="6" cx="33" cy="33" r="30"></circle>
+                  </svg>
+                </div>
+              </button>
+              
+              {%- liquid
+                if section.settings.extra_button
+                  render 'extra-button', unique: section.id
+                endif
+              -%}
+            </div>
+
+            <div class="bundle__timer">
+              {%- if section.settings.timer -%}
+                <div
+                  class="timer"
+                  {%- render 'animation', enable_animations: enable_animations, animation: animation -%}
+                >
+                  <div class="timer__numbers">
+                    <p class="timer__number timer__days">{{ settings.timer_days }}</p>
+                    <p class="timer__number timer__hours">{{ settings.timer_hours }}</p>
+                    <p class="timer__number timer__minutes">{{ settings.timer_minutes }}</p>
+                    <p class="timer__number timer__seconds">{{ settings.timer_seconds }}</p>
+                  </div>
+                </div>
+              {%- endif -%}
+
+              <p
+                class="bundle__form--text"
+                {%- render 'animation', enable_animations: enable_animations, animation: animation -%}
+              >
+                {%- assign savingsAmount = savings | money_without_trailing_zeros -%}
+                {{- section.settings.form_text | replace: '$', savingsAmount | replace: '%', percentage_amount -}}
+              </p>
+            </div>
+          </div>
+          <div class="bundle__products">
+            <div
+              id="bundle__{{ sectionId }}"
+              class="swiper bundle__swiper{% unless section.settings.pagination %} swiper_no_pagination{% endunless %}"
+              {% render 'swiper-data-editor', numberOfSlides: collection.products.size -%}
+            >
+              <div class="swiper-wrapper">
+                {%- if collection.products.size > 0 -%}
+                  {%- for product in collection.products -%}
+                    {%- if product.available -%}
+                      {%- assign title = product.title | downcase -%}
+                      <div class="swiper-slide bundle__product">
+                        {%- if title == trigger -%}
+                          <span class="bundle__product--badge">{{ section.settings.badge }}</span>
+                        {%- endif -%}
+                        <a href="{{ product.url }}">
+                          <div
+                            class="bundle__product--image global-media-settings {% if product.featured_image != blank %}media{% else %}placeholder{% endif %}"
+                            {% if product.featured_image != blank %}
+                              style="padding-bottom: {{ 1 | divided_by: product.featured_image.aspect_ratio | times: 100 }}%;"
+                            {% endif %}
+                          >
+                            {%- if product.featured_image != blank -%}
+                              {%- capture sizes -%}
+                          (min-width: {{ settings.page_width }}px) {{ settings.page_width | minus: 100 | divided_by: 2 }}px,
+                          (min-width: 750px) calc((100vw - 130px) / 2), calc((100vw - 50px) / 2)
+                        {%- endcapture -%}
+                              {{
+                                product.featured_image
+                                | image_url: width: 1500
+                                | image_tag:
+                                  loading: 'lazy',
+                                  class: 'bundle__product--image',
+                                  sizes: sizes,
+                                  widths: '165, 360, 535, 750, 1070, 1500'
+                              }}
+                            {%- else -%}
+                              {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+                            {%- endif -%}
+                          </div>
+                        </a>
+                        <p class="bundle__product--title">{{ product.title }}</p>
+                        <p class="bundle__product--price">
+                          {%- if product.compare_at_price_min > product.price_min -%}
+                            <span class="price--compare">
+                              <del>{{- product.compare_at_price_min | money_without_trailing_zeros -}}</del>
+                            </span>
+                          {%- endif -%}
+                          <span class="price--regular{%- if product.compare_at_price_min > product.price_min %} price--sale{%- endif -%}">
+                            {{ product.price_min | money_without_trailing_zeros }}
+                          </span>
+                        </p>
+
+                        <div class="bundle__product--variants select{% if product.has_only_default_variant %} hidden{% endif %}">
+                          <select class="select__select" name="id[]">
+                            {%- for variant in product.variants -%}
+                              {%- if variant.available -%}
+                                <option value="{{ variant.id }}">{{ variant.title | escape -}}</option>
+                              {%- endif -%}
+                            {%- endfor -%}
+                          </select>
+                          {% render 'icon-caret' %}
+                          <input
+                            type="number"
+                            id="Quantity-{{ section.id }}"
+                            name="quantity"
+                            value="1"
+                            min="1"
+                            class="quantity-selector hidden"
+                          >
+                        </div>
+                      </div>
+                    {%- endif -%}
+                  {%- endfor -%}
+                {%- else -%}
+                  {%- for i in (1..5) -%}
+                    <div
+                      class="swiper-slide collection__slide"
+                      {%- render 'animation', enable_animations: enable_animations, animation: animation -%}
+                    >
+                      <div class="collection__card--product">
+                        <div class="placeholder global-media-settings">
+                          {{ 'product-' | append: i | placeholder_svg_tag }}
+                        </div>
+                        <h3 class="card__product-heading">Product {{ i }} - 19.99$</h3>
+                      </div>
+                    </div>
+                  {%- endfor -%}
+                {%- endif -%}
+              </div>
+              {%- liquid
+                assign swiperEl = "'#bundle__" | append: sectionId | append: "'"
+                assign swiperOptions = 'loop:false,mousewheel:{forceToAxis:true},spaceBetween:10,slidesPerView:1,autoHeight:true,breakpoints:{500:{slidesPerView:2},750:{slidesPerView:3}},'
+                render 'swiper-theme-editor', sectionId: sectionId, swiperVariant: 'bundle__', swiperEl: swiperEl, swiperOptions: swiperOptions, navigation: section.settings.navigation, pagination: section.settings.pagination
+              -%}
+            </div>
+          </div>
+        </form>
+      </product-form>
+    </div>
+  </div>
+</div>
+
+{%- render 'separator-bottom', section: section -%}
+
+{% schema %}
+{
+  "name": "t:sections.bundle.name",
+  "tag": "section",
+  "class": "section section-bundle",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "text",
+      "id": "section_id",
+      "label": "t:sections.global.section_id"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "t:sections.bundle.collection.label"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "t:sections.global.subheading.label",
+      "placeholder": "Best offer"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "t:sections.global.heading.label",
+      "default": "Frequently bought together"
+    },
+    {
+      "type": "select",
+      "id": "heading_style",
+      "options": [
+        {
+          "value": "1",
+          "label": "t:sections.global.style.options.1"
+        },
+        {
+          "value": "2",
+          "label": "t:sections.global.style.options.2"
+        },
+        {
+          "value": "3",
+          "label": "t:sections.global.style.options.3"
+        }
+      ],
+      "default": "2",
+      "label": "t:sections.global.style.heading"
+    },
+    {
+      "type": "select",
+      "id": "desktop_content_alignment",
+      "options": [
+        {
+          "value": "left",
+          "label": "t:sections.image-with-text.settings.desktop_content_alignment.options__1.label"
+        },
+        {
+          "value": "center",
+          "label": "t:sections.image-with-text.settings.desktop_content_alignment.options__2.label"
+        },
+        {
+          "value": "right",
+          "label": "t:sections.image-with-text.settings.desktop_content_alignment.options__3.label"
+        }
+      ],
+      "default": "left",
+      "label": "t:sections.image-with-text.settings.desktop_content_alignment.label"
+    },
+    {
+      "type": "select",
+      "id": "mobile_content_alignment",
+      "options": [
+        {
+          "value": "left",
+          "label": "t:sections.image-with-text.settings.mobile_content_alignment.options__1.label"
+        },
+        {
+          "value": "center",
+          "label": "t:sections.image-with-text.settings.mobile_content_alignment.options__2.label"
+        },
+        {
+          "value": "right",
+          "label": "t:sections.image-with-text.settings.mobile_content_alignment.options__3.label"
+        }
+      ],
+      "default": "left",
+      "label": "t:sections.image-with-text.settings.mobile_content_alignment.label"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.bundle.headers.form"
+    },
+    {
+      "type": "checkbox",
+      "id": "direct_checkout",
+      "label": "t:sections.bundle.direct_checkout.label",
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "t:sections.global.button_text.label",
+      "default": "Add to cart"
+    },
+    {
+      "type": "select",
+      "id": "button_style",
+      "options": [
+        {
+          "value": "1",
+          "label": "t:sections.global.style.options.1"
+        },
+        {
+          "value": "2",
+          "label": "t:sections.global.style.options.2"
+        },
+        {
+          "value": "3",
+          "label": "t:sections.global.style.options.3"
+        }
+      ],
+      "default": "1",
+      "label": "t:sections.global.style.button"
+    },
+    {
+      "type": "checkbox",
+      "id": "extra_button",
+      "label": "t:sections.global.style.extra_button.label",
+      "info": "t:sections.global.style.extra_button.info",
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "form_text",
+      "label": "t:sections.bundle.form_text.label",
+      "info": "t:sections.bundle.form_text.info",
+      "default": "Enjoy $ OFF when purchasing this bundle!"
+    },
+    {
+      "type": "checkbox",
+      "id": "timer",
+      "label": "t:sections.bundle.timer.label",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "t:sections.bundle.headers.product_in_sale"
+    },
+    {
+      "type": "text",
+      "id": "product_trigger",
+      "label": "t:sections.bundle.product_trigger.label"
+    },
+    {
+      "type": "text",
+      "id": "badge",
+      "label": "t:sections.global.badge.label",
+      "default": "FREE"
+    },
+    {
+      "type": "range",
+      "id": "percentage_offer",
+      "min": 5,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "label": "t:sections.bundle.percentage_offer.label",
+      "default": 50
+    },
+    {
+      "type": "checkbox",
+      "id": "navigation",
+      "label": "t:sections.reviews.navigation.label",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "pagination",
+      "label": "t:sections.reviews.pagination.label",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "t:sections.global.headers.animations"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_animations",
+      "label": "t:sections.global.animation.enable",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "animation",
+      "options": [
+        {
+          "value": "fade-up",
+          "label": "t:sections.global.animation.options.fade_up"
+        },
+        {
+          "value": "fade-down",
+          "label": "t:sections.global.animation.options.fade_down"
+        },
+        {
+          "value": "fade-right",
+          "label": "t:sections.global.animation.options.fade_right"
+        },
+        {
+          "value": "fade-left",
+          "label": "t:sections.global.animation.options.fade_left"
+        },
+        {
+          "value": "zoom-in",
+          "label": "t:sections.global.animation.options.zoom_in"
+        },
+        {
+          "value": "zoom-out",
+          "label": "t:sections.global.animation.options.zoom_out"
+        }
+      ],
+      "default": "fade-up",
+      "label": "t:sections.global.animation.label"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.global.headers.layout"
+    },
+    {
+      "type": "select",
+      "id": "layout_width",
+      "options": [
+        {
+          "value": "narrow",
+          "label": "t:sections.global.layout_width.options.page_width_narrow"
+        },
+        {
+          "value": "normal",
+          "label": "t:sections.global.layout_width.options.page_width"
+        },
+        {
+          "value": "full-padded",
+          "label": "t:sections.global.layout_width.options.full_width_padded"
+        },
+        {
+          "value": "full",
+          "label": "t:sections.global.layout_width.options.full_width"
+        }
+      ],
+      "default": "normal",
+      "label": "t:sections.global.layout_width.label"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.global.padding_top.label",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.global.padding_bottom.label",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "padding_top_sm",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.global.padding_top_sm.label",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_sm",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.global.padding_bottom_sm.label",
+      "default": 32
+    },
+    {
+      "type": "header",
+      "content": "t:sections.global.headers.colors"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_palette",
+      "default": "background",
+      "label": "t:sections.global.colors_palette.label"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.global.headers.separators"
+    },
+    {
+      "type": "select",
+      "id": "separator_top",
+      "options": [
+        {
+          "value": "none",
+          "label": "t:sections.global.separators.options.none"
+        },
+        {
+          "value": "wave",
+          "label": "t:sections.global.separators.options.wave"
+        },
+        {
+          "value": "curve-1",
+          "label": "t:sections.global.separators.options.curve1"
+        },
+        {
+          "value": "curve-2",
+          "label": "t:sections.global.separators.options.curve2"
+        },
+        {
+          "value": "curve-3",
+          "label": "t:sections.global.separators.options.curve3"
+        },
+        {
+          "value": "arrow-1",
+          "label": "t:sections.global.separators.options.arrow1"
+        },
+        {
+          "value": "arrow-2",
+          "label": "t:sections.global.separators.options.arrow2"
+        },
+        {
+          "value": "circle",
+          "label": "t:sections.global.separators.options.circle"
+        },
+        {
+          "value": "diagonal-1",
+          "label": "t:sections.global.separators.options.diagonal-1"
+        },
+        {
+          "value": "diagonal-2",
+          "label": "t:sections.global.separators.options.diagonal-2"
+        },
+        {
+          "value": "diagonal-3",
+          "label": "t:sections.global.separators.options.diagonal-3"
+        },
+        {
+          "value": "fade",
+          "label": "t:sections.global.separators.options.fade"
+        },
+        {
+          "value": "line",
+          "label": "t:sections.global.separators.options.line"
+        }
+      ],
+      "default": "none",
+      "label": "t:sections.global.separators.top"
+    },
+    {
+      "type": "select",
+      "id": "separator_bottom",
+      "options": [
+        {
+          "value": "none",
+          "label": "t:sections.global.separators.options.none"
+        },
+        {
+          "value": "wave",
+          "label": "t:sections.global.separators.options.wave"
+        },
+        {
+          "value": "curve-1",
+          "label": "t:sections.global.separators.options.curve1"
+        },
+        {
+          "value": "curve-2",
+          "label": "t:sections.global.separators.options.curve2"
+        },
+        {
+          "value": "curve-3",
+          "label": "t:sections.global.separators.options.curve3"
+        },
+        {
+          "value": "arrow-1",
+          "label": "t:sections.global.separators.options.arrow1"
+        },
+        {
+          "value": "arrow-2",
+          "label": "t:sections.global.separators.options.arrow2"
+        },
+        {
+          "value": "circle",
+          "label": "t:sections.global.separators.options.circle"
+        },
+        {
+          "value": "diagonal-1",
+          "label": "t:sections.global.separators.options.diagonal-1"
+        },
+        {
+          "value": "diagonal-2",
+          "label": "t:sections.global.separators.options.diagonal-2"
+        },
+        {
+          "value": "diagonal-3",
+          "label": "t:sections.global.separators.options.diagonal-3"
+        },
+        {
+          "value": "fade",
+          "label": "t:sections.global.separators.options.fade"
+        },
+        {
+          "value": "line",
+          "label": "t:sections.global.separators.options.line"
+        }
+      ],
+      "default": "none",
+      "label": "t:sections.global.separators.bottom"
+    },
+    {
+      "type": "checkbox",
+      "id": "separator_animated",
+      "label": "t:sections.global.separators.animated",
+      "default": false
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.bundle.name"
+    }
+  ]
+}
+{% endschema %}

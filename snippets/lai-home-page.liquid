@@ -1,0 +1,26 @@
+{% assign random_number = "now" | date: "%N" | modulo: 1000 | plus: 0 %}
+<script>
+  var sectionConfig=  (typeof sectionConfig == "undefined" || sectionConfig == null) ? {
+  } : sectionConfig;
+  var scmCustomData=  (typeof scmCustomData == "undefined" || scmCustomData == null) ? {
+  } : scmCustomData;
+  var scmCustomDataWigetAll= (typeof scmCustomDataWigetAll == "undefined" || scmCustomDataWigetAll == null) ? [] : scmCustomDataWigetAll;
+  scmCustomDataWigetAll['{{ random_number }}'] ={
+    "id_iframe" : "{{ random_number }}",
+    "productId" : "",
+    "typePage" : 'homePage',
+    "sectionConfig" : JSON.stringify(sectionConfig),
+    "scmCustomData" : JSON.stringify(scmCustomData),
+    'dataProduct' : []
+  };
+  sectionConfig= null;
+  scmCustomData= null;
+</script>
+<div class="scm-container" style="display: none;">
+  <div class="{{ section.settings.class_wrap_title | escape }}">
+    <h2 class="{% if block.settings.class_title %} {{ section.settings.class_title | escape }}{% else %}title-lai{% endif %}">{{ section.settings.title }}</h2>
+  </div>
+  <div class="scm-reviews-importer">
+    <iframe class="scm-reviews-importer-iframe" width="100%" title="Sma reviews section Home Page" data-idIframe="{{ random_number }}"></iframe>
+  </div>
+</div>

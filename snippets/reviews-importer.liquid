@@ -1,0 +1,30 @@
+{% assign random_number = "now" | date: "%N" | modulo: 1000 | plus: 0 %}
+<script>
+  var sectionConfig=  (typeof sectionConfig == "undefined" || sectionConfig == null) ? {
+  } : sectionConfig;
+  var scmCustomData=  (typeof scmCustomData == "undefined" || scmCustomData == null) ? {
+  } : scmCustomData;
+  var scmCustomDataWigetAll= (typeof scmCustomDataWigetAll == "undefined" || scmCustomDataWigetAll == null) ? [] : scmCustomDataWigetAll;
+  scmCustomDataWigetAll['{{ random_number }}'] ={
+    "id_iframe" : "{{ random_number }}",
+    "productId" : "{{ product.id }}",
+    "typePage" : 'productPage',
+    "sectionConfig" : JSON.stringify(sectionConfig),
+    "scmCustomData" : JSON.stringify(scmCustomData),
+    'dataProduct' : []
+  };
+  sectionConfig= null;
+  scmCustomData= null;
+  scmCustomDataWigetAll['{{ random_number }}'].dataProduct['product']= {{ product | json }}
+  {% for metafieldValue in  product.metafields.scm_review_importer %}
+      scmCustomDataWigetAll['{{ random_number }}'].dataProduct['{{ metafieldValue[0] }}']= `{{ metafieldValue[1] | json }}`;
+  {% endfor %}
+</script>
+<div class="scm-container" style="display: none;">
+    <div class="scm-reviews-importer" data-product-id= {{ product.id }}>
+        <iframe class="scm-reviews-importer-iframe" width="100%" title="Sma reviews section Product page" data-idIframe="{{ random_number }}"></iframe>
+    </div>
+</div>
+<div class="scm-value-rate-product" data-rate-version2= {{ product.metafields.scm_review_importer.reviewsData.reviewCountInfo | json}}>
+</div>
+

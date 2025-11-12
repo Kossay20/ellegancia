@@ -1,0 +1,655 @@
+{%- liquid
+  assign amount_off = product.compare_at_price | minus: product.price | money_without_trailing_zeros
+  assign percentage = product.price | times: 100 | divided_by: product.compare_at_price
+  assign percentage_off = 100 | minus: percentage | append: '%'
+  assign current_variant = product.selected_or_first_available_variant
+  assign thumbnails_type = section.settings.thumbnails_style
+
+  assign blockImage = false
+  for block in section.blocks
+    if block.type == 'media'
+      assign blockImage = true
+    endif
+  endfor
+-%}
+
+<div
+  class="
+    product product__style--{{ product_style }}
+    {%- if superGlue %} product__super-glue {% endif -%}
+  "
+>
+  {% comment %} All medias {% endcomment %}
+  <div class="product__medias {% if blockImage == true -%}product__medias-desktop{%- endif -%}">
+    {%- render "medias", product: product, swiperMediaEl: "productMedias__", swiperThumbsEl: "productThumbs__", superGlue: superGlue, unique: unique, thumbnails: thumbnails_type, navigation: section.settings.navigation, pagination: section.settings.pagination -%}
+  </div>
+
+  {% comment %} All content {% endcomment %}
+  <div class="product__content">
+    <product-info
+      id="ProductInfo-{{ section.id }}"
+      class="product__info-container"
+      data-section="{{ section.id }}"
+      data-url="{{ product.url }}"
+    >
+      {%- for block in section.blocks -%}
+        {%- case block.type -%}
+          {%- when '@app' -%}
+            {% render block %}
+          {%- when 'media' -%}
+            <div
+              class="product__medias {% if blockImage == true -%}product__medias-mobile{%- endif -%}"
+              {{ block.shopify_attributes }}
+              style="margin-bottom: {{ block.settings.block_margin_bottom | divided_by: 10.0 }}rem;"
+            >
+              {%- render "medias", swiperMediaEl: "productMediasMobile__", swiperThumbsEl: "productThumbsMobile__", superGlue: superGlue -%}
+            </div>
+          {%- when 'text' -%}
+            {%- if block.settings.text != blank -%}
+              <div
+                class="product__content--block"
+                {{ block.shopify_attributes }}
+                style="margin-bottom: {{ block.settings.block_margin_bottom | divided_by: 10.0 }}rem;"
+              >
+                {%- if block.settings.text_style == 'subheading' -%}
+                  <h3
+                    class="subheading product__text"
+                    {%- render 'animation', enable_animations: enable_animations, animation: animation -%}
+                  >
+                    {{- block.settings.text -}}
+                  </h3>
+                {%- else -%}
+                  <p
+                    class="product__text"
+                    {%- render 'animation', enable_animations: enable_animations, animation: animation -%}
+                  >
+                    {{- block.settings.text -}}
+                  </p>
+                {%- endif -%}
+              </div>
+            {%- endif -%}
+          {%- when 'title' -%}
+            <div
+              class="product__content--block{% if block.settings.show_price %} product__title-block{% endif %}"
+              {{ block.shopify_attributes }}
+              style="margin-bottom: {{ block.settings.block_margin_bottom | divided_by: 10.0 }}rem;"
+            >
+              {%- liquid
+                if product.title != blank
+                  assign heading = product.title
+                else
+                  assign heading = 'onboarding.product_title' | t
+                endif
+
+                render 'heading', enable_animations: enable_animations, animation: animation, heading: heading, heading_class: 'product__title', heading_style: block.settings.heading_style
+
+                if block.settings.show_price
+                  render 'price', enable_animations: enable_animations, animation: animation, product: product, use_variant: true, show_badges: true, price_class: 'price--large', price_color: block.settings.price_color
+                endif
+              -%}
+            <div class="scm-reviews-rate" data-rate-version2={{ product.metafields.scm_review_importer.reviewsData.reviewCountInfo | json }} data-product-id= {{ product.id }}></div>
+
+            </div>
+          {%- when 'price' -%}
+            <div
+              class="product__content--block product__price--block product__price--{{ section.id }}"
+              {{ block.shopify_attributes }}
+              style="margin-bottom: {{ block.settings.block_margin_bottom | divided_by: 10.0 }}rem;"
+              {% render 'animation', enable_animations: enable_animations, animation: animation -%}
+            >
+              <div class="no-js-hidden" id="price-{{ section.id }}" role="status">
+                <div class="product__price">
+                  {% style %}
+                    .product__price--{{ section.id }} .price:not(.price--on-sale) .price-item--regular,
+                    .product__price--{{ section.id }} .price.price--on-sale .price-item--sale {
+                      font-size: calc(1.6rem * {{ block.settings.price_font_size | divided_by: 100.0 }});
+                    }
+                  {% endstyle %}
+                  {%- render 'price',
+                    enable_animations: enable_animations,
+                    animation: animation,
+                    product: product,
+                    use_variant: true,
+                    show_badges: true,
+                    price_class: 'price--large',
+                    price_color: block.settings.price_color
+                  -%}
+                  {%- if block.settings.show_sale_badge and product.compare_at_price > product.price -%}
+                    <span class="product__sale-badge">
+                      {{- block.settings.sale_badge | replace: '$', amount_off | replace: '%', percentage_off -}}
+                    </span>
+                  {%- endif -%}
+                </div>
+              </div>
+            </div>
+
+          {%- when 'quantity_reductions' -%}
+            <div
+              class="product__content--block"
+              {{ block.shopify_attributes }}
+              style="margin-bottom: {{ block.settings.block_margin_bottom | divided_by: 10.0 }}rem;"
+            >
+              <div class="product-reductions__wrapper">
+                {%- if block.settings.heading1 != blank -%}
+                  <div
+                    {% render 'animation', enable_animations: enable_animations, animation: animation %}
+                    class="product-reductions__item{% if block.settings.image1 != blank %} product-reductions__item--with_image{% endif %} active"
+                    data-quantity="{{ block.settings.quantity1 }}"
+                    data-compare-price="{{ block.settings.compare1 }}"
+                    data-sale-price="{{ block.settings.sale1 }}"
+                    data-sale-tag="{{ block.settings.label1 }}"
+                  >
+                    {%- if block.settings.label1 != blank -%}
+                      <p class="product-reductions__label">
+                        {{ block.settings.label1 }}
+                      </p>
+                    {%- endif -%}
+                    {%- if block.settings.image1 != blank -%}
+                      {{
+                        block.settings.image1
+                        | image_url: width: 400
+                        | image_tag: loading: 'lazy', class: 'product-reductions__image'
+                      }}
+                    {%- endif -%}
+                    <h3 class="product-reductions__heading">{{ block.settings.heading1 }}</h3>
+                    <p class="product-reductions__price">
+                      {%- if block.settings.compare1 != blank -%}
+                        <span class="product-reductions__compare">
+                          {{- block.settings.compare1 -}}
+                        </span>
+                      {%- endif -%}
+                      <span class="product-reductions__sale">{{ block.settings.sale1 }}</span>
+                    </p>
+                  </div>
+                {%- endif -%}
+
+                {%- if block.settings.heading2 != blank -%}
+                  <div
+                    {% render 'animation', enable_animations: enable_animations, animation: animation %}
+                    class="product-reductions__item{% if block.settings.image2 != blank %} product-reductions__item--with_image{% endif %}"
+                    data-quantity="{{ block.settings.quantity2 }}"
+                    data-compare-price="{{ block.settings.compare2 }}"
+                    data-sale-price="{{ block.settings.sale2 }}"
+                    data-sale-tag="{{ block.settings.label2 }}"
+                  >
+                    {%- if block.settings.label2 != blank -%}
+                      <p class="product-reductions__label">
+                        {{ block.settings.label2 }}
+                      </p>
+                    {%- endif -%}
+                    {%- if block.settings.image2 != blank -%}
+                      {{
+                        block.settings.image2
+                        | image_url: width: 400
+                        | image_tag: loading: 'lazy', class: 'product-reductions__image'
+                      }}
+                    {%- endif -%}
+                    <h3 class="product-reductions__heading">{{ block.settings.heading2 }}</h3>
+                    <p class="product-reductions__price">
+                      {%- if block.settings.compare2 != blank -%}
+                        <span class="product-reductions__compare">
+                          {{- block.settings.compare2 -}}
+                        </span>
+                      {%- endif -%}
+                      <span class="product-reductions__sale">{{ block.settings.sale2 }}</span>
+                    </p>
+                  </div>
+                {%- endif -%}
+
+                {%- if block.settings.heading3 != blank -%}
+                  <div
+                    {% render 'animation', enable_animations: enable_animations, animation: animation %}
+                    class="product-reductions__item{% if block.settings.image3 != blank %} product-reductions__item--with_image{% endif %}"
+                    data-quantity="{{ block.settings.quantity3 }}"
+                    data-compare-price="{{ block.settings.compare3 }}"
+                    data-sale-price="{{ block.settings.sale3 }}"
+                    data-sale-tag="{{ block.settings.label3 }}"
+                  >
+                    {%- if block.settings.label3 != blank -%}
+                      <p class="product-reductions__label">
+                        {{ block.settings.label3 }}
+                      </p>
+                    {%- endif -%}
+                    {%- if block.settings.image3 != blank -%}
+                      {{
+                        block.settings.image3
+                        | image_url: width: 400
+                        | image_tag: loading: 'lazy', class: 'product-reductions__image'
+                      }}
+                    {%- endif -%}
+                    <h3 class="product-reductions__heading">{{ block.settings.heading3 }}</h3>
+                    <p class="product-reductions__price">
+                      {%- if block.settings.compare3 != blank -%}
+                        <span class="product-reductions__compare">
+                          {{- block.settings.compare3 -}}
+                        </span>
+                      {%- endif -%}
+                      <span class="product-reductions__sale">{{ block.settings.sale3 }}</span>
+                    </p>
+                  </div>
+                {%- endif -%}
+
+                <input
+                  type="hidden"
+                  name="quantity"
+                  id="quantityReductions"
+                  value="{{ block.settings.quantity1 }}"
+                  form="{{ product_form_id }}"
+                >
+                <script>
+                  const allReductions = document.querySelectorAll('.product-reductions__item');
+                  const inputQuantity = document.getElementById('quantityReductions');
+                  allReductions.forEach(reduction => {
+                    reduction.addEventListener('click', (e) => {
+                      const parentContainer = e.target.closest('.product-reductions__item');
+                      const priceContainer = document.querySelector('.product__price--{{ section.id }}');
+                      if (parentContainer) {
+                        if (priceContainer) {
+                          const comparePrice = priceContainer.querySelector('.price__sale span s');
+                          const salePrice = priceContainer.querySelector('.price-item--sale');
+                          const saleTag = priceContainer.querySelector('.product__sale-badge');
+                          let saleTagTextContent;
+                          if (saleTag) { saleTagTextContent = saleTag.textContent; }
+                          const regularPrice = priceContainer.querySelector('.price__regular .price-item');
+                          if (comparePrice && salePrice) {
+                            comparePrice.textContent = parentContainer.dataset.comparePrice;
+                            salePrice.textContent = parentContainer.dataset.salePrice;
+                            parentContainer.dataset.saleTag === ""
+                              ? saleTag.textContent = saleTagTextContent
+                              : saleTag.textContent = parentContainer.dataset.saleTag;
+                          } else {
+                            regularPrice.textContent = parentContainer.dataset.salePrice;
+                          }
+                        }
+
+                        inputQuantity.value = parentContainer.dataset.quantity;
+                        allReductions.forEach(item => {
+                          item.classList.remove('active');
+                        });
+                        parentContainer.classList.add('active');
+                      }
+                    });
+                  })
+                </script>
+              </div>
+            </div>
+
+          {%- when 'quantity_selector' -%}
+            <div
+              class="product__content--block"
+              {{ block.shopify_attributes }}
+              style="margin-bottom: {{ block.settings.block_margin_bottom | divided_by: 10.0 }}rem;"
+            >
+              <div
+                id="Quantity-Form-{{ section.id }}"
+                class="product-form__input product-form__quantity"
+              >
+                {% comment %} TODO: enable theme-check once `item_count_for_variant` is accepted as valid filter {% endcomment %}
+                {% # theme-check-disable %}
+                {%- assign cart_qty = cart | item_count_for_variant: product.selected_or_first_available_variant.id -%}
+                {% # theme-check-enable %}
+                <label
+                  class="quantity__label form__label"
+                  for="Quantity-{{ section.id }}"
+                  {% render 'animation', enable_animations: enable_animations, animation: animation -%}
+                >
+                  {{ 'products.product.quantity.label' | t }}
+                  {%- if block.settings.show_cart_qty -%}
+                    <span class="quantity__rules-cart no-js-hidden{% if cart_qty == 0 %} hidden{% endif %}">
+                      <span class="loading-overlay hidden">
+                        <span class="loading-overlay__spinner">
+                          <svg
+                            aria-hidden="true"
+                            focusable="false"
+                            class="spinner"
+                            viewBox="0 0 66 66"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <circle class="path" fill="none" stroke-width="6" cx="33" cy="33" r="30"></circle>
+                          </svg>
+                        </span>
+                      </span>
+                      <span>
+                        {{- block.settings.cart_qty | replace: '$qty', cart_qty -}}
+                      </span>
+                    </span>
+                  {%- endif -%}
+                </label>
+                <quantity-input
+                  class="
+                    product__quantity product__quantity-hover--{{ settings.hover_effect }}
+                    product__quantity--{{ settings.secondary_background_border }}
+                    {%- if settings.remove_spacing %} product__quantity--super-glue {% endif -%}
+                    {%- if settings.secondary_background_buttons %}
+                      product__quantity--buttons-secondary
+                      {% unless settings.secondary_background_input %} alone{% else %} both_background{% endunless %}
+                    {% else %}
+                      {% unless settings.secondary_background_input %} no_background {% endunless %}
+                    {% endif -%}
+                  "
+                  {% render 'animation', enable_animations: enable_animations, animation: animation -%}
+                >
+                  <button class="quantity__button no-js-hidden" name="minus" type="button">
+                    <span class="visually-hidden">
+                      {{- 'products.product.quantity.decrease' | t: product: product.title | escape -}}
+                    </span>
+                    {% render 'icon-minus' %}
+                  </button>
+                  <input
+                    class="quantity__input{% if settings.secondary_background_input %} product__quantity--input-secondary{% endif %}"
+                    type="number"
+                    name="quantity"
+                    id="Quantity-{{ section.id }}"
+                    data-cart-quantity="{{ cart_qty }}"
+                    data-min="{{ product.selected_or_first_available_variant.quantity_rule.min }}"
+                    min="{{ product.selected_or_first_available_variant.quantity_rule.min }}"
+                    {% if product.selected_or_first_available_variant.quantity_rule.max != null %}
+                      data-max="{{ product.selected_or_first_available_variant.quantity_rule.max }}"
+                      max="{{ product.selected_or_first_available_variant.quantity_rule.max }}"
+                    {% endif %}
+                    step="{{ product.selected_or_first_available_variant.quantity_rule.increment }}"
+                    value="{{ product.selected_or_first_available_variant.quantity_rule.min }}"
+                    form="{{ product_form_id }}"
+                  >
+                  <button class="quantity__button no-js-hidden" name="plus" type="button">
+                    <span class="visually-hidden">
+                      {{- 'products.product.quantity.increase' | t: product: product.title | escape -}}
+                    </span>
+                    {% render 'icon-plus' %}
+                  </button>
+                </quantity-input>
+                <div class="quantity__rules caption no-js-hidden">
+                  {%- if product.selected_or_first_available_variant.quantity_rule.increment > 1 -%}
+                    <span class="divider">
+                      {{-
+                        'products.product.quantity.multiples_of'
+                        | t: quantity: product.selected_or_first_available_variant.quantity_rule.increment
+                      -}}
+                    </span>
+                  {%- endif -%}
+                  {%- if product.selected_or_first_available_variant.quantity_rule.min > 1 -%}
+                    <span class="divider">
+                      {{-
+                        'products.product.quantity.minimum_of'
+                        | t: quantity: product.selected_or_first_available_variant.quantity_rule.min
+                      -}}
+                    </span>
+                  {%- endif -%}
+                  {%- if product.selected_or_first_available_variant.quantity_rule.max != null -%}
+                    <span class="divider">
+                      {{-
+                        'products.product.quantity.maximum_of'
+                        | t: quantity: product.selected_or_first_available_variant.quantity_rule.max
+                      -}}
+                    </span>
+                  {%- endif -%}
+                </div>
+              </div>
+            </div>
+          {%- when 'variant_picker' -%}
+            {%- unless product.has_only_default_variant -%}
+              <div
+                class="product__content--block"
+                {{ block.shopify_attributes }}
+                style="margin-bottom: {{ block.settings.block_margin_bottom | divided_by: 10.0 }}rem;"
+              >
+                {% render 'product-variant-picker',
+                  unique: unique,
+                  enable_animations: enable_animations,
+                  animation: animation,
+                  product: product,
+                  block: block,
+                  product_form_id: product_form_id,
+                  update_url: false
+                %}
+              </div>
+            {%- endunless -%}
+          {%- when 'buy_buttons' -%}
+            <div
+              class="product__content--block"
+              {{ block.shopify_attributes }}
+              style="margin-bottom: {{ block.settings.block_margin_bottom | divided_by: 10.0 }}rem;"
+            >
+              {%- render 'buy-buttons',
+                block: block,
+                product: product,
+                product_form_id: product_form_id,
+                section_id: section.id,
+                unique: unique,
+                amount_off: amount_off,
+                percentage_off: percentage_off,
+                enable_animations: enable_animations,
+                animation: animation
+              -%}
+            </div>
+          {%- when 'share' -%}
+            <div
+              class="product__content--block"
+              {{ block.shopify_attributes }}
+              style="margin-bottom: {{ block.settings.block_margin_bottom | divided_by: 10.0 }}rem;"
+              {%- render 'animation', enable_animations: enable_animations, animation: animation -%}
+            >
+              {% assign share_url = product.selected_variant.url | default: product.url | prepend: request.origin %}
+              {% render 'share-button', block: block, share_link: share_url %}
+            </div>
+          {%- when 'custom_liquid' -%}
+            <div
+              class="product__content--block"
+              {{ block.shopify_attributes }}
+              style="margin-bottom: {{ block.settings.block_margin_bottom | divided_by: 10.0 }}rem;"
+              {%- render 'animation', enable_animations: enable_animations, animation: animation -%}
+            >
+              {{ block.settings.custom_liquid }}
+            </div>
+          {%- when 'rating' -%}
+            <div
+              class="product__content--block"
+              {{ block.shopify_attributes }}
+              style="margin-bottom: {{ block.settings.block_margin_bottom | divided_by: 10.0 }}rem;"
+              {% render 'animation', enable_animations: enable_animations, animation: animation %}
+            >
+              <div class="product__rating">
+                {%- render 'block-stars',
+                  rating: block.settings.rating,
+                  unique: unique,
+                  style: block.settings.stars_style
+                -%}
+                <p class="product__rating--text stars__text">{{ block.settings.rating_text }}</p>
+              </div>
+            </div>
+          {%- when 'review' -%}
+            <div
+              class="product__content--block"
+              {{ block.shopify_attributes }}
+              style="margin-bottom: {{ block.settings.block_margin_bottom | divided_by: 10.0 }}rem;"
+            >
+              <div
+                class="
+                  product__review
+                  {%- if block.settings.color_bg_secondary %}
+                    product__review--with-bg-secondary
+                    with-{{ block.settings.border }}
+                    with-{{ block.settings.shadow }}
+                  {% endif -%}
+                "
+                {%- render 'animation', enable_animations: enable_animations, animation: animation -%}
+              >
+                {%- render 'block-review',
+                  enable_animations: enable_animations,
+                  animation: animation,
+                  block: block,
+                  unique: unique
+                -%}
+              </div>
+            </div>
+
+          {%- when 'image' -%}
+            <div
+              class="product__content--block"
+              {{ block.shopify_attributes }}
+              style="margin-bottom: {{ block.settings.block_margin_bottom | divided_by: 10.0 }}rem;"
+            >
+              <div
+                class="product-block__image--wrapper global-media-settings {% if section.settings.image != blank %}media{% else %}placeholder{% endif %}"
+                {% if section.settings.image != blank %}
+                  style="padding-bottom: {{ 1 | divided_by: section.settings.image.aspect_ratio | times: 100 }}%;"
+                {% endif %}
+              >
+                {%- if block.settings.image != blank -%}
+                  {{
+                    block.settings.image
+                    | image_url: width: 1100
+                    | image_tag: loading: 'lazy', class: 'product-block__image'
+                  }}
+                {%- else -%}
+                  {{ 'image' | placeholder_svg_tag }}
+                {%- endif -%}
+              </div>
+            </div>
+
+          {%- when 'icon-with-text' -%}
+            <div
+              class="product__content--block"
+              {{ block.shopify_attributes }}
+              style="margin-bottom: {{ block.settings.block_margin_bottom | divided_by: 10.0 }}rem;"
+            >
+              <div
+                class="
+                  product__icons
+                  {%- if block.settings.color_bg_secondary %}
+                    product__icons--with-bg-secondary
+                    with-{{ block.settings.border }}
+                    with-{{ block.settings.shadow }}
+                  {% endif -%}
+                "
+                {%- render 'animation', enable_animations: enable_animations, animation: animation -%}
+              >
+                {%- render 'block-icons',
+                  enable_animations: enable_animations,
+                  animation: animation,
+                  block: block,
+                  unique: unique
+                -%}
+              </div>
+            </div>
+          {%- when 'description' -%}
+            <div
+              class="product__content--block"
+              {{ block.shopify_attributes }}
+              style="margin-bottom: {{ block.settings.block_margin_bottom | divided_by: 10.0 }}rem;"
+            >
+              <div class="product__description description__tabs">
+                {%- render 'block-description-tabs',
+                  product: product,
+                  unique: unique,
+                  block: block,
+                  enable_animations: enable_animations,
+                  animation: animation
+                -%}
+              </div>
+            </div>
+          {%- when 'description-faq' -%}
+            <div
+              class="product__content--block"
+              {{ block.shopify_attributes }}
+              style="margin-bottom: {{ block.settings.block_margin_bottom | divided_by: 10.0 }}rem;"
+            >
+              <div class="product__description description__accordion">
+                {%- render 'block-description-faq',
+                  product: product,
+                  unique: unique,
+                  block: block,
+                  enable_animations: enable_animations,
+                  animation: animation
+                -%}
+              </div>
+            </div>
+          {%- when 'description-text' -%}
+            <div
+              class="product__content--block"
+              {{ block.shopify_attributes }}
+              style="margin-bottom: {{ block.settings.block_margin_bottom | divided_by: 10.0 }}rem;"
+            >
+              <div class="product__description">
+                {{ product.description }}
+              </div>
+            </div>
+          {%- when 'timer' -%}
+            <div
+              class="product__content--block"
+              {{ block.shopify_attributes }}
+              style="margin-bottom: {{ block.settings.block_margin_bottom | divided_by: 10.0 }}rem;"
+            >
+              <div
+                class="
+                  product__timer product__timer--color-{{ block.settings.fill_color }}
+                  product__timer--alignment-{{ block.settings.alignment }}
+                  {%- if block.settings.color_bg_secondary %}
+                    product__timer--with-bg-secondary
+                    with-{{ block.settings.border }}
+                    with-{{ block.settings.shadow }}
+                  {% endif -%}
+                "
+                {%- render 'animation', enable_animations: enable_animations, animation: animation -%}
+              >
+                <div class="timer">
+                  <div class="timer__numbers">
+                    <p class="timer__number timer__days">{{ settings.timer_days }}</p>
+                    <p class="timer__number timer__hours">{{ settings.timer_hours }}</p>
+                    <p class="timer__number timer__minutes">{{ settings.timer_minutes }}</p>
+                    <p class="timer__number timer__seconds">{{ settings.timer_seconds }}</p>
+                  </div>
+                  <p class="timer__text">
+                    {{- block.settings.text | replace: '$', amount_off | replace: '%', percentage_off -}}
+                  </p>
+                </div>
+              </div>
+            </div>
+          {%- when 'stock' -%}
+            {% if current_variant.inventory_quantity > 0 and current_variant.inventory_management == 'shopify' %}
+              <div
+                class="product__content--block product__content--block-stock"
+                {{ block.shopify_attributes }}
+                style="margin-bottom: {{ block.settings.block_margin_bottom | divided_by: 10.0 }}rem;"
+              >
+                <div
+                  class="
+                    product__stock product__stock--color-{{ block.settings.fill_color }}
+                    product__stock--alignment-{{ block.settings.alignment }}
+                    {%- if block.settings.color_bg_secondary %}
+                      product__stock--with-bg-secondary
+                      with-{{ block.settings.border }}
+                      with-{{ block.settings.shadow }}
+                    {% endif -%}
+                  "
+                  {%- render 'animation', enable_animations: enable_animations, animation: animation -%}
+                >
+                  {%- assign quantityLeftInStock = '<span class="inventoryWrapperSpan">'
+                    | append: current_variant.inventory_quantity
+                    | append: '</span>'
+                  -%}
+                  <div class="inventoryWrapper">
+                    {{ block.settings.text | replace: '$quantity', quantityLeftInStock }}
+                  </div>
+
+                  <div class="stock_div stock_bar-{{ block.settings.fill_color }}">
+                    <div
+                      class="stock_bar"
+                      data-limit="{{ block.settings.limit }}"
+                      style="width: {{ current_variant.inventory_quantity | times: 100 | divided_by: block.settings.limit }}%;"
+                    ></div>
+                  </div>
+
+                  <script>
+                    {% for variant in product.variants %}
+                      variantStock[{{- variant.id -}}] = {{ variant.inventory_quantity }};
+                    {% endfor %}
+                  </script>
+                </div>
+              </div>
+            {% endif %}
+        {%- endcase -%}
+      {%- endfor -%}
+    </product-info>
+  </div>
+</div>

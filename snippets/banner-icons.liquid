@@ -1,0 +1,81 @@
+{%- liquid
+  if icons_style == 'bullets'
+    assign width_height_custom_icon = 20
+  else
+    assign width_height_custom_icon = 36
+  endif
+-%}
+
+<div class="banner__icons banner__icons--{{ icons_style }}">
+  {%- if settings.icon_1_text != blank -%}
+    <div
+      class="banner__icons--item"
+      {%- render 'animation', enable_animations: enable_animations, animation: animation -%}
+    >
+      {%- if settings.icon_1_custom_icon != blank -%}
+        {{
+          settings.icon_1_custom_icon
+          | image_url: width: width_height_custom_icon
+          | image_tag: loading: 'lazy', class: 'icon__icon icon__custom-icon'
+        }}
+      {%- else -%}
+        {% render 'icons', icon: settings.icon_1_icon, width: width_height_custom_icon %}
+      {%- endif -%}
+      <p class="icon__text">{{ settings.icon_1_text }}</p>
+    </div>
+  {%- endif -%}
+
+  {%- if settings.icon_2_text != blank -%}
+    <div
+      class="banner__icons--item"
+      {%- render 'animation', enable_animations: enable_animations, animation: animation -%}
+    >
+      {%- if settings.icon_2_custom_icon != blank -%}
+        {{
+          settings.icon_2_custom_icon
+          | image_url: width: width_height_custom_icon
+          | image_tag: loading: 'lazy', class: 'icon__icon icon__custom-icon'
+        }}
+      {%- else -%}
+        {% render 'icons', icon: settings.icon_2_icon, width: width_height_custom_icon %}
+      {%- endif -%}
+      <p class="icon__text">{{ settings.icon_2_text }}</p>
+    </div>
+  {%- endif -%}
+
+  {%- if settings.icon_3_text != blank -%}
+    <div
+      class="banner__icons--item"
+      {%- render 'animation', enable_animations: enable_animations, animation: animation -%}
+    >
+      {%- if settings.icon_3_custom_icon != blank -%}
+        {{
+          settings.icon_3_custom_icon
+          | image_url: width: width_height_custom_icon
+          | image_tag: loading: 'lazy', class: 'icon__icon icon__custom-icon'
+        }}
+      {%- else -%}
+        {% render 'icons', icon: settings.icon_3_icon, width: width_height_custom_icon %}
+      {%- endif -%}
+      <p class="icon__text">{{ settings.icon_3_text }}</p>
+    </div>
+  {%- endif -%}
+
+  {%- if settings.icon_4_text != blank -%}
+    <div
+      class="banner__icons--item"
+      {%- render 'animation', enable_animations: enable_animations, animation: animation -%}
+    >
+      {%- if settings.icon_4_custom_icon != blank -%}
+        {{
+          settings.icon_4_custom_icon
+          | image_url: width: width_height_custom_icon
+          | image_tag: loading: 'lazy', class: 'icon__icon icon__custom-icon'
+        }}
+      {%- else -%}
+        {% render 'icons', icon: settings.icon_5_icon, width: width_height_custom_icon %}
+      {%- endif -%}
+      <p class="icon__text">{{ settings.icon_4_text }}</p>
+    </div>
+  {%- endif -%}
+</div>

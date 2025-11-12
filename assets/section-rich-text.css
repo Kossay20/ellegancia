@@ -1,0 +1,45 @@
+.rich-text>*:not(:first-child) {
+  margin-top: 1.8rem;
+}
+
+.rich-text__alignement--left {
+  text-align: left;
+}
+
+.rich-text__alignement--left .button__container {
+  width: fit-content;
+}
+
+.rich-text__alignement--center {
+  text-align: center;
+}
+
+.rich-text__alignement--center .heading::after {
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.rich-text__alignement--right {
+  text-align: right;
+}
+
+.rich-text__alignement--right .heading::after {
+  left: auto;
+  right: 0;
+}
+
+.image-with-text__bold-heading strong {
+  color: rgb(var(--color-foreground));
+}
+
+.image-with-text__bold-text strong {
+  color: rgb(var(--color-foreground-secondary));
+}
+
+.image-with-text__bold-accent-1 strong {
+  color: rgb(var(--color-accent-1));
+}
+
+.image-with-text__bold-accent-2 strong {
+  color: rgb(var(--color-accent-2));
+}

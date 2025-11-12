@@ -1,0 +1,83 @@
+{%- liquid
+  assign style = block.settings.style
+-%}
+
+{{ 'section-tabs.css' | asset_url | stylesheet_tag }}
+<div class="tabs__wrapper tabs__bg--{{ block.settings.tabs_background }}">
+  <div class="tabs__header" {%- render 'animation', enable_animations: enable_animations, animation: animation -%}>
+    {%- if block.settings.heading1 != blank -%}
+      <div
+        data-tab="tab__{{ unique }}_1"
+        class="tab__button active"
+        {%- render 'animation', enable_animations: enable_animations, animation: animation -%}
+      >
+        <h3 class="tabs__heading">
+          {%- render 'icons', icon: block.settings.icon1 -%}
+          {{ block.settings.heading1 }}
+        </h3>
+      </div>
+    {%- endif -%}
+
+    {%- if block.settings.heading2 != blank -%}
+      <div
+        data-tab="tab__{{ unique }}_2"
+        class="tab__button"
+        {%- render 'animation', enable_animations: enable_animations, animation: animation -%}
+      >
+        <h3 class="tabs__heading">
+          {%- render 'icons', icon: block.settings.icon2 -%}
+          {{ block.settings.heading2 }}
+        </h3>
+      </div>
+    {%- endif -%}
+
+    {%- if block.settings.heading3 != blank -%}
+      <div
+        data-tab="tab__{{ unique }}_3"
+        class="tab__button"
+        {%- render 'animation', enable_animations: enable_animations, animation: animation -%}
+      >
+        <h3 class="tabs__heading">
+          {%- render 'icons', icon: block.settings.icon3 -%}
+          {{ block.settings.heading3 }}
+        </h3>
+      </div>
+    {%- endif -%}
+  </div>
+  <div class="tabs__inner">
+    {%- if block.settings.heading1 -%}
+      <div
+        id="tab__{{ unique }}_1"
+        class="tab__content"
+        {%- render 'animation', enable_animations: enable_animations, animation: animation -%}
+      >
+        {%- if block.settings.show_description -%}
+          {{- product.description -}}
+        {%- else -%}
+          {{- block.settings.text1 -}}
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+    {%- if block.settings.heading2 -%}
+      <div
+        id="tab__{{ unique }}_2"
+        class="tab__content"
+        {%- render 'animation', enable_animations: enable_animations, animation: animation -%}
+      >
+        {{ block.settings.text2 }}
+      </div>
+    {%- endif -%}
+
+    {%- if block.settings.heading3 -%}
+      <div
+        id="tab__{{ unique }}_3"
+        class="tab__content"
+        {%- render 'animation', enable_animations: enable_animations, animation: animation -%}
+      >
+        {{ block.settings.text3 }}
+      </div>
+    {%- endif -%}
+  </div>
+</div>
+{%- render 'tabs-theme-editor', sectionId: unique -%}

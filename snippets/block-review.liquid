@@ -1,0 +1,132 @@
+{%- liquid
+  assign uniqueSwiper = block.id | remove: '-'
+  assign show_review_1 = false
+  assign show_review_2 = false
+  assign show_review_3 = false
+
+  if block.settings.heading1 != blank and block.settings.text1 != blank
+    assign show_review_1 = true
+    assign unique1 = block.id | append: 1
+  endif
+
+  if block.settings.heading2 != blank and block.settings.text2 != blank
+    assign show_review_2 = true
+    assign unique2 = block.id | append: 2
+  endif
+
+  if block.settings.heading3 != blank and block.settings.text3 != blank
+    assign show_review_3 = true
+    assign unique3 = block.id | append: 3
+  endif
+-%}
+
+<div
+  id="product__review__{{ uniqueSwiper }}"
+  class="swiper product-review__swiper"
+  {% render 'swiper-data-editor', numberOfSlides: section.blocks.size %}
+>
+  <div class="swiper-wrapper product-review__wrapper">
+    {%- if show_review_1 -%}
+      <div class="swiper-slide product-review__slide">
+        {%- if block.settings.image1 != blank -%}
+          {{
+            block.settings.image1
+            | image_url: width: 200
+            | image_tag: loading: 'lazy', class: 'product-review__image'
+          }}
+        {%- else -%}
+          {{ 'image' | placeholder_svg_tag: 'placeholder product-review__image' }}
+        {%- endif -%}
+        <div class="product-review__meta">
+          <div class="product-review__header">
+            <p class="product-review__heading">
+              {{ block.settings.heading1 }}
+              {%- if block.settings.verified1 -%}
+                {% render 'icons', icon: 'check_mark' %}
+              {%- endif -%}
+            </p>
+            {%- render 'block-stars',
+              rating: block.settings.rating1,
+              unique: unique1,
+              style: block.settings.stars_style
+            -%}
+          </div>
+          <div class="product-review__inner">
+            <p class="product-review__text">{{ block.settings.text1 }}</p>
+          </div>
+        </div>
+      </div>
+    {%- endif -%}
+
+    {%- if show_review_2 -%}
+      <div class="swiper-slide product-review__slide">
+        {%- if block.settings.image2 != blank -%}
+          {{
+            block.settings.image2
+            | image_url: width: 200
+            | image_tag: loading: 'lazy', class: 'product-review__image'
+          }}
+        {%- else -%}
+          {{ 'image' | placeholder_svg_tag: 'placeholder product-review__image' }}
+        {%- endif -%}
+        <div class="product-review__meta">
+          <div class="product-review__header">
+            <p class="product-review__heading">
+              {{ block.settings.heading2 }}
+              {%- if block.settings.verified2 -%}
+                {% render 'icons', icon: 'check_mark' %}
+              {%- endif -%}
+            </p>
+            {%- render 'block-stars',
+              stars: block.settings.rating2,
+              unique: unique2,
+              style: block.settings.stars_style
+            -%}
+          </div>
+          <div class="product-review__inner">
+            <p class="product-review__text">{{ block.settings.text2 }}</p>
+          </div>
+        </div>
+      </div>
+    {%- endif -%}
+
+    {%- if show_review_3 -%}
+      <div class="swiper-slide product-review__slide">
+        {%- if block.settings.image3 != blank -%}
+          {{
+            block.settings.image3
+            | image_url: width: 200
+            | image_tag: loading: 'lazy', class: 'product-review__image'
+          }}
+        {%- else -%}
+          {{ 'image' | placeholder_svg_tag: 'placeholder product-review__image' }}
+        {%- endif -%}
+        <div class="product-review__meta">
+          <div class="product-review__header">
+            <p class="product-review__heading">
+              {{ block.settings.heading3 }}
+              {%- if block.settings.verified3 -%}
+                {% render 'icons', icon: 'check_mark' %}
+              {%- endif -%}
+            </p>
+            {%- render 'block-stars',
+              stars: block.settings.rating3,
+              unique: unique3,
+              style: block.settings.stars_style
+            -%}
+          </div>
+          <div class="product-review__inner">
+            <p class="product-review__text">{{ block.settings.text3 }}</p>
+          </div>
+        </div>
+      </div>
+    {%- endif -%}
+  </div>
+</div>
+{%- liquid
+  assign swiperAutoplayDelay = block.settings.speed | times: 1000
+  assign swiperAutoplay = 'autoplay: { pauseOnMouseEnter: true, enabled: ' | append: block.settings.autoplay | append: ', delay:' | append: swiperAutoplayDelay | append: '},'
+  assign swiperEl = "'#product__review__" | append: uniqueSwiper | append: "'"
+  assign swiperOptions = 'loop:true,mousewheel:{forceToAxis:true},spaceBetween:' | append: settings.spacing_grid_horizontal | append: ',slidesPerView:1,autoHeight:true,' | append: swiperAutoplay
+  render 'swiper-theme-editor', sectionId: uniqueSwiper, swiperVariant: 'product__review__', swiperEl: swiperEl, swiperOptions: swiperOptions
+-%}

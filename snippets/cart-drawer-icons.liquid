@@ -1,0 +1,74 @@
+<div class="swiper-wrapper">
+  {%- if settings.icon_1_text != blank -%}
+    <div class="swiper-slide drawer-trust__slide">
+      {%- if settings.icon_1_custom_icon != blank -%}
+        <img
+          src="{{ settings.icon_1_custom_icon }}"
+          loading="lazy"
+          width="20"
+          height="20"
+          class="icon__icon icon__custom-icon"
+        >
+      {%- else -%}
+        {% render 'icons', icon: settings.icon_1_icon %}
+      {%- endif -%}
+      <p class="icon__text">
+        {{ settings.icon_1_text }}
+      </p>
+    </div>
+  {%- endif -%}
+  {%- if settings.icon_2_text != blank -%}
+    <div class="swiper-slide drawer-trust__slide">
+      {%- if settings.icon_2_custom_icon != blank -%}
+        <img
+          src="{{ settings.icon_2_custom_icon }}"
+          loading="lazy"
+          width="20"
+          height="20"
+          class="icon__icon icon__custom-icon"
+        >
+      {%- else -%}
+        {% render 'icons', icon: settings.icon_2_icon %}
+      {%- endif -%}
+      <p class="icon__text">
+        {{ settings.icon_2_text }}
+      </p>
+    </div>
+  {%- endif -%}
+  {%- if settings.icon_3_text != blank -%}
+    <div class="swiper-slide drawer-trust__slide">
+      {%- if settings.icon_3_custom_icon != blank -%}
+        <img
+          src="{{ settings.icon_3_custom_icon }}"
+          loading="lazy"
+          width="20"
+          height="20"
+          class="icon__icon icon__custom-icon"
+        >
+      {%- else -%}
+        {% render 'icons', icon: settings.icon_3_icon %}
+      {%- endif -%}
+      <p class="icon__text">
+        {{ settings.icon_3_text }}
+      </p>
+    </div>
+  {%- endif -%}
+  {%- if settings.icon_4_text != blank -%}
+    <div class="swiper-slide drawer-trust__slide">
+      {%- if settings.icon_4_custom_icon != blank -%}
+        <img
+          src="{{ settings.icon_4_custom_icon }}"
+          loading="lazy"
+          width="20"
+          height="20"
+          class="icon__icon icon__custom-icon"
+        >
+      {%- else -%}
+        {% render 'icons', icon: settings.icon_4_icon %}
+      {%- endif -%}
+      <p class="icon__text">
+        {{ settings.icon_4_text }}
+      </p>
+    </div>
+  {%- endif -%}
+</div>

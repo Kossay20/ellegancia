@@ -1,0 +1,40 @@
+<div id="fader" class="no-js-hidden">
+  {%- if settings.page_loader -%}
+    <div class="fader__image">
+      {%- capture sizes -%}
+            (min-width: {{ settings.page_width }}px) {{ settings.page_width | minus: 100 | divided_by: 2 }}px,
+            (min-width: 750px) calc((100vw - 130px) / 2), calc((100vw - 50px) / 2)
+          {%- endcapture -%}
+      {{
+        settings.page_loader
+        | image_url: width: 1000
+        | image_tag: loading: 'lazy', sizes: sizes, widths: '165, 360, 535, 750, 1070, 1500'
+      }}
+    </div>
+  {%- endif -%}
+</div>
+<script>
+  const allLinks = document.getElementsByTagName('a');
+  const fader = document.getElementById('fader');
+  const fadeInPage = () => window.AnimationEvent && fader.classList.add('fade-out');
+  document.addEventListener('DOMContentLoaded', function () {
+    if (window.AnimationEvent) {
+      for (let i = 0; i < allLinks.length; i++) {
+        if (allLinks[i].hostname === window.location.hostname && allLinks[i].pathname !== window.location.pathname) {
+          allLinks[i].addEventListener('click', (e) => {
+            const t = e.currentTarget;
+            const a = () => {
+              window.location = t.href;
+              fader.removeEventListener('animationend', a);
+            };
+            fader.addEventListener('animationend', a);
+            e.preventDefault();
+            fader.classList.add('fade-in');
+          });
+        }
+      }
+    }
+  });
+  window.addEventListener('pageshow', (e) => e.persisted && fader.classList.remove('fade-in'));
+  fadeInPage();
+</script>

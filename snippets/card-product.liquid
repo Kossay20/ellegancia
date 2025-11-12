@@ -1,0 +1,272 @@
+{% comment %}
+  Renders a product card
+
+  Accepts:
+  - card_style: {String} Card style
+  - card_product: {Object} Product Liquid object (optional)
+  - media_aspect_ratio: {String} Size of the product image card. Values are "square" and "portrait". Default is "square" (optional)
+  - show_secondary_image: {Boolean} Show the secondary image on hover. Default: false (optional)
+  - show_vendor: {Boolean} Show the product vendor. Default: false
+  - show_rating: {Boolean} Show the product rating. Default: false
+  - lazy_load: {Boolean} Image should be lazy loaded. Default: true (optional)
+
+  Usage:
+  {% render 'card-product', show_vendor: section.settings.show_vendor %}
+{% endcomment %}
+
+{%- if card_product and card_product != empty -%}
+  {%- liquid
+    assign ratio = 1
+    if card_product.featured_media and media_aspect_ratio == 'portrait'
+      assign ratio = 0.8
+    elsif card_product.featured_media and media_aspect_ratio == 'adapt'
+      assign ratio = card_product.featured_media.aspect_ratio
+    endif
+    if ratio == 0 or ratio == null
+      assign ratio = 1
+    endif
+
+    assign amount = card_product.price | money_without_trailing_zeros
+    assign savings_amount = card_product.compare_at_price | minus: card_product.price | money_without_trailing_zeros
+    assign new_amount_in_percentage = card_product.price | times: 100 | divided_by: card_product.compare_at_price
+    assign savings_percentage = 100 | minus: new_amount_in_percentage | append: '%'
+  -%}
+
+  <div
+    class="
+      card card--product card__style--{{ card_style }} card__alignment--{{ settings.product_card_text_alignment }}
+      {% if settings.product_card_hover_line %}card--product-hover-line{% endif %}
+      {% if settings.product_card_hover_zoom %}card--product-hover-zoom{% endif %}
+    "
+  >
+    {%- if card_product.featured_media -%}
+      <a href="{{ card_product.url }}" class="card__product-link--media">
+        {%- unless settings.product_card_sale_tag_text == blank -%}
+          {%- if card_product.compare_at_price > card_product.price and card_product.available -%}
+            <div
+              class="
+                card__product-badges card__product-badges-position--{{ settings.product_card_sale_tag_position }}
+                card__product-badges-style--{{ settings.product_card_sale_tag_style }}
+              "
+            >
+              <span class="badge sale">
+                {{-
+                  settings.product_card_sale_tag_text
+                  | replace: '$', savings_amount
+                  | replace: '%', savings_percentage
+                -}}
+              </span>
+            </div>
+          {%- endif -%}
+        {%- endunless -%}
+
+        <div
+          class="
+            card__media{% if card_style == "standard" %} global-media-settings{% endif %} media media--image
+            {%- if card_product.media[1] != null and show_secondary_image %} card__media--secondary-image{% endif %}
+          "
+          style="padding-bottom: {{ 1 | divided_by: ratio | times: 100 }}%;"
+        >
+          {% comment %}theme-check-disable ImgLazyLoading{% endcomment %}
+          <img
+            srcset="
+              {%- if card_product.featured_media.width >= 165 -%}{{ card_product.featured_media | image_url: width: 165 }} 165w,{%- endif -%}
+              {%- if card_product.featured_media.width >= 360 -%}{{ card_product.featured_media | image_url: width: 360 }} 360w,{%- endif -%}
+              {%- if card_product.featured_media.width >= 533 -%}{{ card_product.featured_media | image_url: width: 533 }} 533w,{%- endif -%}
+              {%- if card_product.featured_media.width >= 720 -%}{{ card_product.featured_media | image_url: width: 720 }} 720w,{%- endif -%}
+              {%- if card_product.featured_media.width >= 940 -%}{{ card_product.featured_media | image_url: width: 940 }} 940w,{%- endif -%}
+              {%- if card_product.featured_media.width >= 1066 -%}{{ card_product.featured_media | image_url: width: 1066 }} 1066w,{%- endif -%}
+              {{ card_product.featured_media | image_url }} {{ card_product.featured_media.width }}w
+            "
+            src="{{ card_product.featured_media | image_url: width: 533 }}"
+            sizes="(min-width: {{ settings.page_width }}px) {{ settings.page_width | minus: 130 | divided_by: 4 }}px, (min-width: 990px) calc((100vw - 130px) / 4), (min-width: 750px) calc((100vw - 120px) / 3), calc((100vw - 35px) / 2)"
+            alt="{{ card_product.featured_media.alt | escape }}"
+            class="motion-reduce"
+            {% unless lazy_load == false %}
+              loading="lazy"
+            {% endunless %}
+            width="{{ card_product.featured_media.width }}"
+            height="{{ card_product.featured_media.height }}"
+          >
+          {% comment %}theme-check-enable ImgLazyLoading{% endcomment %}
+
+          {%- if card_product.media[1] != null and show_secondary_image -%}
+            <img
+              srcset="
+                {%- if card_product.media[1].width >= 165 -%}{{ card_product.media[1] | image_url: width: 165 }} 165w,{%- endif -%}
+                {%- if card_product.media[1].width >= 360 -%}{{ card_product.media[1] | image_url: width: 360 }} 360w,{%- endif -%}
+                {%- if card_product.media[1].width >= 533 -%}{{ card_product.media[1] | image_url: width: 533 }} 533w,{%- endif -%}
+                {%- if card_product.media[1].width >= 720 -%}{{ card_product.media[1] | image_url: width: 720 }} 720w,{%- endif -%}
+                {%- if card_product.media[1].width >= 940 -%}{{ card_product.media[1] | image_url: width: 940 }} 940w,{%- endif -%}
+                {%- if card_product.media[1].width >= 1066 -%}{{ card_product.media[1] | image_url: width: 1066 }} 1066w,{%- endif -%}
+                {{ card_product.media[1] | image_url }} {{ card_product.media[1].width }}w
+              "
+              src="{{ card_product.media[1] | image_url: width: 533 }}"
+              sizes="(min-width: {{ settings.page_width }}px) {{ settings.page_width | minus: 130 | divided_by: 4 }}px, (min-width: 990px) calc((100vw - 130px) / 4), (min-width: 750px) calc((100vw - 120px) / 3), calc((100vw - 35px) / 2)"
+              alt=""
+              class="motion-reduce"
+              loading="lazy"
+              width="{{ card_product.media[1].width }}"
+              height="{{ card_product.media[1].height }}"
+            >
+          {%- endif -%}
+        </div>
+      </a>
+    {%- endif -%}
+    <div class="card__content">
+      <div class="card__product-informations{% if settings.product_card_display_price %} with_price{% endif %}">
+        <div>
+          <a href="{{ card_product.url }}" class="card__product-link--heading">
+            <h3 class="card__product-heading{% if settings.product_card_limit_2_lines %} heading--2-lines{% endif %}">
+              {{ card_product.title }}
+            </h3>
+            <div class='opinew-stars-plugin-product-list'>{% render 'opinew_review_stars_lists' product:card_product %}</div>
+            {%- if show_vendor -%}
+              <span class="visually-hidden">{{ 'accessibility.vendor' | t }}</span>
+              <div class="card__product-vendor">{{ card_product.vendor }}</div>
+            {%- endif -%}
+          </a>
+          {%- if card_product.metafields.loox.avg_rating != blank and show_rating -%}
+            <div
+              class="loox-rating"
+              data-id="{{ card_product.id }}"
+              data-rating="{{ card_product.metafields.loox.avg_rating }}"
+              data-raters="{{ card_product.metafields.loox.num_reviews }}"
+            ></div>
+          {%- endif -%}
+        </div>
+        {%- if settings.product_card_display_price -%}
+          {% render 'price',
+            product: card_product,
+            price_class: '',
+            formatting: formatting,
+            price_color: settings.card_product_price_color
+          %}
+        {%- endif -%}
+      </div>
+
+      <div class="scm-reviews-rate" data-rate-version2={{ product.metafields.scm_review_importer.reviewsData.reviewCountInfo | json }} data-product-id= {{ product.id }}></div>
+
+      {%- if show_rating and card_product.metafields.reviews.rating.value != blank -%}
+        {% liquid
+          assign rating_decimal = 0
+          assign decimal = card_product.metafields.reviews.rating.value.rating | modulo: 1
+          if decimal >= 0.3 and decimal <= 0.7
+            assign rating_decimal = 0.5
+          elsif decimal > 0.7
+            assign rating_decimal = 1
+          endif
+        %}
+        <div
+          class="card__product-rating"
+          role="img"
+          aria-label="{{ 'accessibility.star_reviews_info' | t: rating_value: card_product.metafields.reviews.rating.value, rating_max: card_product.metafields.reviews.rating.value.scale_max }}"
+        >
+          <span
+            aria-hidden="true"
+            class="rating-star color-icon-{{ settings.accent_icons }}"
+            style="--rating: {{ card_product.metafields.reviews.rating.value.rating | floor }}; --rating-max: {{ card_product.metafields.reviews.rating.value.scale_max }}; --rating-decimal: {{ rating_decimal }};"
+          ></span>
+        </div>
+        <p class="rating-text caption">
+          <span aria-hidden="true">
+            {{- card_product.metafields.reviews.rating.value }} /
+            {{ card_product.metafields.reviews.rating.value.scale_max -}}
+          </span>
+        </p>
+        <p class="rating-count caption">
+          <span aria-hidden="true">({{ card_product.metafields.reviews.rating_count }})</span>
+          <span class="visually-hidden">
+            {{- card_product.metafields.reviews.rating_count }}
+            {{ 'accessibility.total_reviews' | t -}}
+          </span>
+        </p>
+      {%- endif -%}
+
+      {%- if settings.product_card_enable_button -%}
+        <div class="card__product-cta">
+          {%- if settings.product_card_button_type == 'atc' -%}
+            <script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
+            <product-form class="product-form">
+              <div class="product-form__error-message-wrapper" role="alert" hidden="">
+                {% render 'icon-error' %}
+                <span class="product-form__error-message"></span>
+              </div>
+              <form
+                method="post"
+                action="/cart/add"
+                id="product-form-{{ section.id }}"
+                accept-charset="UTF-8"
+                class="form card__product-form{% unless card_product.has_only_default_variant %} card__product-form-with_variants{% endunless %}"
+                enctype="multipart/form-data"
+                novalidate="novalidate"
+                data-type="add-to-cart-form"
+                data-editor-form-attribute=""
+              >
+                <input type="hidden" name="form_type" value="product">
+                <input type="hidden" name="utf8" value="✓">
+
+                {%- unless card_product.has_only_default_variant -%}
+                  <div class="select card__product-form-select">
+                    <select class="select__select" name="id">
+                      {%- for variant in card_product.variants -%}
+                        {%- if variant.available -%}
+                          <option value="{{ variant.id }}">
+                            {{ variant.title }}
+                          </option>
+                        {%- endif -%}
+                      {%- endfor -%}
+                    </select>
+                    {% render 'icon-caret' %}
+                  </div>
+                {%- else -%}
+                  <input type="hidden" name="id" value="{{ card_product.variants[0].id }}" class="product-variant-id">
+                {%- endunless -%}
+
+                <div class="product-form__buttons card__product-form-buttons">
+                  <button
+                    id="ProductSubmitButton-{{ section.id }}"
+                    type="submit"
+                    name="add"
+                    class="product-form__submit button button__style--{{ settings.product_card_button_style }}"
+                  >
+                    <span>
+                      {{- settings.product_card_button_text | replace: '$', amount | replace: '%', savings_percentage }}
+                    </span>
+                    <div class="loading-overlay__spinner hidden">
+                      <svg
+                        aria-hidden="true"
+                        focusable="false"
+                        class="spinner"
+                        viewBox="0 0 66 66"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <circle class="path" fill="none" stroke-width="6" cx="33" cy="33" r="30"></circle>
+                      </svg>
+                    </div>
+                  </button>
+                </div>
+              </form>
+            </product-form>
+          {%- else -%}
+            <a href="{{ card_product.url }}" class="button button__style--{{ settings.product_card_button_style }}">
+              {{- settings.product_card_button_text | replace: '$', amount | replace: '%', savings_percentage -}}
+            </a>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+{%- else -%}
+  <div class="card card--product card__style--{{ card_style }}">
+    <div class="card__media{% if card_style == "standard" %} global-media-settings{% endif %} placeholder">
+      {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+    </div>
+    <div class="card__content">
+      <div class="card__product-informations">
+        <h3 class="card__product-heading">{{ 'onboarding.product_title' | t }}</h3>
+        {% render 'price' %}
+      </div>
+    </div>
+  </div>
+{%- endif -%}

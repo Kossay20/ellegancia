@@ -1,0 +1,1912 @@
+
+  <script src="https://d2ls1pfffhvy22.cloudfront.net/assets/gp-product.v2.js" defer="defer"></script>
+    {%- assign gpBkProduct = product -%}
+    
+        {%- liquid
+          if request.page_type == 'product'
+            if 'static' == 'static'
+              if '8619409604955' == 'latest'
+                paginate collections.all.products by 100000
+                  assign product = collections.all.products | sort: 'created_at' | reverse | first
+                endpaginate
+              else
+                assign product = all_products['ensemble-tricote-3-pieces-confort-et-elegance']
+                if product == empty or product == null
+                  paginate collections.all.products by 100000
+                    for item in collections.all.products 
+                      if item.id == '8619409604955'
+                        assign product = item
+                      endif
+                    endfor
+                  endpaginate
+                endif
+              endif
+            endif
+          else
+            if '8619409604955' == 'latest'
+              paginate collections.all.products by 100000
+                assign product = collections.all.products | sort: 'created_at'| reverse | first
+              endpaginate
+            else
+              assign product = all_products['ensemble-tricote-3-pieces-confort-et-elegance']
+              if product == empty or product == null
+                paginate collections.all.products by 100000
+                  for item in collections.all.products 
+                    if item.id == '8619409604955'
+                      assign product = item
+                    endif
+                  endfor
+                endpaginate
+              endif
+            endif
+          endif
+        -%}
+      
+
+    {%-if product != empty and product != null -%}
+      {%- assign initVariantId =  -%}
+      {%- assign product_form_id = 'product-form-' | append: "ghATapGLoS" -%}
+      {%- assign variant = product.selected_or_first_available_variant -%}
+      {%- assign productSelectedVariant = product.selected_or_first_available_variant -%}
+      {%-if productSelectedVariant == empty or productSelectedVariant == null -%}
+        {%- assign productSelectedVariant = product.selected_or_first_available_variant -%}
+      {%- endif -%}
+      {%-if variant == empty or variant == null -%}
+        {%- assign variant = product.selected_or_first_available_variant -%}
+      {%- endif -%}
+      <gp-product class="" gp-context='{"productId": {{ product.id }}, "isSyncProduct": "", "variantSelected": {{ variant | json | escape }}, "quantity": 1, "formId": "{{ product_form_id }}" }'
+        gp-data='{"variantSelected": {{ variant | json | escape }}, "quantity": 1}'>
+        <product-form class="product-form">
+          {%- form 'product', product, id: product_form_id, class: 'form contents', data-type: 'add-to-cart-form', autocomplete: 'off'  -%}
+            <input type="hidden" name="id" value="{{ variant.id }}" />
+            <input type="hidden" name="quantity" value="{{ quantity }}" />
+            <button type="submit" onclick="return false;" style="display:none;"></button>
+            
+      
+      
+    <div
+      id
+        style="--b:solid;--bc:#121212;--bw:0px;--shadow:none;--d:grid;--d-mobile:grid;--d-tablet:grid;--op:100%;--radius:var(--g-radius-none);--cg:60px;--cg-tablet:30px;--pc:start;--gtc:minmax(0, 6fr) minmax(0, 6fr);--gtc-mobile:minmax(0, 12fr);--w:var(--g-ct-w, 1200px);--w-tablet:100%;--w-mobile:100%"
+        class="mx-auto mb-0 grid max-w-full gap-y-0 transition-colors duration-200 ease-in-out [&_*]:max-w-full"
+    >
+    <div
+      label="Block" tag="Col" type="component"
+      style="--jc:start;--d-mobile:none"
+      class="gMYOOQndCs relative flex flex-col"
+    >
+      
+    </div><div
+      label="Block" tag="Col" type="component"
+      style="--jc:start"
+      class="gGxz-LRtla relative flex flex-col"
+    >
+      <div style="--b:solid;--bc:#121212;--bw:0px;--shadow:none;--d:block;--d-mobile:block;--d-tablet:block;--op:100%;--radius:var(--g-radius-none);--mb:var(--g-s-s)" class="g8Inw_zp3w ">
+      
+    {%- unless product -%}
+      <p>Product not found</p>
+    {%- else -%}
+      
+        
+    <div
+      
+        class=" "
+        style=""
+      >
+      <div class="" style="">
+        <h2
+          data-gp-text
+          class="[&_p]:inline [&_p]:after:whitespace-pre-wrap [&_p]:after:content-['\A']"
+          style="--w:100%;--ta:left;--line-clamp:unset;--line-clamp-tablet:unset;--line-clamp-mobile:unset;--c:#242424;--fs:normal;--ff:var(--g-font-DM-Sans, DM Sans);--weight:700;--ls:normal;--lh:120%;--size:38px;--size-tablet:38px;--size-mobile:33px;word-break:break-word"
+        >
+        {{ product.title }}
+        </h2>
+      </div>
+    </div>
+      
+    {%- endunless -%}
+  
+      </div>
+      
+      
+    <div
+      parentTag="Col" id="g4PsgweUKs"
+        style="--b:solid;--bc:#121212;--bw:0px;--shadow:none;--d:grid;--d-mobile:grid;--d-tablet:grid;--op:100%;--radius:var(--g-radius-none);--mb:var(--g-s-2xl);--cg:var(--g-s-s);--pc:start;--gtc:minmax(0, auto) minmax(0, auto);--w:100%;--w-tablet:100%;--w-mobile:100%;--bgc:transparent;--bgi:url();--bgp:50% 50%;--bgs:cover;--bgr:no-repeat;--bga:scroll"
+        class="g4PsgweUKs mx-auto mb-0 grid max-w-full gap-y-0 transition-colors duration-200 ease-in-out [&_*]:max-w-full"
+    >
+    <div
+      label="Block" tag="Col" type="component"
+      style="--jc:center"
+      class="g8WbZWGrzV relative flex flex-col"
+    >
+      
+    
+    <div
+      
+      style="--b:solid;--bc:#121212;--bw:0px;--shadow:none;--d:block;--d-mobile:block;--d-tablet:block;--op:100%;--radius:var(--g-radius-none);--bgc:transparent;--bgi:url();--bgp:50% 50%;--bgs:cover;--bgr:no-repeat;--bga:scroll">
+        
+    <div 
+            class="flex flex-wrap"
+            style="--cg:var(--g-s-xxs);--jc:left">
+            <div style="--b:solid;--bc:#121212;--bw:0px;--shadow:none;--d:block;--d-mobile:block;--d-tablet:block;--op:100%;--radius:var(--g-radius-none)" class="grLD2_qzZ6 ">
+      
+    <div 
+      
+      class="flex w-full flex-col items-center"
+    >
+    <div
+      
+      style="--b:solid;--bc:#121212;--bw:0px;--shadow:none;--d:block;--d-mobile:block;--d-tablet:block;--op:100%;--radius:var(--g-radius-none);--ta:left"
+      class="leading-[0] gpZPNNFGp8"
+    >
+      <div class="inline-flex overflow-hidden"
+      style="--pl:0px;--pr:0px;--pt:0px;--pb:0px;--bs:none;--bw:0px;--bc:transparent;--bg:transparent"
+      >
+      <div
+      
+    >
+      <span
+        style="--c:#FAAD14;--t:rotate(0deg);--w:12px;--h:12px;--minw:12px"
+        class="inline-flex items-center justify-center overflow-hidden [&>svg]:w-full [&>svg]:h-auto"
+      ><svg height="100%" width="100%" xmlns="http://www.w3.org/2000/svg" className="w-6 h-6"  viewBox="0 0 512 512" fill="currentColor">              <path fill="currentColor" strokeLinecap="round" strokeLinejoin="round" fill="currentColor" d="M115.584 494.176c-12.352 6.336 -26.368 -4.768 -23.872 -18.944l26.56 -151.36L5.536 216.48c-10.528 -10.048 -5.056 -28.416 9.056 -30.4l156.736 -22.272L241.216 25.344c6.304 -12.48 23.36 -12.48 29.664 0l69.888 138.464 156.736 22.272c14.112 1.984 19.584 20.352 9.024 30.4l-112.704 107.392 26.56 151.36c2.496 14.176 -11.52 25.28 -23.872 18.944L256 421.984l-140.448 72.192z" /></svg></span>
+    </div>
+      </div>
+    </div>
+    </div>
+  
+      </div><div style="--b:solid;--bc:#121212;--bw:0px;--shadow:none;--d:block;--d-mobile:block;--d-tablet:block;--op:100%;--radius:var(--g-radius-none)" class="gKYiSEzupq ">
+      
+    <div 
+      
+      class="flex w-full flex-col items-center"
+    >
+    <div
+      
+      style="--b:solid;--bc:#121212;--bw:0px;--shadow:none;--d:block;--d-mobile:block;--d-tablet:block;--op:100%;--radius:var(--g-radius-none);--ta:left"
+      class="leading-[0] gyR4OQEIQr"
+    >
+      <div class="inline-flex overflow-hidden"
+      style="--pl:0px;--pr:0px;--pt:0px;--pb:0px;--bs:none;--bw:0px;--bc:transparent;--bg:transparent"
+      >
+      <div
+      
+    >
+      <span
+        style="--c:#FAAD14;--t:rotate(0deg);--w:12px;--h:12px;--minw:12px"
+        class="inline-flex items-center justify-center overflow-hidden [&>svg]:w-full [&>svg]:h-auto"
+      ><svg height="100%" width="100%" xmlns="http://www.w3.org/2000/svg" className="w-6 h-6"  viewBox="0 0 512 512" fill="currentColor">              <path fill="currentColor" strokeLinecap="round" strokeLinejoin="round" fill="currentColor" d="M115.584 494.176c-12.352 6.336 -26.368 -4.768 -23.872 -18.944l26.56 -151.36L5.536 216.48c-10.528 -10.048 -5.056 -28.416 9.056 -30.4l156.736 -22.272L241.216 25.344c6.304 -12.48 23.36 -12.48 29.664 0l69.888 138.464 156.736 22.272c14.112 1.984 19.584 20.352 9.024 30.4l-112.704 107.392 26.56 151.36c2.496 14.176 -11.52 25.28 -23.872 18.944L256 421.984l-140.448 72.192z" /></svg></span>
+    </div>
+      </div>
+    </div>
+    </div>
+  
+      </div><div style="--b:solid;--bc:#121212;--bw:0px;--shadow:none;--d:block;--d-mobile:block;--d-tablet:block;--op:100%;--radius:var(--g-radius-none)" class="g6GFOJ9bX2 ">
+      
+    <div 
+      
+      class="flex w-full flex-col items-center"
+    >
+    <div
+      
+      style="--b:solid;--bc:#121212;--bw:0px;--shadow:none;--d:block;--d-mobile:block;--d-tablet:block;--op:100%;--radius:var(--g-radius-none);--ta:left"
+      class="leading-[0] gBpjd28tf5"
+    >
+      <div class="inline-flex overflow-hidden"
+      style="--pl:0px;--pr:0px;--pt:0px;--pb:0px;--bs:none;--bw:0px;--bc:transparent;--bg:transparent"
+      >
+      <div
+      
+    >
+      <span
+        style="--c:#FAAD14;--t:rotate(0deg);--w:12px;--h:12px;--minw:12px"
+        class="inline-flex items-center justify-center overflow-hidden [&>svg]:w-full [&>svg]:h-auto"
+      ><svg height="100%" width="100%" xmlns="http://www.w3.org/2000/svg" className="w-6 h-6"  viewBox="0 0 512 512" fill="currentColor">              <path fill="currentColor" strokeLinecap="round" strokeLinejoin="round" fill="currentColor" d="M115.584 494.176c-12.352 6.336 -26.368 -4.768 -23.872 -18.944l26.56 -151.36L5.536 216.48c-10.528 -10.048 -5.056 -28.416 9.056 -30.4l156.736 -22.272L241.216 25.344c6.304 -12.48 23.36 -12.48 29.664 0l69.888 138.464 156.736 22.272c14.112 1.984 19.584 20.352 9.024 30.4l-112.704 107.392 26.56 151.36c2.496 14.176 -11.52 25.28 -23.872 18.944L256 421.984l-140.448 72.192z" /></svg></span>
+    </div>
+      </div>
+    </div>
+    </div>
+  
+      </div><div style="--b:solid;--bc:#121212;--bw:0px;--shadow:none;--d:block;--d-mobile:block;--d-tablet:block;--op:100%;--radius:var(--g-radius-none)" class="gs4sEluxbV ">
+      
+    <div 
+      
+      class="flex w-full flex-col items-center"
+    >
+    <div
+      
+      style="--b:solid;--bc:#121212;--bw:0px;--shadow:none;--d:block;--d-mobile:block;--d-tablet:block;--op:100%;--radius:var(--g-radius-none);--ta:left"
+      class="leading-[0] gioYck7OUG"
+    >
+      <div class="inline-flex overflow-hidden"
+      style="--pl:0px;--pr:0px;--pt:0px;--pb:0px;--bs:none;--bw:0px;--bc:transparent;--bg:transparent"
+      >
+      <div
+      
+    >
+      <span
+        style="--c:#FAAD14;--t:rotate(0deg);--w:12px;--h:12px;--minw:12px"
+        class="inline-flex items-center justify-center overflow-hidden [&>svg]:w-full [&>svg]:h-auto"
+      ><svg height="100%" width="100%" xmlns="http://www.w3.org/2000/svg" className="w-6 h-6"  viewBox="0 0 512 512" fill="currentColor">              <path fill="currentColor" strokeLinecap="round" strokeLinejoin="round" fill="currentColor" d="M115.584 494.176c-12.352 6.336 -26.368 -4.768 -23.872 -18.944l26.56 -151.36L5.536 216.48c-10.528 -10.048 -5.056 -28.416 9.056 -30.4l156.736 -22.272L241.216 25.344c6.304 -12.48 23.36 -12.48 29.664 0l69.888 138.464 156.736 22.272c14.112 1.984 19.584 20.352 9.024 30.4l-112.704 107.392 26.56 151.36c2.496 14.176 -11.52 25.28 -23.872 18.944L256 421.984l-140.448 72.192z" /></svg></span>
+    </div>
+      </div>
+    </div>
+    </div>
+  
+      </div><div style="--b:solid;--bc:#121212;--bw:0px;--shadow:none;--d:block;--d-mobile:block;--d-tablet:block;--op:100%;--radius:var(--g-radius-none)" class="gLhse_ktTN ">
+      
+    <div 
+      
+      class="flex w-full flex-col items-center"
+    >
+    <div
+      
+      style="--b:solid;--bc:#121212;--bw:0px;--shadow:none;--d:block;--d-mobile:block;--d-tablet:block;--op:100%;--radius:var(--g-radius-none);--ta:left"
+      class="leading-[0] gJ2vGn2lE2"
+    >
+      <div class="inline-flex overflow-hidden"
+      style="--pl:0px;--pr:0px;--pt:0px;--pb:0px;--bs:none;--bw:0px;--bc:transparent;--bg:transparent"
+      >
+      <div
+      
+    >
+      <span
+        style="--c:#FAAD14;--t:rotate(0deg);--w:12px;--h:12px;--minw:12px"
+        class="inline-flex items-center justify-center overflow-hidden [&>svg]:w-full [&>svg]:h-auto"
+      ><svg height="100%" width="100%" xmlns="http://www.w3.org/2000/svg" className="w-6 h-6"  viewBox="0 0 512 512" fill="currentColor">              <path fill="currentColor" strokeLinecap="round" strokeLinejoin="round" fill="currentColor" d="M115.584 494.176c-12.352 6.336 -26.368 -4.768 -23.872 -18.944l26.56 -151.36L5.536 216.48c-10.528 -10.048 -5.056 -28.416 9.056 -30.4l156.736 -22.272L241.216 25.344c6.304 -12.48 23.36 -12.48 29.664 0l69.888 138.464 156.736 22.272c14.112 1.984 19.584 20.352 9.024 30.4l-112.704 107.392 26.56 151.36c2.496 14.176 -11.52 25.28 -23.872 18.944L256 421.984l-140.448 72.192z" /></svg></span>
+    </div>
+      </div>
+    </div>
+    </div>
+  
+      </div>
+         </div>
+    </div>
+  
+    </div><div
+      label="Block" tag="Col" type="component"
+      style="--jc:center"
+      class="gjX9nY64Qx relative flex flex-col"
+    >
+      
+    <div
+      parentTag="Col"
+        class="gun2bPKhlS "
+        style="--tt:default;--ta:left;--b:solid;--bc:#121212;--bw:0px;--shadow:none;--d:block;--d-mobile:block;--d-tablet:block;--op:100%;--radius:var(--g-radius-none)"
+      >
+      <div class="flex" style="--jc:left">
+        <div
+          data-gp-text
+          class="[&_p]:inline [&_p]:after:whitespace-pre-wrap [&_p]:after:content-['\A'] gp-text"
+          style="--w:100%;--w-tablet:100%;--w-mobile:100%;--ts:none;--ta:left;--line-clamp:unset;--line-clamp-tablet:unset;--line-clamp-mobile:unset;--c:#242424;--fs:normal;--ff:var(--g-font-DM-Sans, DM Sans);--weight:400;--ls:normal;--lh:150%;--size:16px;--size-tablet:16px;--size-mobile:14px;word-break:break-word"
+        >
+        <p>(129 reviews)</p>
+        </div>
+      </div>
+    </div>
+    </div>
+    </div>
+  
+    
+      
+      
+    <div
+      parentTag="Col" id="gYMu1xNvHp"
+        style="--b:solid;--bc:#121212;--bw:0px;--shadow:none;--d:grid;--d-mobile:grid;--d-tablet:grid;--op:100%;--radius:var(--g-radius-none);--mb:var(--g-s-2xl);--cg:var(--g-s-s);--pc:start;--gtc:minmax(0, auto) minmax(0, auto) minmax(0, auto) minmax(0, auto);--gtc-mobile:minmax(0, auto) minmax(0, auto) minmax(0, auto) minmax(0, auto);--w:100%;--w-tablet:100%;--w-mobile:100%;--bgc:transparent;--bgi:url();--bgp:50% 50%;--bgs:cover;--bgr:no-repeat;--bga:scroll"
+        class="gYMu1xNvHp mx-auto mb-0 grid max-w-full gap-y-0 transition-colors duration-200 ease-in-out [&_*]:max-w-full"
+    >
+    <div
+      label="Block" tag="Col" type="component"
+      style="--jc:center"
+      class="gaMEfsQa_P relative flex flex-col"
+    >
+      
+  <script src="https://d2ls1pfffhvy22.cloudfront.net/assets/gp-product-price.js" defer="defer"></script>
+      <gp-product-price
+        gp-data='{"priceType":"compare","uid":"gcH2QREs53","locale":"{{shop.locale}}","currency":"{{shop.currency}}","moneyFormat":"{{ shop.money_format | replace: '"', '\\"' | escape }}"}'
+        
+        class=" data-[hidden=true]:hidden"
+        style="--b:solid;--bc:#121212;--bw:0px;--shadow:none;--d:block;--d-mobile:block;--d-tablet:block;--op:100%;--radius:var(--g-radius-none);--mb-mobile:0px"
+        data-hidden="{% if variant.compare_at_price > variant.price and variant.compare_at_price >= 0 %}false{% else %}true{% endif %}"
+      >
+        
+    <div
+      id="p-price-gcH2QREs53"
+        class=" "
+        style=""
+      >
+      <div class="" style="">
+        <div
+          data-gp-text
+          class="[&_p]:inline [&_p]:after:whitespace-pre-wrap [&_p]:after:content-['\A'] gp-price gp-product-compare-price line-through"
+          style="--w:100%;--tdc:#B4B4B4;--tdt:1;--ta:left;--c:#B4B4B4;--fs:normal;--ff:var(--g-font-DM-Sans, DM Sans);--weight:400;--ls:normal;--lh:150%;--size:21px;--size-tablet:21px;--size-mobile:19px;word-break:break-word"
+        >
+        
+                  {% if variant.compare_at_price  %} 
+                    {{ variant.compare_at_price | money}}
+                  {% endif %}
+                
+        </div>
+      </div>
+    </div>
+      </gp-product-price>
+  
+    </div><div
+      label="Block" tag="Col" type="component"
+      style="--jc:center"
+      class="gMEuiMbNDf relative flex flex-col"
+    >
+      
+  <script src="https://d2ls1pfffhvy22.cloudfront.net/assets/gp-product-price.js" defer="defer"></script>
+      <gp-product-price
+        gp-data='{"priceType":"regular","uid":"g0g5WdKwP7","locale":"{{shop.locale}}","currency":"{{shop.currency}}","moneyFormat":"{{ shop.money_format | replace: '"', '\\"' | escape }}"}'
+        
+        class=" data-[hidden=true]:hidden"
+        style="--b:solid;--bc:#121212;--bw:0px;--shadow:none;--d:block;--d-mobile:block;--d-tablet:block;--op:100%;--radius:var(--g-radius-none)"
+        data-hidden="false"
+      >
+        
+    <div
+      id="p-price-g0g5WdKwP7"
+        class=" "
+        style=""
+      >
+      <div class="" style="">
+        <div
+          data-gp-text
+          class="[&_p]:inline [&_p]:after:whitespace-pre-wrap [&_p]:after:content-['\A'] gp-price gp-money decoration-g-text-1"
+          style="--w:100%;--tdc:text-1;--tdt:1;--ta:left;--c:#242424;--fs:normal;--ff:var(--g-font-DM-Sans, DM Sans);--weight:700;--ls:normal;--lh:130%;--size:38px;--size-tablet:38px;--size-mobile:33px;word-break:break-word"
+        >
+        
+                  {% if variant.price %} 
+                    {{ variant.price | money}}
+                  {% endif %}
+                
+        </div>
+      </div>
+    </div>
+      </gp-product-price>
+  
+    </div><div
+      label="Block" tag="Col" type="component"
+      style="--jc:center"
+      class="gsh_uxYVZ9 relative flex flex-col"
+    >
+      <div style="--b:solid;--bc:#121212;--bw:0px;--shadow:none;--d:block;--d-mobile:block;--d-tablet:block;--op:100%;--radius:var(--g-radius-none)" class="gcw4YlSZDh ">
+      
+    <div
+      class="flex justify-start"
+    >
+      <div
+        style="--w:20px;--w-tablet:20px;--w-mobile:20px;--bs:solid;--bbw:1px;--bbw-tablet:1px;--bbw-mobile:1px;--t:rotate(90deg);--bc:#E0E0E0"
+        class="block tablet:block mobile:block"
+      ></div>
+      <div
+        class="items-center hidden tablet:hidden mobile:hidden"
+        style="--w:20px;--w-tablet:20px;--w-mobile:20px;--bc:#E0E0E0;--t:rotate(90deg)"
+      >
+        
+    <div
+      class="hidden"
+      style="--w:20px;--w-tablet:20px;--w-mobile:20px;--bc:#E0E0E0;--bs:solid;--bbw:1px;--bbw-tablet:1px;--bbw-mobile:1px;--minw:20px"
+    ></div>
+  
+        
+            <span
+              class="inline-flex items-center justify-center flex-none"
+              style="--mr:var(--g-s-xs);--w:20px;--h:20px;--t:rotate(0);--c:var(--g-c-text-1, text-1)"
+            >
+              <svg height="100%" width="100%" xmlns="http://www.w3.org/2000/svg" className="w-6 h-6"  viewBox="0 0 512 512" fill="currentColor">              <path fill="currentColor" strokeLinecap="round" strokeLinejoin="round" fill="currentColor" d="M428.8 137.6h-86.177a115.52 115.52 0 0 0 2.176-22.4c0-47.914-35.072-83.2-92-83.2-45.314 0-57.002 48.537-75.707 78.784-7.735 12.413-16.994 23.317-25.851 33.253l-.131.146-.129.148C135.662 161.807 127.764 168 120.8 168h-2.679c-5.747-4.952-13.536-8-22.12-8H32c-17.673 0-32 12.894-32 28.8v230.4C0 435.106 14.327 448 32 448h64c8.584 0 16.373-3.048 22.12-8h2.679c28.688 0 67.137 40 127.2 40h21.299c62.542 0 98.8-38.658 99.94-91.145 12.482-17.813 18.491-40.785 15.985-62.791A93.148 93.148 0 0 0 393.152 304H428.8c45.435 0 83.2-37.584 83.2-83.2 0-45.099-38.101-83.2-83.2-83.2zm0 118.4h-91.026c12.837 14.669 14.415 42.825-4.95 61.05 11.227 19.646 1.687 45.624-12.925 53.625 6.524 39.128-10.076 61.325-50.6 61.325H248c-45.491 0-77.21-35.913-120-39.676V215.571c25.239-2.964 42.966-21.222 59.075-39.596 11.275-12.65 21.725-25.3 30.799-39.875C232.355 112.712 244.006 80 252.8 80c23.375 0 44 8.8 44 35.2 0 35.2-26.4 53.075-26.4 70.4h158.4c18.425 0 35.2 16.5 35.2 35.2 0 18.975-16.225 35.2-35.2 35.2zM88 384c0 13.255-10.745 24-24 24s-24-10.745-24-24 10.745-24 24-24 24 10.745 24 24z" /></svg>
+            </span>
+          
+        
+            <span
+              class="inline-flex items-center justify-center flex-none g-paragraph-1"
+              style="--tt:vertical;--c:var(--g-c-text-1, text-1);--mr:var(--g-s-s)"
+            >
+              Title
+            </span>
+          
+        
+    <div
+      class="flex"
+      style="--w:20px;--w-tablet:20px;--w-mobile:20px;--bc:#E0E0E0;--bs:solid;--bbw:1px;--bbw-tablet:1px;--bbw-mobile:1px;--minw:20px"
+    ></div>
+  
+      </div>
+    </div>
+  
+      </div>
+    </div><div
+      label="Block" tag="Col" type="component"
+      style="--jc:center"
+      class="gADxVno3rH relative flex flex-col"
+    >
+      <div style="--b:solid;--bc:#121212;--bw:0px;--shadow:none;--d:block;--d-mobile:block;--d-tablet:block;--op:100%;--radius:var(--g-radius-none);--ml:-14px" class="gVRRwaou4- ">
+      
+  <script src="https://d2ls1pfffhvy22.cloudfront.net/assets/gp-product-tag.js" defer="defer"></script>
+  {% liquid 
+    assign price = variant.price | times: 1.0
+    assign salePrice = variant.compare_at_price | times: 1.0
+    assign priceSave = salePrice | minus: price
+    if salePrice == null or price == null
+      assign pricePercentage = '- ' | append: '0%' | append: ' OFF'
+    else 
+         assign salePercent = priceSave | divided_by: salePrice | times: 100  | round
+                assign pricePercentage = '- ' | append: salePercent | append: '%' | append: ' OFF'
+              
+    endif
+  %}
+
+   <gp-product-tag
+    data-disabled="{%- if priceSave > 0 -%} false {%- else -%} true {%- endif -%}"
+    gp-data='{"setting":{"customContent":{"prefix":"-","suffix":"OFF","unit":"percentage"}}, "id": "gVRRwaou4-", "locale": "{{shop.locale}}", "currency": "{{shop.currency}}", "moneyFormat": "{{ shop.money_format | replace: '"', '\"' | escape }}"}'
+    class="block data-[disabled=true]:hidden "
+    style="--ta:left"
+  >
+ 
+     <div class="inline-flex flex-wrap items-end gap-3">
+       <div
+         class="inline-block g-s-tag-medium"
+         style="--bs:none;--bw:0px;--bc:transparent;--c:#EA3335;--bg:transparent;--radius:var(--g-radius-large)"
+       >
+         
+    <div
+      id="p-tag-gVRRwaou4-"
+        class=" "
+        style=""
+      >
+      <div class="" style="">
+        <div
+          data-gp-text
+          class="[&_p]:inline [&_p]:after:whitespace-pre-wrap [&_p]:after:content-['\A']"
+          style="--w:100%;--ta:left;--c:#F24330;--fs:normal;--ff:var(--g-font-DM-Sans, DM Sans);--weight:700;--ls:normal;--lh:150%;--size:21px;--size-tablet:21px;--size-mobile:19px;word-break:break-word"
+        >
+        {{pricePercentage}}
+        </div>
+      </div>
+    </div>
+       </div>
+     </div>
+
+ </gp-product-tag>
+   
+      </div>
+    </div>
+    </div>
+  
+    <div style="--b:solid;--bc:#121212;--bw:0px;--shadow:none;--d:block;--d-mobile:block;--d-tablet:block;--op:100%;--radius:var(--g-radius-none);--mb:var(--g-s-xl)" class="g9zeTDJwMz ">
+      
+  <script src="https://d2ls1pfffhvy22.cloudfront.net/assets/gp-product-variantV2.js" defer="defer"></script>
+  <gp-product-variants
+    class=""
+    has-pre-selected="true"
+    gp-data='{
+      "setting":{"blankText":"Please select an option","column":{"desktop":1},"hasPreSelected":true,"label":true,"layout":{"desktop":"vertical"},"optionAlign":{"desktop":"left"},"optionType":"singleOption","price":true,"showAsSwatches":true,"soldOutMark":true,"variantPresets":[{"hide":false,"optionName":"base","optionType":"dropdown","presets":{"color":{"height":"32px","spacing":"var(--g-s-l)","width":{"desktop":"","mobile":"45px","tablet":"45px"}},"dropdown":{"fullWidth":{"desktop":true,"mobile":true,"tablet":true},"height":"32px","width":{}},"image":{"height":"32px","spacing":"var(--g-s-l)","width":{"desktop":"","mobile":"64px","tablet":"64px"}},"image_shopify":{"height":"32px","spacing":"var(--g-s-l)","width":{"desktop":"","mobile":"64px","tablet":"64px"}},"rectangle_list":{"height":"32px","spacing":"var(--g-s-l)","width":{"desktop":""}}}},{"hide":false,"optionName":"SELECT YOUR COLOR","optionType":"color","presets":{"color":{"height":"32px","spacing":"var(--g-s-l)","width":{"desktop":"","mobile":"45px","tablet":"45px"}},"dropdown":{"fullWidth":{"desktop":true,"mobile":true,"tablet":true},"height":"32px","width":{}},"image":{"height":"32px","spacing":"var(--g-s-l)","width":{"desktop":"","mobile":"64px","tablet":"64px"}},"image_shopify":{"height":"32px","spacing":"var(--g-s-l)","width":{"desktop":"","mobile":"64px","tablet":"64px"}},"rectangle_list":{"height":"32px","spacing":"var(--g-s-l)","width":{"desktop":""}}}},{"hide":false,"optionName":"Size","optionType":"dropdown","presets":{"color":{"height":"32px","spacing":"var(--g-s-l)","width":{"desktop":"","mobile":"45px","tablet":"45px"}},"dropdown":{"fullWidth":{"desktop":true,"mobile":true,"tablet":true},"height":"32px","width":{}},"image":{"height":"32px","spacing":"var(--g-s-l)","width":{"desktop":"","mobile":"64px","tablet":"64px"}},"image_shopify":{"height":"32px","spacing":"var(--g-s-l)","width":{"desktop":"","mobile":"64px","tablet":"64px"}},"rectangle_list":{"height":"32px","spacing":"var(--g-s-l)","width":{"desktop":""}}}},{"hide":false,"optionName":"Color","optionType":"color","presets":{"color":{"height":"32px","spacing":"var(--g-s-l)","width":{"desktop":"","mobile":"45px","tablet":"45px"}},"dropdown":{"fullWidth":{"desktop":true,"mobile":true,"tablet":true},"height":"32px","width":{}},"image":{"height":"32px","spacing":"var(--g-s-l)","width":{"desktop":"","mobile":"64px","tablet":"64px"}},"image_shopify":{"height":"32px","spacing":"var(--g-s-l)","width":{"desktop":"","mobile":"64px","tablet":"64px"}},"rectangle_list":{"height":"32px","spacing":"var(--g-s-l)","width":{"desktop":""}}}},{"hide":false,"optionName":"Size 2","optionType":"rectangle_list","presets":{"color":{"height":"32px","spacing":"var(--g-s-l)","width":{"desktop":"","mobile":"45px","tablet":"45px"}},"dropdown":{"fullWidth":{"desktop":true,"mobile":true,"tablet":true},"height":"32px","width":{}},"image":{"height":"32px","spacing":"var(--g-s-l)","width":{"desktop":"","mobile":"64px","tablet":"64px"}},"image_shopify":{"height":"32px","spacing":"var(--g-s-l)","width":{"desktop":"","mobile":"64px","tablet":"64px"}},"rectangle_list":{"height":"32px","spacing":"var(--g-s-l)","width":{"desktop":""}}}},{"hide":false,"optionName":"Select Color","optionType":"image_shopify","presets":{"color":{"height":"32px","spacing":"var(--g-s-l)","width":{"desktop":"","mobile":"45px","tablet":"45px"}},"dropdown":{"fullWidth":{"desktop":true,"mobile":true,"tablet":true},"height":"32px","width":{}},"image":{"height":"32px","spacing":"var(--g-s-l)","width":{"desktop":"","mobile":"64px","tablet":"64px"}},"image_shopify":{"height":"32px","spacing":"var(--g-s-l)","width":{"desktop":"","mobile":"64px","tablet":"64px"}},"rectangle_list":{"height":"32px","spacing":"var(--g-s-l)","width":{"desktop":""}}}},{"hide":false,"optionName":"SELECT YOUR SIZE","optionType":"dropdown","presets":{"color":{"height":"32px","spacing":"var(--g-s-l)","width":{"desktop":"","mobile":"45px","tablet":"45px"}},"dropdown":{"fullWidth":{"desktop":true,"mobile":true,"tablet":true},"height":"32px","width":{}},"image":{"height":"32px","spacing":"var(--g-s-l)","width":{"desktop":"","mobile":"64px","tablet":"64px"}},"image_shopify":{"height":"32px","spacing":"var(--g-s-l)","width":{"desktop":"","mobile":"64px","tablet":"64px"}},"rectangle_list":{"height":"32px","spacing":"var(--g-s-l)","width":{"desktop":""}}}},{"hide":false,"optionName":"SELECT COLOR","optionType":"color","presets":{"color":{"height":"32px","spacing":"var(--g-s-l)","width":{"desktop":"","mobile":"45px","tablet":"45px"}},"dropdown":{"fullWidth":{"desktop":true,"mobile":true,"tablet":true},"height":"32px","width":{}},"image":{"height":"32px","spacing":"var(--g-s-l)","width":{"desktop":"","mobile":"64px","tablet":"64px"}},"image_shopify":{"height":"32px","spacing":"var(--g-s-l)","width":{"desktop":"","mobile":"64px","tablet":"64px"}},"rectangle_list":{"height":"32px","spacing":"var(--g-s-l)","width":{"desktop":""}}}},{"hide":false,"optionName":"SELECT SIZE","optionType":"rectangle_list","presets":{"color":{"height":"32px","spacing":"var(--g-s-l)","width":{"desktop":"","mobile":"45px","tablet":"45px"}},"dropdown":{"fullWidth":{"desktop":true,"mobile":true,"tablet":true},"height":"32px","width":{}},"image":{"height":"32px","spacing":"var(--g-s-l)","width":{"desktop":"","mobile":"64px","tablet":"64px"}},"image_shopify":{"height":"32px","spacing":"var(--g-s-l)","width":{"desktop":"","mobile":"64px","tablet":"64px"}},"rectangle_list":{"height":"32px","spacing":"var(--g-s-l)","width":{"desktop":""}}}},{"hide":false,"optionName":"Select Size","optionType":"rectangle_list","presets":{"color":{"height":"32px","spacing":"var(--g-s-l)","width":{"desktop":"","mobile":"45px","tablet":"45px"}},"dropdown":{"fullWidth":{"desktop":true,"mobile":true,"tablet":true},"height":"32px","width":{}},"image":{"height":"32px","spacing":"var(--g-s-l)","width":{"desktop":"","mobile":"64px","tablet":"64px"}},"image_shopify":{"height":"32px","spacing":"var(--g-s-l)","width":{"desktop":"","mobile":"64px","tablet":"64px"}},"rectangle_list":{"height":"32px","spacing":"var(--g-s-l)","width":{"desktop":""}}}},{"hide":false,"optionName":"GemSleep Pack","optionType":"rectangle_list","presets":{"color":{"height":"32px","spacing":"var(--g-s-l)","width":{"desktop":"","mobile":"45px","tablet":"45px"}},"dropdown":{"fullWidth":{"desktop":true,"mobile":true,"tablet":true},"height":"32px","width":{}},"image":{"height":"32px","spacing":"var(--g-s-l)","width":{"desktop":"","mobile":"64px","tablet":"64px"}},"image_shopify":{"height":"32px","spacing":"var(--g-s-l)","width":{"desktop":"","mobile":"64px","tablet":"64px"}},"rectangle_list":{"height":"32px","spacing":"var(--g-s-l)","width":{"desktop":""}}}},{"hide":false,"optionName":"Option","optionType":"rectangle_list","presets":{"color":{"height":"32px","spacing":"var(--g-s-l)","width":{"desktop":"","mobile":"45px","tablet":"45px"}},"dropdown":{"fullWidth":{"desktop":true,"mobile":true,"tablet":true},"height":"32px","width":{}},"image":{"height":"32px","spacing":"var(--g-s-l)","width":{"desktop":"","mobile":"64px","tablet":"64px"}},"image_shopify":{"height":"32px","spacing":"var(--g-s-l)","width":{"desktop":"","mobile":"64px","tablet":"64px"}},"rectangle_list":{"height":"32px","spacing":"var(--g-s-l)","width":{"desktop":""}}}},{"hide":false,"optionName":"Camera Style","optionType":"rectangle_list","presets":{"color":{"height":"32px","spacing":"var(--g-s-l)","width":{"desktop":"","mobile":"45px","tablet":"45px"}},"dropdown":{"fullWidth":{"desktop":true,"mobile":true,"tablet":true},"height":"32px","width":{}},"image":{"height":"32px","spacing":"var(--g-s-l)","width":{"desktop":"","mobile":"64px","tablet":"64px"}},"image_shopify":{"height":"32px","spacing":"var(--g-s-l)","width":{"desktop":"","mobile":"64px","tablet":"64px"}},"rectangle_list":{"height":"32px","spacing":"var(--g-s-l)","width":{"desktop":""}}}},{"hide":false,"optionName":"Style","optionType":"dropdown","presets":{"color":{"height":"32px","spacing":"var(--g-s-l)","width":{"desktop":"","mobile":"45px","tablet":"45px"}},"dropdown":{"fullWidth":{"desktop":true,"mobile":true,"tablet":true},"height":"32px","width":{}},"image":{"height":"32px","spacing":"var(--g-s-l)","width":{"desktop":"","mobile":"64px","tablet":"64px"}},"image_shopify":{"height":"32px","spacing":"var(--g-s-l)","width":{"desktop":"","mobile":"64px","tablet":"64px"}},"rectangle_list":{"height":"32px","spacing":"var(--g-s-l)","width":{"desktop":""}}}},{"hide":false,"optionName":"Serving Size","optionType":"rectangle_list","presets":{"color":{"height":"32px","spacing":"var(--g-s-l)","width":{"desktop":"","mobile":"45px","tablet":"45px"}},"dropdown":{"fullWidth":{"desktop":true,"mobile":true,"tablet":true},"height":"32px","width":{}},"image":{"height":"32px","spacing":"var(--g-s-l)","width":{"desktop":"","mobile":"64px","tablet":"64px"}},"image_shopify":{"height":"32px","spacing":"var(--g-s-l)","width":{"desktop":"","mobile":"64px","tablet":"64px"}},"rectangle_list":{"height":"32px","spacing":"var(--g-s-l)","width":{"desktop":""}}}},{"hide":false,"optionName":"Color Option","optionType":"dropdown","presets":{"color":{"height":"32px","spacing":"var(--g-s-l)","width":{"desktop":"","mobile":"45px","tablet":"45px"}},"dropdown":{"fullWidth":{"desktop":true,"mobile":true,"tablet":true},"height":"32px","width":{}},"image":{"height":"32px","spacing":"var(--g-s-l)","width":{"desktop":"","mobile":"64px","tablet":"64px"}},"image_shopify":{"height":"32px","spacing":"var(--g-s-l)","width":{"desktop":"","mobile":"64px","tablet":"64px"}},"rectangle_list":{"height":"32px","spacing":"var(--g-s-l)","width":{"desktop":""}}}},{"hide":false,"optionName":"Colors","optionType":"color","presets":{"color":{"height":"32px","spacing":"var(--g-s-l)","width":{"desktop":"","mobile":"45px","tablet":"45px"}},"dropdown":{"fullWidth":{"desktop":true,"mobile":true,"tablet":true},"height":"32px","width":{}},"image":{"height":"32px","spacing":"var(--g-s-l)","width":{"desktop":"","mobile":"64px","tablet":"64px"}},"image_shopify":{"height":"32px","spacing":"var(--g-s-l)","width":{"desktop":"","mobile":"64px","tablet":"64px"}},"rectangle_list":{"height":"32px","spacing":"var(--g-s-l)","width":{"desktop":""}}}},{"hide":false,"optionName":"COLOR","optionType":"rectangle_list","presets":{"color":{"height":"32px","spacing":"var(--g-s-l)","width":{"desktop":"","mobile":"45px","tablet":"45px"}},"dropdown":{"fullWidth":{"desktop":true,"mobile":true,"tablet":true},"height":"32px","width":{}},"image":{"height":"32px","spacing":"var(--g-s-l)","width":{"desktop":"","mobile":"64px","tablet":"64px"}},"image_shopify":{"height":"32px","spacing":"var(--g-s-l)","width":{"desktop":"","mobile":"64px","tablet":"64px"}},"rectangle_list":{"height":"32px","spacing":"var(--g-s-l)","width":{"desktop":""}}}},{"hide":false,"optionName":"Size 3","optionType":"dropdown","presets":{"color":{"height":"32px","spacing":"var(--g-s-l)","width":{"desktop":"","mobile":"45px","tablet":"45px"}},"dropdown":{"fullWidth":{"desktop":true,"mobile":true,"tablet":true},"height":"32px","width":{}},"image":{"height":"32px","spacing":"var(--g-s-l)","width":{"desktop":"","mobile":"64px","tablet":"64px"}},"image_shopify":{"height":"32px","spacing":"var(--g-s-l)","width":{"desktop":"","mobile":"64px","tablet":"64px"}},"rectangle_list":{"height":"32px","spacing":"var(--g-s-l)","width":{"desktop":""}}}},{"hide":false,"optionName":"Storage","optionType":"rectangle_list","presets":{"color":{"height":"32px","spacing":"var(--g-s-l)","width":{"desktop":"","mobile":"45px","tablet":"45px"}},"dropdown":{"fullWidth":{"desktop":true,"mobile":true,"tablet":true},"height":"32px","width":{}},"image":{"height":"32px","spacing":"var(--g-s-l)","width":{"desktop":"","mobile":"64px","tablet":"64px"}},"image_shopify":{"height":"32px","spacing":"var(--g-s-l)","width":{"desktop":"","mobile":"64px","tablet":"64px"}},"rectangle_list":{"height":"32px","spacing":"var(--g-s-l)","width":{"desktop":""}}}}]},
+      "styles":{"align":{"desktop":"left"},"dropdownItemWidth":{"desktop":"fill","mobile":"fill","tablet":"fill"},"fixedDropdownWidth":{"desktop":"240px"},"fullWidth":{"desktop":true},"labelColor":"#242424","labelSpacing":"8px","labelTypography":{"custom":{"desktop":{"fontFamily":"heading","fontSize":"16px","fontStyle":"normal","fontWeight":"700","letterSpacing":"0px","lineHeight":"150%"},"mobile":{"fontSize":"14px"},"tablet":{"fontSize":"16px","lineHeight":"150%"}}},"marginBottom":{"desktop":"var(--g-s-l)","mobile":"var(--g-s-xl)"},"optionBgColor":{"active":"transparent","hover":"transparent","normal":"transparent"},"optionBorder":{"active":{"border":"solid","borderLabel":"Style 3","borderType":"style-3","color":"line-3","isCustom":false,"width":"1px 1px 1px 1px"},"hover":{"border":"solid","borderLabel":"Style 3","borderType":"style-3","color":"line-3","isCustom":false,"width":"1px 1px 1px 1px"},"normal":{"border":"solid","borderLabel":"Style 1","borderType":"style-1","color":"#ececec","isCustom":false,"width":"1px 1px 1px 1px"}},"optionHasShadow":{"normal":false},"optionRounded":{"active":{"bblr":"9999px","bbrr":"9999px","btlr":"9999px","btrr":"9999px","radiusType":"circle"},"hover":{"bblr":"9999px","bbrr":"9999px","btlr":"9999px","btrr":"9999px","radiusType":"circle"},"normal":{"bblr":"9999px","bbrr":"9999px","btlr":"9999px","btrr":"9999px","radiusType":"circle"}},"optionShadow":{"normal":{"type":"shadow-1"}},"optionSpacing":"30px","optionTextColor":{"active":"#242424","hover":"#242424","normal":"#424242"},"optionTransform":"default","optionTypography":{"type":"paragraph-2"},"swatchAutoWidth":{"desktop":true},"swatchHeight":{"desktop":"32px"},"swatchItemWidth":{"desktop":"auto"},"swatchSpacing":"var(--g-s-l)","swatchWidth":{"desktop":"80px"},"width":{"desktop":"400px"}}, 
+      "variants":{{product.variants | json | escape}},
+      "optionsWithValues": {{product.options_with_values | json | escape}},
+      "variantSelected": {{ variant | json | escape }},
+      "variantInventoryQuantity": {{product.variants | map: 'inventory_quantity' | json | escape}},
+      "moneyFormat": {{shop.money_format | json | escape}}
+    }
+  '>
+    {%- assign options = product.options_with_values -%}
+    {%- assign variants = product.variants -%}
+    {%- if options.size == 0 or options.size == 1 and options[0].name == 'Title' and options[0].values.size == 1 and options[0].values[0] == 'Default Title' -%}
+      <div>
+      
+      </div>    
+    {% else %}
+      <div
+      class="grid !ml-0"
+      style="--gtc:repeat(1, minmax(0, 1fr));--ta:left;--w:100%;--w-tablet:100%;--w-mobile:100%;--rg:var(--g-s-l);--rg-mobile:var(--g-s-xl)"
+    >
+      
+      {%- for option in options -%}
+        <div
+        option-name="{{option.name | escape}}"
+        class="flex variant-inside flex-col items-start"
+
+        >
+          
+    <div
+      
+        class=" "
+        style="--mr:0px;--mr-tablet:0px;--mr-mobile:0px"
+      >
+      <div class="" style="">
+        <legend
+          data-gp-text
+          class="[&_p]:inline [&_p]:after:whitespace-pre-wrap [&_p]:after:content-['\A'] variant-display"
+          style="--w:100%;word-break:break-word"
+        >
+        {{option.name}}: <span></span>
+        </legend>
+      </div>
+    </div>
+
+          <div
+              variant-option-name="{{option.name | escape}}"
+              class="justify-start flex w-full flex-wrap items-center variant-option-group"
+              style="--rg:var(--g-s-l);--cg:var(--g-s-l)"
+            >
+              {%- assign values = option.values -%}
+              {%- assign rootForloop = forloop.index0 -%}
+              {%- if option.position == 1 -%}
+                {%- assign selectedValue = variant.option1 -%}
+              {%- elsif option.position == 2 -%}
+                {%- assign selectedValue = variant.option2 -%}
+              {%- else -%}
+                {%- assign selectedValue = variant.option3 -%}
+              {%- endif -%}
+              
+              
+    {% assign optionRendered = false %}
+    {%  assign swatches = shop.metafields.GEMPAGES.swatches %}
+    {%  assign swatchesItems = swatches | split: '($1)'  %}
+    {% for swatchesItem in swatchesItems %}
+      {% assign colorArraysString = "" %}
+      {% assign labelsString = "" %}
+      {% assign imageUrlsString = "" %}
+    
+      {%  assign attrItems = swatchesItem | split: '($3)'  %}
+      {% for attrItem in attrItems %}
+        {%  assign attrs = attrItem | split: '($2)'  %}
+    
+        
+          {% assign optionKey = attrs[0] %}
+          {% assign optionValue = attrs[1] %}
+          {% if optionKey == 'optionTitle' %}
+                {% assign optionTitle = optionValue %}
+              {% elsif optionKey == 'optionType' %}
+                {% assign optionType = optionValue %}
+            {% endif %}
+        
+
+            {% if optionKey == 'optionValues' %}
+            
+              {% assign opValueItems = optionValue | split: '($4)'  %}
+              {% for opValueItem in opValueItems %}
+                {% assign opValueItemAttrs = opValueItem | split: '($6)'  %}
+                {% for opValueItemAttr in opValueItemAttrs %}
+                  {% assign attrs = opValueItemAttr | split: '($5)'  %}
+                  {% assign opValueItemKey = attrs[0] %}
+                  {% assign opValueItemValue = attrs[1] %}
+
+                  {% if opValueItemKey == 'label' %}
+                    {% assign labelsString = labelsString | append: opValueItemValue %}
+                    {% assign labelsString = labelsString | append: "($8)" %}
+                  {% endif %}
+
+                  {% if opValueItemKey == 'colors' %}   
+                    {% assign colorArraysString = colorArraysString | append: opValueItemValue %}
+                    {% assign colorArraysString = colorArraysString | append: "($8)" %}
+                  {% endif %}
+
+                  {% if opValueItemKey == 'imageUrl' %}   
+                    {% assign imageUrlsString = imageUrlsString | append: opValueItemValue %}
+                    {% assign imageUrlsString = imageUrlsString | append: "($8)" %}
+                    
+                  {% endif %}
+                {% endfor %}
+              {% endfor %}
+            {% endif %}
+        
+      {% endfor %}
+      {% assign labels = labelsString | split: '($8)' %}
+      {% assign colorStrings = colorArraysString | split: '($8)' %}
+      {% assign imageUrls = imageUrlsString | split: '($8)' %}
+
+      {% if optionTitle == option.name %}
+        {% assign optionRendered = true %}
+        {%- for value in values -%}
+          
+    {%- liquid
+      assign option_disabled = true
+      for variantItem in product.variants
+        case option.position
+          when 1
+            if variantItem.available and variantItem.option1 == value
+              assign option_disabled = false
+            endif
+          when 2
+            if variantItem.available and variantItem.option2 == value
+              assign option_disabled = false
+            endif
+          when 3
+            if variantItem.available and variantItem.option3 == value
+              assign option_disabled = false
+            endif
+        endcase
+      endfor
+    -%}
+
+  {% assign option_disabled = false %}
+  <div
+    id="{{option.name | escape}}-{{value | escape}}"
+    for="g9zeTDJwMz-{{option.name | escape}}-{{option.position}}-{{ forloop.index }}"
+    class="{%- if option_disabled == true -%} w-auto h-auto option-item-active option-item  {% else %} option-item-active option-item {%- endif -%}"
+  >
+    <input
+      checked="{%- if option.selected_value == value -%}true{% else %}false{%- endif -%}"
+      name="{{product.id}}-options-{{option.name | escape}}"
+      id="g9zeTDJwMz-{{option.name | escape}}-{{option.position}}-{{ forloop.index }}"
+      value="{{value | escape}}"
+      type="radio"
+      class="sr-only"
+    />
+    <span class="sr-only">{{value | escape}}</span>
+    
+      
+    {% assign colorsString = null %}
+    {% assign colors = null %}
+    {% for label in labels %}
+      {% if label == value %}
+        {% assign colorsString = colorStrings[forloop.index0] %}
+      {% endif %}
+    {% endfor %}
+    {% if colorsString != null %}
+      {% assign colors = colorsString | split: '($7)' %}
+    {% endif %}
+    <div
+    class="
+    {%- if selectedValue == value -%}
+      relative cursor-pointer items-center justify-center text-center option-value-wrapper overflow-hidden !w-full h-full data-[disabled='disabled']:pointer-events-none data-[disabled='disabled']:!cursor-not-allowed data-[hidden='true']:hidden data-[hidden='false']:flex g-paragraph-2 !rounded-full p-[4px]
+    {%- else -%}
+      relative cursor-pointer items-center justify-center text-center option-value-wrapper overflow-hidden !w-full h-full data-[disabled='disabled']:pointer-events-none data-[disabled='disabled']:!cursor-not-allowed data-[hidden='true']:hidden data-[hidden='false']:flex g-paragraph-2 !rounded-full p-[4px]
+    {%- endif -%}
+    "
+    style="
+      {%- if selectedValue == value -%}
+        --bg: transparent;--bs: solid;--bw: 1px 1px 1px 1px;--bc: var(--g-c-line-3, line-3);--radius: var(--g-radius-circle);
+      {%- else -%}
+        
+      {%- endif -%}
+      "
+    id="value-wrapper-{{option.name | escape | strip}}-{{value | escape | strip}}"
+    option-data="{{option.name | escape}}"
+    option-value="{{value | escape}}"
+    option-position="{{option.position}}"
+    option-type="color"
+    data-disabled="{%- if option_disabled == true -%} disabled  {%- endif -%}"
+    data-hidden='true'
+  >
+    {%- if colors != null and colors.size > 0 -%} 
+      {%- for color in colors -%}
+        <div
+          class="relative h-full w-full min-w-fit flex rounded-full color-circle before:hidden before:absolute before:top-[50%] before:-rotate-45 before:border-t before:z-1 before:content-[''] before:w-full"
+          style="background-color: {{color}};"></div>
+      {%- endfor -%}
+       {% else %} 
+      <div class="option-value overflow-hidden relative ">
+      
+      <span class="text-center overflow-hidden text-ellipsis px-1 g-paragraph-2">{{value}}</span>
+      </div>
+     {%- endif -%}
+  </div>
+  
+      
+    {% assign imageUrl = null %}
+    {% for label in labels %}
+    {% if label == value %}
+      {% assign imageUrl = imageUrls[forloop.index0] %}
+    {% endif %}
+    {% endfor %}
+    <div
+    class="
+    {%- if selectedValue == value -%}
+      relative cursor-pointer items-center justify-center text-center option-value-wrapper overflow-hidden !w-full h-full data-[disabled='disabled']:pointer-events-none data-[disabled='disabled']:!cursor-not-allowed data-[hidden='true']:hidden data-[hidden='false']:flex g-paragraph-2
+    {%- else -%}
+      relative cursor-pointer items-center justify-center text-center option-value-wrapper overflow-hidden !w-full h-full data-[disabled='disabled']:pointer-events-none data-[disabled='disabled']:!cursor-not-allowed data-[hidden='true']:hidden data-[hidden='false']:flex g-paragraph-2
+    {%- endif -%}
+    "
+    style="
+      {%- if selectedValue == value -%}
+        --bg: transparent;--bs: solid;--bw: 1px 1px 1px 1px;--bc: var(--g-c-line-3, line-3);--radius: var(--g-radius-circle);
+      {%- else -%}
+        --bs: solid;--hvr-bs: solid;--bw: 1px 1px 1px 1px;--hvr-bw: 1px 1px 1px 1px;--bc: #ececec;--hvr-bc: var(--g-c-line-3, line-3);
+      {%- endif -%}
+      "
+    id="value-wrapper-{{option.name | escape | strip}}-{{value | escape | strip}}"
+    option-data="{{option.name | escape}}"
+    option-value="{{value | escape}}"
+    option-position="{{option.position}}"
+    option-type="image"
+    data-disabled="{%- if option_disabled == true -%} disabled  {%- endif -%}"
+    data-hidden='true'
+  >
+    {%- if imageUrl != null and imageUrl != "" -%} 
+      <img class="h-full object-cover w-full rounded-none" src="{{imageUrl}}" alt="" />
+     {% else %} 
+      <div class="option-value overflow-hidden relative flex flex-col justify-center items-center gap-[6px]">
+      <svg width="15" height="12" viewBox="0 0 15 12" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="2" cy="2" r="2" fill="#D6D6D6"></circle><path d="M0.196854 10.6453L2.40968 8.05946C2.4846 7.97175 2.57719 7.9008 2.68141 7.85124C2.78562 7.80168 2.89913 7.77461 3.01452 7.77181C3.12991 7.76902 3.2446 7.79055 3.3511 7.835C3.45761 7.87945 3.55353 7.94583 3.63262 8.02981L4.66733 9.12714L8.71205 4.29464C8.79123 4.19995 8.89077 4.1243 9.00325 4.07333C9.11573 4.02236 9.23827 3.99737 9.36176 4.00022C9.48524 4.00307 9.6065 4.03369 9.71651 4.08979C9.82651 4.1459 9.92245 4.22605 9.99717 4.32429L14.8329 10.6772C14.9254 10.7989 14.982 10.9441 14.9964 11.0962C15.0107 11.2484 14.9823 11.4016 14.9144 11.5385C14.8464 11.6754 14.7415 11.7907 14.6115 11.8713C14.4815 11.952 14.3316 11.9948 14.1786 11.995L0.822048 12C0.664945 11.9999 0.511148 11.9549 0.378853 11.8703C0.246557 11.7857 0.141299 11.6649 0.0755311 11.5224C0.00976323 11.3799 -0.013762 11.2216 0.00773837 11.0661C0.0292388 10.9107 0.0948652 10.7646 0.196854 10.6453Z" fill="#D6D6D6"></path></svg>
+      <span class="text-center overflow-hidden text-ellipsis px-1 g-paragraph-2">{{value}}</span>
+      </div>
+     {%- endif -%}
+  </div>
+  
+      
+      {% assign imageUrl = null %}
+      {% for variant in variants %}
+        {% assign valueIncludesSelectedOption = false %}
+        {% for item in variant.options %}
+          {% if item == value %}
+          {% assign valueIncludesSelectedOption = true %}
+          {% endif %}
+        {% endfor %}
+        {% if valueIncludesSelectedOption and variant.featured_image or variant.featured_media%}
+          {% unless imageUrl %}
+            {% if variant.featured_media %}
+              {% assign imageUrl = variant.featured_media.preview_image.src | product_img_url: '200x'  %}
+            {% else %}
+              {% assign imageUrl = variant.featured_image.src | product_img_url: '200x'  %}
+            {% endif %}
+          {% endunless %}
+        {% endif %}
+      {% endfor %}
+      <div
+    class="
+    {%- if selectedValue == value -%}
+      relative cursor-pointer items-center justify-center text-center option-value-wrapper overflow-hidden !w-full h-full data-[disabled='disabled']:pointer-events-none data-[disabled='disabled']:!cursor-not-allowed data-[hidden='true']:hidden data-[hidden='false']:flex g-paragraph-2
+    {%- else -%}
+      relative cursor-pointer items-center justify-center text-center option-value-wrapper overflow-hidden !w-full h-full data-[disabled='disabled']:pointer-events-none data-[disabled='disabled']:!cursor-not-allowed data-[hidden='true']:hidden data-[hidden='false']:flex g-paragraph-2
+    {%- endif -%}
+    "
+    style="
+      {%- if selectedValue == value -%}
+        --bg: transparent;--bs: solid;--bw: 1px 1px 1px 1px;--bc: var(--g-c-line-3, line-3);--radius: var(--g-radius-circle);
+      {%- else -%}
+        --bs: solid;--hvr-bs: solid;--bw: 1px 1px 1px 1px;--hvr-bw: 1px 1px 1px 1px;--bc: #ececec;--hvr-bc: var(--g-c-line-3, line-3);
+      {%- endif -%}
+      "
+    id="value-wrapper-{{option.name | escape | strip}}-{{value | escape | strip}}"
+    option-data="{{option.name | escape}}"
+    option-value="{{value | escape}}"
+    option-position="{{option.position}}"
+    option-type="image_shopify"
+    data-disabled="{%- if option_disabled == true -%} disabled  {%- endif -%}"
+    data-hidden='true'
+  >
+    {%- if imageUrl != null and imageUrl != "" -%} 
+      <img class="h-full object-cover w-full rounded-none" src="{{imageUrl}}" alt="" />
+     {% else %} 
+      <div class="option-value overflow-hidden relative flex flex-col justify-center items-center gap-[6px]">
+      <svg width="15" height="12" viewBox="0 0 15 12" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="2" cy="2" r="2" fill="#D6D6D6"></circle><path d="M0.196854 10.6453L2.40968 8.05946C2.4846 7.97175 2.57719 7.9008 2.68141 7.85124C2.78562 7.80168 2.89913 7.77461 3.01452 7.77181C3.12991 7.76902 3.2446 7.79055 3.3511 7.835C3.45761 7.87945 3.55353 7.94583 3.63262 8.02981L4.66733 9.12714L8.71205 4.29464C8.79123 4.19995 8.89077 4.1243 9.00325 4.07333C9.11573 4.02236 9.23827 3.99737 9.36176 4.00022C9.48524 4.00307 9.6065 4.03369 9.71651 4.08979C9.82651 4.1459 9.92245 4.22605 9.99717 4.32429L14.8329 10.6772C14.9254 10.7989 14.982 10.9441 14.9964 11.0962C15.0107 11.2484 14.9823 11.4016 14.9144 11.5385C14.8464 11.6754 14.7415 11.7907 14.6115 11.8713C14.4815 11.952 14.3316 11.9948 14.1786 11.995L0.822048 12C0.664945 11.9999 0.511148 11.9549 0.378853 11.8703C0.246557 11.7857 0.141299 11.6649 0.0755311 11.5224C0.00976323 11.3799 -0.013762 11.2216 0.00773837 11.0661C0.0292388 10.9107 0.0948652 10.7646 0.196854 10.6453Z" fill="#D6D6D6"></path></svg>
+      <span class="text-center overflow-hidden text-ellipsis px-1 g-paragraph-2">{{value}}</span>
+      </div>
+     {%- endif -%}
+  </div>
+  
+      <div
+    class="
+    {%- if selectedValue == value -%}
+      relative cursor-pointer items-center justify-center text-center option-value-wrapper overflow-hidden !w-full h-full data-[disabled='disabled']:pointer-events-none data-[disabled='disabled']:!cursor-not-allowed data-[hidden='true']:hidden data-[hidden='false']:flex g-paragraph-2
+    {%- else -%}
+      relative cursor-pointer items-center justify-center text-center option-value-wrapper overflow-hidden !w-full h-full data-[disabled='disabled']:pointer-events-none data-[disabled='disabled']:!cursor-not-allowed data-[hidden='true']:hidden data-[hidden='false']:flex g-paragraph-2
+    {%- endif -%}
+    "
+    style="
+      {%- if selectedValue == value -%}
+        --bg: transparent;--bs: solid;--bw: 1px 1px 1px 1px;--bc: var(--g-c-line-3, line-3);--c: #242424;--radius: var(--g-radius-circle);
+      {%- else -%}
+        --hvr-bg: transparent;--bg: transparent;--c: #424242;--hvr-c: #242424;--bs: solid;--hvr-bs: solid;--bw: 1px 1px 1px 1px;--hvr-bw: 1px 1px 1px 1px;--bc: #ececec;--hvr-bc: var(--g-c-line-3, line-3);
+      {%- endif -%}
+      "
+    id="value-wrapper-{{option.name | escape | strip}}-{{value | escape | strip}}"
+    option-data="{{option.name | escape}}"
+    option-value="{{value | escape}}"
+    option-position="{{option.position}}"
+    option-type="rectangle_list"
+    data-disabled="{%- if option_disabled == true -%} disabled  {%- endif -%}"
+    data-hidden='true'
+  >
+    
+      <div class="option-value overflow-hidden relative ">
+      
+      <span class="text-center g-paragraph-2">{{value}}</span>
+      </div>
+    
+  </div>
+    
+  </div>
+          
+    <select
+    autocomplete="off"
+    id="p-variant-dropdown-{{option.position}}"
+    name="{%- if option -%}{{option.name | escape}}{% else %}Select Option{%- endif -%}"
+    option-data="{{option.name}}"
+    option-type="{{optionType}}"
+    option-renderer="{{optionRendered}}"
+    class="truncate bg-auto pl-4 pr-6 outline-none dropdown-option-item hidden hover:border-g-line-3 g-paragraph-2 outline-none shadow-none"
+ 
+    style="--bg:transparent;--bs:solid;--bw:1px 1px 1px 1px;--bc:#ececec;--tt:default;--hvr-c:#242424;--c:#424242;--hvr-bg:transparent;--h:32px;--w:100%;--w-tablet:100%;--w-mobile:100%;--hvr-bs:solid;--hvr-bw:1px 1px 1px 1px;--hvr-bc:var(--g-c-line-3, line-3);appearance:none;background-image:url(https://cdn.shopify.com/s/files/1/1827/4239/t/1/assets/ico-select.svg?v=155563818344741998551488860031);background-repeat:no-repeat;background-position:right 10px center"
+  >
+  
+  {%- for value in values -%}
+          {%- liquid
+            assign option_disabled = true
+            for variantItem in product.variants
+              case option.position
+                when 1
+                  if variantItem.available and variantItem.option1 == value
+                    assign option_disabled = false
+                  endif
+                when 2
+                  if variantItem.available and variantItem.option2 == value
+                    assign option_disabled = false
+                  endif
+                when 3
+                  if variantItem.available and variantItem.option3 == value
+                    assign option_disabled = false
+                  endif
+              endcase
+            endfor
+          -%}
+          {%- if value == selectedValue -%}
+              <option selected option-data="{{option.name | escape}}"
+                  option-value="{{value | escape}}" option-position="{{option.position}}" class="option-value-wrapper" value="{{value | escape}}" key="{{value | escape}}">
+                  {{value}} 
+              </option>
+              {% else %}
+              <option  option-data="{{option.name | escape}}"
+                  option-value="{{value | escape}}" option-position="{{option.position}}" class="option-value-wrapper" value="{{value | escape}}" key="{{value | escape}}">
+                  {{value}} 
+              </option>
+              {%- endif -%}
+         
+        {%- endfor -%}
+  </select>
+    
+        {%- endfor -%}
+      {% endif %}
+    {% endfor %}
+    
+    {% if optionRendered == false %}
+      
+    {%- for value in values -%}
+      
+    {%- liquid
+      assign option_disabled = true
+      for variantItem in product.variants
+        case option.position
+          when 1
+            if variantItem.available and variantItem.option1 == value
+              assign option_disabled = false
+            endif
+          when 2
+            if variantItem.available and variantItem.option2 == value
+              assign option_disabled = false
+            endif
+          when 3
+            if variantItem.available and variantItem.option3 == value
+              assign option_disabled = false
+            endif
+        endcase
+      endfor
+    -%}
+
+  {% assign option_disabled = false %}
+  <div
+    id="{{option.name | escape}}-{{value | escape}}"
+    for="g9zeTDJwMz-{{option.name | escape}}-{{option.position}}-{{ forloop.index }}"
+    class="{%- if option_disabled == true -%} w-auto h-auto option-item-active option-item  {% else %} option-item-active option-item {%- endif -%}"
+  >
+    <input
+      checked="{%- if option.selected_value == value -%}true{% else %}false{%- endif -%}"
+      name="{{product.id}}-options-{{option.name | escape}}"
+      id="g9zeTDJwMz-{{option.name | escape}}-{{option.position}}-{{ forloop.index }}"
+      value="{{value | escape}}"
+      type="radio"
+      class="sr-only"
+    />
+    <span class="sr-only">{{value | escape}}</span>
+    
+    <div
+    class="
+    {%- if selectedValue == value -%}
+      relative cursor-pointer items-center justify-center text-center option-value-wrapper overflow-hidden !w-full h-full data-[disabled='disabled']:pointer-events-none data-[disabled='disabled']:!cursor-not-allowed data-[hidden='true']:hidden data-[hidden='false']:flex g-paragraph-2
+    {%- else -%}
+      relative cursor-pointer items-center justify-center text-center option-value-wrapper overflow-hidden !w-full h-full data-[disabled='disabled']:pointer-events-none data-[disabled='disabled']:!cursor-not-allowed data-[hidden='true']:hidden data-[hidden='false']:flex g-paragraph-2
+    {%- endif -%}
+    "
+    style="
+      {%- if selectedValue == value -%}
+        --bg: transparent;--bs: solid;--bw: 1px 1px 1px 1px;--bc: var(--g-c-line-3, line-3);--c: #242424;--radius: var(--g-radius-circle);
+      {%- else -%}
+        --hvr-bg: transparent;--bg: transparent;--c: #424242;--hvr-c: #242424;--bs: solid;--hvr-bs: solid;--bw: 1px 1px 1px 1px;--hvr-bw: 1px 1px 1px 1px;--bc: #ececec;--hvr-bc: var(--g-c-line-3, line-3);
+      {%- endif -%}
+      "
+    id="value-wrapper-{{option.name | escape | strip}}-{{value | escape | strip}}"
+    option-data="{{option.name | escape}}"
+    option-value="{{value | escape}}"
+    option-position="{{option.position}}"
+    option-type="rectangle_list"
+    data-disabled="{%- if option_disabled == true -%} disabled  {%- endif -%}"
+    data-hidden='true'
+  >
+    
+      <div class="option-value overflow-hidden relative ">
+      
+      <span class="text-center g-paragraph-2">{{value}}</span>
+      </div>
+    
+  </div>
+    
+  </div>
+    {%- endfor -%}
+    
+    {% endif %}
+    
+          </div>
+      </div>
+      {%- endfor -%}
+    
+    </div>
+    {%- endif -%}
+    
+  </gp-product-variants>
+  
+   
+      </div><div style="--b:solid;--bc:#121212;--bw:0px;--shadow:none;--d:block;--d-mobile:block;--d-tablet:block;--op:100%;--radius:var(--g-radius-none);--mb:var(--g-s-2xl)" class="gZI1bhJVec ">
+      
+  <script src="https://d2ls1pfffhvy22.cloudfront.net/assets/gp-product-description.js" defer="defer"></script>
+  <gp-product-description class="" gp-data='{"setting":{"color":"#424242","enableViewMoreIcon":true,"hasLineClamp":{"desktop":false},"hasTextShadow":false,"htmlTag":"html","lineClamp":{"desktop":12},"textAlign":{"desktop":"left"},"textShadow":{"type":"shadow-1"},"transform":"default","typo":{"attrs":{"color":"#424242"},"custom":{"fontFamily":"DM Sans","fontSize":{"desktop":"16px","mobile":"14px","tablet":"16px"},"fontStyle":"normal","fontVariants":["regular","italic","500","500italic","700","700italic"],"fontWeight":"400","letterSpacing":"normal","lineHeight":"150%"},"type":"paragraph-1"},"typography":{"type":"paragraph-1"},"viewLessText":"View less","viewMoreColor":{"hover":"text-2","normal":"text-1"},"viewMoreText":"View more"},"styles":{"color":"#424242","enableViewMoreIcon":true,"hasLineClamp":{"desktop":false},"hasTextShadow":false,"htmlTag":"html","lineClamp":{"desktop":12},"textAlign":{"desktop":"left"},"textShadow":{"type":"shadow-1"},"transform":"default","typo":{"attrs":{"color":"#424242"},"custom":{"fontFamily":"DM Sans","fontSize":{"desktop":"16px","mobile":"14px","tablet":"16px"},"fontStyle":"normal","fontVariants":["regular","italic","500","500italic","700","700italic"],"fontWeight":"400","letterSpacing":"normal","lineHeight":"150%"},"type":"paragraph-1"},"typography":{"type":"paragraph-1"},"viewLessText":"View less","viewMoreColor":{"hover":"text-2","normal":"text-1"},"viewMoreText":"View more"},"defaultStyle":{"--ta":"left","--c":"#424242","--tt":"default","--fs":"normal","--ff":"var(--g-font-DM-Sans, DM Sans)","--weight":"400","--ls":"normal","--lh":"150%","--size":"16px","--size-tablet":"16px","--size-mobile":"14px"},"collapseStyle":{"--ta":"left","--c":"#424242","--tt":"default","--fs":"normal","--ff":"var(--g-font-DM-Sans, DM Sans)","--weight":"400","--ls":"normal","--lh":"150%","--size":"16px","--size-tablet":"16px","--size-mobile":"14px","--line-clamp":12}}'>
+  {%- unless product -%}
+    <p>Product not found</p>
+  {%- else -%}
+    <div
+      class="relative p-description-wrapper gp-p-description-text break-words safari:[&_p]:inline safari:[&_p]:after:whitespace-pre data-[browser=safari]:after:content-[' '] data-[browser=safari]:after:absolute data-[browser=safari]:after:left-0 data-[browser=safari]:after:right-0 data-[browser=safari]:after:bottom-0 data-[browser=safari]:after:w-full data-[browser=safari]:after:h-1/2 data-[browser=safari]:after:bg-gradient-to-t data-[browser=safari]:after:from-white"
+      style="--ta:left;--c:#424242;--tt:default;--fs:normal;--ff:var(--g-font-DM-Sans, DM Sans);--weight:400;--ls:normal;--lh:150%;--size:16px;--size-tablet:16px;--size-mobile:14px;--line-clamp:unset;--line-clamp-tablet:unset;--line-clamp-mobile:unset"
+    >
+    {{product.description}}
+    </div>
+    <button
+      type="button"
+      class="p-description-show-more mt-4 hover:opacity-80 transition-all"
+      style="--tt:default;--fs:normal;--ff:var(--g-font-DM-Sans, DM Sans);--weight:400;--ls:normal;--lh:150%;--size:16px;--size-tablet:16px;--size-mobile:14px;--c:#424242;--d:none;--d-mobile:block;--d-tablet:block;display:none"
+    >
+    
+      View more
+      <svg
+          class="ml-1 inline-block"
+          style="display: inline-block; margin-left: 1px;"
+          height="1em"
+          width="1em"
+          viewBox="0 0 22 12"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+              d="M1.70711 0.292893C1.31658 -0.0976311 0.683417 -0.0976311 0.292893 0.292893C-0.0976311 0.683417 -0.0976311 1.31658 0.292893 1.70711L1.70711 0.292893ZM11 11L10.2929 11.7071C10.6834 12.0976 11.3166 12.0976 11.7071 11.7071L11 11ZM21.7071 1.70711C22.0976 1.31658 22.0976 0.683417 21.7071 0.292893C21.3166 -0.0976311 20.6834 -0.0976311 20.2929 0.292893L21.7071 1.70711ZM0.292893 1.70711L10.2929 11.7071L11.7071 10.2929L1.70711 0.292893L0.292893 1.70711ZM11.7071 11.7071L21.7071 1.70711L20.2929 0.292893L10.2929 10.2929L11.7071 11.7071Z"
+              fill="currentColor"
+          />
+        </svg>
+    </button>
+  {%- endunless -%}
+  {% style %}
+    .p-description-wrapper.gp-p-description-text * {
+      color: inherit
+    }
+  {% endstyle %}
+  </gp-product-description>
+  
+      </div>
+      
+      
+    <div
+      parentTag="Col" id="gKnpGQ2Os_"
+        style="--b:dashed;--bc:#EA3335;--bw:1px 1px 1px 1px;--shadow:none;--d:grid;--d-mobile:grid;--d-tablet:grid;--op:100%;--radius:var(--g-radius-none);--mb:var(--g-s-2xl);--pt:var(--g-s-l);--pl:var(--g-s-l);--pb:var(--g-s-l);--pr:var(--g-s-l);--cg:var(--g-s-l);--pc:start;--gtc:minmax(0, auto) minmax(0, auto);--gtc-mobile:minmax(0, auto) minmax(0, auto);--w:100%;--w-tablet:100%;--w-mobile:100%;--bgc:transparent;--bgi:url();--bgp:50% 50%;--bgs:cover;--bgr:no-repeat;--bga:scroll"
+        class="gKnpGQ2Os_ mx-auto mb-0 grid max-w-full gap-y-0 transition-colors duration-200 ease-in-out [&_*]:max-w-full"
+    >
+    <div
+      label="Block" tag="Col" type="component"
+      style="--jc:center"
+      class="giozBUR8a1 relative flex flex-col"
+    >
+      <div
+    
+    role="presentation"
+    class="group/image gZ1RiJkyZt"
+    style="--b:solid;--bc:#121212;--bw:0px;--shadow:none;--d:block;--d-mobile:block;--d-tablet:block;--op:100%;--radius:var(--g-radius-none);--ta:left"
+    >
+    <figure
+      class="relative inline-block overflow-hidden align-middle pointer-events-none"
+      style="--w:100px;--w-tablet:100px;--w-mobile:100px;--h:auto;--h-tablet:auto;--h-mobile:auto;border-radius:inherit"
+    >
+      <div
+        class="pointer-events-auto h-full"
+        
+      >
+        <img
+    quality="70" title="Image Title"
+    draggable="false"
+    class="inline-block w-full h-full max-w-full flex gp_lazyload"
+    data-src="https://ucarecdn.com/2cd435ff-5cdf-4de5-b3c1-0d7662606287/-/format/auto/-/preview/3000x3000/-/quality/lighter/10.png" data-srcset="https://ucarecdn.com/2cd435ff-5cdf-4de5-b3c1-0d7662606287/-/format/auto/-/preview/3000x3000/-/quality/lighter/10.png 768w,https://ucarecdn.com/2cd435ff-5cdf-4de5-b3c1-0d7662606287/-/format/auto/-/preview/3000x3000/-/quality/lighter/10.png 1024w,https://ucarecdn.com/2cd435ff-5cdf-4de5-b3c1-0d7662606287/-/format/auto/-/preview/3000x3000/-/quality/lighter/10.png 1440w" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAA1JREFUGFdj+Pr1638ACaED3/nOThIAAAAASUVORK5CYII=" width="149" height="132" alt="Alt Image" priority
+    sizes="100vw"
+    style="--aspect:149/132;--aspect-tablet:149/132;--aspect-mobile:149/132;--objf:cover;--bs:none;--bw:0px;--bc:transparent;--radius:var(--g-radius-none);--w:100%"
+  />
+      </div>
+    </figure>
+  </div>
+    </div><div
+      label="Block" tag="Col" type="component"
+      style="--jc:center"
+      class="g_GOF5YPN0 relative flex flex-col"
+    >
+      <div style="--b:solid;--bc:#121212;--bw:0px;--shadow:none;--d:block;--d-mobile:block;--d-tablet:block;--op:100%;--radius:var(--g-radius-none);--mb:var(--g-s-s)" class="gPVcup8ele ">
+      
+    <div
+      parentTag="Col"
+        class="gPVcup8ele "
+        style="--tt:default;--ta:left"
+      >
+      <div class="flex" style="--jc:left">
+        <h2
+          data-gp-text
+          class="[&_p]:inline [&_p]:after:whitespace-pre-wrap [&_p]:after:content-['\A'] gp-text"
+          style="--w:100%;--w-tablet:100%;--w-mobile:100%;--ts:none;--ta:left;--c:var(--g-c-text-2, text-2);--fs:normal;--ff:var(--g-font-DM-Sans, DM Sans);--weight:400;--ls:normal;--lh:150%;--size:21px;--size-tablet:21px;--size-mobile:19px;word-break:break-word"
+        >
+        <p>Free Hemoton Helmet!</p>
+        </h2>
+      </div>
+    </div>
+      </div>
+    <div
+      parentTag="Col"
+        class="g56qhHrBw7 "
+        style="--tt:default;--ta:left;--b:solid;--bc:#121212;--bw:0px;--shadow:none;--d:block;--d-mobile:block;--d-tablet:block;--op:100%;--radius:var(--g-radius-none)"
+      >
+      <div class="flex" style="--jc:left">
+        <div
+          data-gp-text
+          class="[&_p]:inline [&_p]:after:whitespace-pre-wrap [&_p]:after:content-['\A'] gp-text"
+          style="--w:100%;--w-tablet:100%;--w-mobile:100%;--ts:none;--ta:left;--line-clamp:unset;--line-clamp-tablet:unset;--line-clamp-mobile:unset;--c:#424242;--fs:normal;--ff:var(--g-font-DM-Sans, DM Sans);--weight:400;--ls:normal;--lh:150%;--size:16px;--size-tablet:16px;--size-mobile:14px;word-break:break-word"
+        >
+        <p>When you buy one Hemoton Bike, get one free Hemoton Helmet <strong>$19,95 !</strong></p>
+        </div>
+      </div>
+    </div>
+    </div>
+    </div>
+  
+    
+      
+      
+    <div
+      parentTag="Col" id="gxSclp0MZq"
+        style="--b:solid;--bc:#121212;--bw:0px;--shadow:none;--d:grid;--d-mobile:grid;--d-tablet:grid;--op:100%;--radius:var(--g-radius-none);--mb:var(--g-s-2xl);--cg:var(--g-s-2xl);--pc:start;--gtc:minmax(0, 6fr) minmax(0, 6fr);--gtc-mobile:minmax(0, 12fr);--w:100%;--w-tablet:100%;--w-mobile:100%;--bgc:transparent;--bgi:url();--bgp:50% 50%;--bgs:cover;--bgr:no-repeat;--bga:scroll"
+        class="gxSclp0MZq mx-auto mb-0 grid max-w-full gap-y-0 transition-colors duration-200 ease-in-out [&_*]:max-w-full"
+    >
+    <div
+      label="Block" tag="Col" type="component"
+      style="--jc:start"
+      class="gmGF8iz_Yh relative flex flex-col"
+    >
+      
+      
+      
+    <div
+      parentTag="Col" id="gRjm1sWVMm"
+        style="--b:solid;--bc:#121212;--bw:0px;--shadow:none;--d:grid;--d-mobile:grid;--d-tablet:grid;--op:100%;--radius:var(--g-radius-none);--mb:var(--g-s-2xl);--cg:var(--g-s-l);--pc:start;--gtc:minmax(0, auto) minmax(0, auto);--w:100%;--w-tablet:100%;--w-mobile:100%;--bgc:transparent;--bgi:url();--bgp:50% 50%;--bgs:cover;--bgr:no-repeat;--bga:scroll"
+        class="gRjm1sWVMm mx-auto mb-0 grid max-w-full gap-y-0 transition-colors duration-200 ease-in-out [&_*]:max-w-full"
+    >
+    <div
+      label="Block" tag="Col" type="component"
+      style="--jc:center"
+      class="ga51nAOvox relative flex flex-col"
+    >
+      <div
+    
+    role="presentation"
+    class="group/image gBtrh7n2JN"
+    style="--b:solid;--bc:#121212;--bw:0px;--shadow:none;--d:block;--d-mobile:block;--d-tablet:block;--op:100%;--radius:var(--g-radius-none);--ta:left"
+    >
+    <figure
+      class="relative inline-block overflow-hidden align-middle pointer-events-none"
+      style="--w:56px;--w-tablet:56px;--w-mobile:56px;--h:auto;--h-tablet:auto;--h-mobile:auto;border-radius:inherit"
+    >
+      <div
+        class="pointer-events-auto h-full"
+        
+      >
+        <img
+    quality="70" title="Image Title"
+    draggable="false"
+    class="inline-block w-full h-full max-w-full flex gp_lazyload"
+    data-src="https://ucarecdn.com/afec98bc-fc28-45aa-bead-4236a7c8b388/free.svg" data-srcset="https://ucarecdn.com/afec98bc-fc28-45aa-bead-4236a7c8b388/free.svg 768w,https://ucarecdn.com/afec98bc-fc28-45aa-bead-4236a7c8b388/free.svg 1024w,https://ucarecdn.com/afec98bc-fc28-45aa-bead-4236a7c8b388/free.svg 1440w" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAA1JREFUGFdj+Pr1638ACaED3/nOThIAAAAASUVORK5CYII=" width="56" height="56" alt="Alt Image" priority
+    sizes="100vw"
+    style="--aspect:56/56;--aspect-tablet:56/56;--aspect-mobile:56/56;--objf:cover;--bs:none;--bw:0px;--bc:transparent;--radius:var(--g-radius-none);--w:100%"
+  />
+      </div>
+    </figure>
+  </div>
+    </div><div
+      label="Block" tag="Col" type="component"
+      style="--jc:center"
+      class="gBAEaBTeY3 relative flex flex-col"
+    >
+      
+    <div
+      parentTag="Col"
+        class="gHPCrr4Bkh "
+        style="--tt:default;--ta:left;--b:solid;--bc:#121212;--bw:0px;--shadow:none;--d:block;--d-mobile:block;--d-tablet:block;--op:100%;--radius:var(--g-radius-none)"
+      >
+      <div class="flex" style="--jc:left">
+        <div
+          data-gp-text
+          class="[&_p]:inline [&_p]:after:whitespace-pre-wrap [&_p]:after:content-['\A'] gp-text"
+          style="--w:100%;--w-tablet:100%;--w-mobile:100%;--ts:none;--ta:left;--line-clamp:unset;--line-clamp-tablet:unset;--line-clamp-mobile:unset;--c:#242424;--fs:normal;--ff:var(--g-font-DM-Sans, DM Sans);--weight:700;--ls:normal;--lh:150%;--size:16px;--size-tablet:16px;--size-mobile:14px;word-break:break-word"
+        >
+        <p>Free Delivery</p>
+        </div>
+      </div>
+    </div>
+    <div
+      parentTag="Col"
+        class="goqa4cUM8C "
+        style="--tt:default;--ta:left;--b:solid;--bc:#121212;--bw:0px;--shadow:none;--d:block;--d-mobile:block;--d-tablet:block;--op:100%;--radius:var(--g-radius-none)"
+      >
+      <div class="flex" style="--jc:left">
+        <div
+          data-gp-text
+          class="[&_p]:inline [&_p]:after:whitespace-pre-wrap [&_p]:after:content-['\A'] gp-text"
+          style="--w:100%;--w-tablet:100%;--w-mobile:100%;--ts:none;--ta:left;--line-clamp:unset;--line-clamp-tablet:unset;--line-clamp-mobile:unset;--c:#424242;--fs:normal;--ff:var(--g-font-DM-Sans, DM Sans);--weight:400;--ls:normal;--lh:150%;--size:16px;--size-tablet:16px;--size-mobile:14px;word-break:break-word"
+        >
+        <p>Free delivery and returns</p>
+        </div>
+      </div>
+    </div>
+    </div>
+    </div>
+  
+    
+      
+      
+    <div
+      parentTag="Col" id="gDRadeuOL7"
+        style="--b:solid;--bc:#121212;--bw:0px;--shadow:none;--d:grid;--d-mobile:grid;--d-tablet:grid;--op:100%;--radius:var(--g-radius-none);--mb-mobile:var(--g-s-2xl);--cg:var(--g-s-l);--pc:start;--gtc:minmax(0, auto) minmax(0, auto);--w:100%;--w-tablet:100%;--w-mobile:100%;--bgc:transparent;--bgi:url();--bgp:50% 50%;--bgs:cover;--bgr:no-repeat;--bga:scroll"
+        class="gDRadeuOL7 mx-auto mb-0 grid max-w-full gap-y-0 transition-colors duration-200 ease-in-out [&_*]:max-w-full"
+    >
+    <div
+      label="Block" tag="Col" type="component"
+      style="--jc:center"
+      class="gEib7cB3u2 relative flex flex-col"
+    >
+      <div
+    
+    role="presentation"
+    class="group/image g7PeWzf7cR"
+    style="--b:solid;--bc:#121212;--bw:0px;--shadow:none;--d:block;--d-mobile:block;--d-tablet:block;--op:100%;--radius:var(--g-radius-none);--ta:left"
+    >
+    <figure
+      class="relative inline-block overflow-hidden align-middle pointer-events-none"
+      style="--w:56px;--w-tablet:56px;--w-mobile:56px;--h:auto;--h-tablet:auto;--h-mobile:auto;border-radius:inherit"
+    >
+      <div
+        class="pointer-events-auto h-full"
+        
+      >
+        <img
+    quality="70" title="Image Title"
+    draggable="false"
+    class="inline-block w-full h-full max-w-full flex gp_lazyload"
+    data-src="https://ucarecdn.com/4f771103-2eae-4e49-af2d-7f2a41195d54/trial.svg" data-srcset="https://ucarecdn.com/4f771103-2eae-4e49-af2d-7f2a41195d54/trial.svg 768w,https://ucarecdn.com/4f771103-2eae-4e49-af2d-7f2a41195d54/trial.svg 1024w,https://ucarecdn.com/4f771103-2eae-4e49-af2d-7f2a41195d54/trial.svg 1440w" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAA1JREFUGFdj+Pr1638ACaED3/nOThIAAAAASUVORK5CYII=" width="56" height="56" alt="Alt Image" priority
+    sizes="100vw"
+    style="--aspect:56/56;--aspect-tablet:56/56;--aspect-mobile:56/56;--objf:cover;--bs:none;--bw:0px;--bc:transparent;--radius:var(--g-radius-none);--w:100%"
+  />
+      </div>
+    </figure>
+  </div>
+    </div><div
+      label="Block" tag="Col" type="component"
+      style="--jc:center"
+      class="gbAMhk4Tgr relative flex flex-col"
+    >
+      
+    <div
+      parentTag="Col"
+        class="gP7vB_fxZW "
+        style="--tt:default;--ta:left;--b:solid;--bc:#121212;--bw:0px;--shadow:none;--d:block;--d-mobile:block;--d-tablet:block;--op:100%;--radius:var(--g-radius-none)"
+      >
+      <div class="flex" style="--jc:left">
+        <div
+          data-gp-text
+          class="[&_p]:inline [&_p]:after:whitespace-pre-wrap [&_p]:after:content-['\A'] gp-text"
+          style="--w:100%;--w-tablet:100%;--w-mobile:100%;--ts:none;--ta:left;--line-clamp:unset;--line-clamp-tablet:unset;--line-clamp-mobile:unset;--c:#242424;--fs:normal;--ff:var(--g-font-DM-Sans, DM Sans);--weight:700;--ls:normal;--lh:150%;--size:16px;--size-tablet:16px;--size-mobile:14px;word-break:break-word"
+        >
+        <p>Worry-Free Trial</p>
+        </div>
+      </div>
+    </div>
+    <div
+      parentTag="Col"
+        class="g9rY3V2Qap "
+        style="--tt:default;--ta:left;--b:solid;--bc:#121212;--bw:0px;--shadow:none;--d:block;--d-mobile:block;--d-tablet:block;--op:100%;--radius:var(--g-radius-none)"
+      >
+      <div class="flex" style="--jc:left">
+        <div
+          data-gp-text
+          class="[&_p]:inline [&_p]:after:whitespace-pre-wrap [&_p]:after:content-['\A'] gp-text"
+          style="--w:100%;--w-tablet:100%;--w-mobile:100%;--ts:none;--ta:left;--line-clamp:unset;--line-clamp-tablet:unset;--line-clamp-mobile:unset;--c:#424242;--fs:normal;--ff:var(--g-font-DM-Sans, DM Sans);--weight:400;--ls:normal;--lh:150%;--size:16px;--size-tablet:16px;--size-mobile:14px;word-break:break-word"
+        >
+        <p>60-Day easy returns</p>
+        </div>
+      </div>
+    </div>
+    </div>
+    </div>
+  
+    
+    </div><div
+      label="Block" tag="Col" type="component"
+      style="--jc:start"
+      class="g9isch_NE8 relative flex flex-col"
+    >
+      
+      
+      
+    <div
+      parentTag="Col" id="gujWfVcZBZ"
+        style="--b:solid;--bc:#121212;--bw:0px;--shadow:none;--d:grid;--d-mobile:grid;--d-tablet:grid;--op:100%;--radius:var(--g-radius-none);--mb:var(--g-s-2xl);--cg:var(--g-s-l);--pc:start;--gtc:minmax(0, auto) minmax(0, auto);--w:100%;--w-tablet:100%;--w-mobile:100%;--bgc:transparent;--bgi:url();--bgp:50% 50%;--bgs:cover;--bgr:no-repeat;--bga:scroll"
+        class="gujWfVcZBZ mx-auto mb-0 grid max-w-full gap-y-0 transition-colors duration-200 ease-in-out [&_*]:max-w-full"
+    >
+    <div
+      label="Block" tag="Col" type="component"
+      style="--jc:center"
+      class="gEygLdBqk_ relative flex flex-col"
+    >
+      <div
+    
+    role="presentation"
+    class="group/image gthtGLfm2u"
+    style="--b:solid;--bc:#121212;--bw:0px;--shadow:none;--d:block;--d-mobile:block;--d-tablet:block;--op:100%;--radius:var(--g-radius-none);--ta:left"
+    >
+    <figure
+      class="relative inline-block overflow-hidden align-middle pointer-events-none"
+      style="--w:56px;--w-tablet:56px;--w-mobile:56px;--h:auto;--h-tablet:auto;--h-mobile:auto;border-radius:inherit"
+    >
+      <div
+        class="pointer-events-auto h-full"
+        
+      >
+        <img
+    quality="70" title="Image Title"
+    draggable="false"
+    class="inline-block w-full h-full max-w-full flex gp_lazyload"
+    data-src="https://ucarecdn.com/21577929-a829-4ae0-a0ea-33b3b35ece48/warranty.svg" data-srcset="https://ucarecdn.com/21577929-a829-4ae0-a0ea-33b3b35ece48/warranty.svg 768w,https://ucarecdn.com/21577929-a829-4ae0-a0ea-33b3b35ece48/warranty.svg 1024w,https://ucarecdn.com/21577929-a829-4ae0-a0ea-33b3b35ece48/warranty.svg 1440w" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAA1JREFUGFdj+Pr1638ACaED3/nOThIAAAAASUVORK5CYII=" width="56" height="56" alt="Alt Image" priority
+    sizes="100vw"
+    style="--aspect:56/56;--aspect-tablet:56/56;--aspect-mobile:56/56;--objf:cover;--bs:none;--bw:0px;--bc:transparent;--radius:var(--g-radius-none);--w:100%"
+  />
+      </div>
+    </figure>
+  </div>
+    </div><div
+      label="Block" tag="Col" type="component"
+      style="--jc:center"
+      class="glCextUPxF relative flex flex-col"
+    >
+      
+    <div
+      parentTag="Col"
+        class="g1WqIi9M6H "
+        style="--tt:default;--ta:left;--b:solid;--bc:#121212;--bw:0px;--shadow:none;--d:block;--d-mobile:block;--d-tablet:block;--op:100%;--radius:var(--g-radius-none)"
+      >
+      <div class="flex" style="--jc:left">
+        <div
+          data-gp-text
+          class="[&_p]:inline [&_p]:after:whitespace-pre-wrap [&_p]:after:content-['\A'] gp-text"
+          style="--w:100%;--w-tablet:100%;--w-mobile:100%;--ts:none;--ta:left;--line-clamp:unset;--line-clamp-tablet:unset;--line-clamp-mobile:unset;--c:#242424;--fs:normal;--ff:var(--g-font-DM-Sans, DM Sans);--weight:700;--ls:normal;--lh:150%;--size:16px;--size-tablet:16px;--size-mobile:14px;word-break:break-word"
+        >
+        <p>Warranty</p>
+        </div>
+      </div>
+    </div>
+    <div
+      parentTag="Col"
+        class="g3URM-QqGy "
+        style="--tt:default;--ta:left;--b:solid;--bc:#121212;--bw:0px;--shadow:none;--d:block;--d-mobile:block;--d-tablet:block;--op:100%;--radius:var(--g-radius-none)"
+      >
+      <div class="flex" style="--jc:left">
+        <div
+          data-gp-text
+          class="[&_p]:inline [&_p]:after:whitespace-pre-wrap [&_p]:after:content-['\A'] gp-text"
+          style="--w:100%;--w-tablet:100%;--w-mobile:100%;--ts:none;--ta:left;--line-clamp:unset;--line-clamp-tablet:unset;--line-clamp-mobile:unset;--c:#424242;--fs:normal;--ff:var(--g-font-DM-Sans, DM Sans);--weight:400;--ls:normal;--lh:150%;--size:16px;--size-tablet:16px;--size-mobile:14px;word-break:break-word"
+        >
+        <p>1-Year warranty policy</p>
+        </div>
+      </div>
+    </div>
+    </div>
+    </div>
+  
+    
+      
+      
+    <div
+      parentTag="Col" id="g7BR2WokXL"
+        style="--b:solid;--bc:#121212;--bw:0px;--shadow:none;--d:grid;--d-mobile:grid;--d-tablet:grid;--op:100%;--radius:var(--g-radius-none);--cg:var(--g-s-l);--pc:start;--gtc:minmax(0, auto) minmax(0, auto);--w:100%;--w-tablet:100%;--w-mobile:100%;--bgc:transparent;--bgi:url();--bgp:50% 50%;--bgs:cover;--bgr:no-repeat;--bga:scroll"
+        class="g7BR2WokXL mx-auto mb-0 grid max-w-full gap-y-0 transition-colors duration-200 ease-in-out [&_*]:max-w-full"
+    >
+    <div
+      label="Block" tag="Col" type="component"
+      style="--jc:center"
+      class="g-ibB2IA1T relative flex flex-col"
+    >
+      <div
+    
+    role="presentation"
+    class="group/image gwly3eZUDM"
+    style="--b:solid;--bc:#121212;--bw:0px;--shadow:none;--d:block;--d-mobile:block;--d-tablet:block;--op:100%;--radius:var(--g-radius-none);--ta:left"
+    >
+    <figure
+      class="relative inline-block overflow-hidden align-middle pointer-events-none"
+      style="--w:56px;--w-tablet:56px;--w-mobile:56px;--h:auto;--h-tablet:auto;--h-mobile:auto;border-radius:inherit"
+    >
+      <div
+        class="pointer-events-auto h-full"
+        
+      >
+        <img
+    quality="70" title="Image Title"
+    draggable="false"
+    class="inline-block w-full h-full max-w-full flex gp_lazyload"
+    data-src="https://ucarecdn.com/21577929-a829-4ae0-a0ea-33b3b35ece48/warranty.svg" data-srcset="https://ucarecdn.com/21577929-a829-4ae0-a0ea-33b3b35ece48/warranty.svg 768w,https://ucarecdn.com/21577929-a829-4ae0-a0ea-33b3b35ece48/warranty.svg 1024w,https://ucarecdn.com/21577929-a829-4ae0-a0ea-33b3b35ece48/warranty.svg 1440w" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAA1JREFUGFdj+Pr1638ACaED3/nOThIAAAAASUVORK5CYII=" width="56" height="56" alt="Alt Image" priority
+    sizes="100vw"
+    style="--aspect:56/56;--aspect-tablet:56/56;--aspect-mobile:56/56;--objf:cover;--bs:none;--bw:0px;--bc:transparent;--radius:var(--g-radius-none);--w:100%"
+  />
+      </div>
+    </figure>
+  </div>
+    </div><div
+      label="Block" tag="Col" type="component"
+      style="--jc:center"
+      class="gnCMS19vbJ relative flex flex-col"
+    >
+      
+    <div
+      parentTag="Col"
+        class="gXpUSVMBJY "
+        style="--tt:default;--ta:left;--b:solid;--bc:#121212;--bw:0px;--shadow:none;--d:block;--d-mobile:block;--d-tablet:block;--op:100%;--radius:var(--g-radius-none)"
+      >
+      <div class="flex" style="--jc:left">
+        <div
+          data-gp-text
+          class="[&_p]:inline [&_p]:after:whitespace-pre-wrap [&_p]:after:content-['\A'] gp-text"
+          style="--w:100%;--w-tablet:100%;--w-mobile:100%;--ts:none;--ta:left;--line-clamp:unset;--line-clamp-tablet:unset;--line-clamp-mobile:unset;--c:#242424;--fs:normal;--ff:var(--g-font-DM-Sans, DM Sans);--weight:700;--ls:normal;--lh:150%;--size:16px;--size-tablet:16px;--size-mobile:14px;word-break:break-word"
+        >
+        <p>After-Sale Service</p>
+        </div>
+      </div>
+    </div>
+    <div
+      parentTag="Col"
+        class="gbDZVh3vfi "
+        style="--tt:default;--ta:left;--b:solid;--bc:#121212;--bw:0px;--shadow:none;--d:block;--d-mobile:block;--d-tablet:block;--op:100%;--radius:var(--g-radius-none)"
+      >
+      <div class="flex" style="--jc:left">
+        <div
+          data-gp-text
+          class="[&_p]:inline [&_p]:after:whitespace-pre-wrap [&_p]:after:content-['\A'] gp-text"
+          style="--w:100%;--w-tablet:100%;--w-mobile:100%;--ts:none;--ta:left;--line-clamp:unset;--line-clamp-tablet:unset;--line-clamp-mobile:unset;--c:#424242;--fs:normal;--ff:var(--g-font-DM-Sans, DM Sans);--weight:400;--ls:normal;--lh:150%;--size:16px;--size-tablet:16px;--size-mobile:14px;word-break:break-word"
+        >
+        <p>24/7 support</p>
+        </div>
+      </div>
+    </div>
+    </div>
+    </div>
+  
+    
+    </div>
+    </div>
+  
+    <div style="--b:solid;--bc:#121212;--bw:0px;--shadow:none;--d:block;--d-mobile:block;--d-tablet:block;--op:100%;--radius:var(--g-radius-none);--mb:var(--g-s-2xl)" class="gre1c6Bhn4 ">
+      
+  <script src="https://d2ls1pfffhvy22.cloudfront.net/assets/gp-product-stock-counter.js" defer="defer"></script>
+    {%- liquid 
+      assign current_variant = variant
+      assign available = current_variant.available | default: false
+      assign inventory_management = current_variant.inventory_management | default: null
+      assign inventory_policy = current_variant.inventory_policy | default: 'deny'
+      assign inventory_quantity = current_variant.inventory_quantity | default: 0
+
+      assign check_display = true
+
+      if check_display == true
+        assign should_display = true
+      elsif false and inventory_quantity > 0 and inventory_quantity < 12
+        assign should_display = true
+      else
+        assign should_display = false
+      endif
+
+      if true and available
+        assign show_progress_bar = true
+      else
+        assign show_progress_bar = false
+      endif
+    -%}
+    <gp-product-stock-counter data-visible="{{ should_display }}" gp-setting='{"displayByDefault":true,"displayProgressBar":true,"scarcityThreshold":12,"remainingQuantity":12,"quantitySource":"manual","template":"<mark>HURRY!</mark> ONLY %number% LEFT IN-STOCK","outOfStockMessage":"OUT OF STOCK","continueSelling":"Restock soon, PREORDER NOW!","unlimitedQuantityMessage":"<mark>HURRY!</mark> LET BUY NOW","color":"#424242"}' class="data-[visible=true]:block data-[visible=false]:hidden " style="--ta:left">
+        <div
+          class="inline-block"
+          style="--w:100%;--w-tablet:100%;--w-mobile:100%;--c:#424242"
+        >
+          <div class="flex items-baseline">
+            
+            <span
+            class="mr-1 shrink-0 bg-[length:60px_100%]"
+            style="--c:#50E584;--w:14px;--w-tablet:14px;--w-mobile:13px"
+          >
+          <svg height="100%" width="100%" xmlns="http://www.w3.org/2000/svg" className="w-6 h-6"  viewBox="0 0 512 512" fill="currentColor">
+              <path fill="currentColor" strokeLinecap="round" strokeLinejoin="round" fill="currentColor" d="M512 256A256 256 0 1 1 0 256a256 256 0 0 1 512 0ZM297.056 128.064H255.072L194.304 172.32v40.672l58.688 -42.176h2.08V384h41.984V128.064Z" /></svg></span>
+            
+            <p
+              data-slot-type="message"
+              class=""
+              style="--fs:normal;--ff:var(--g-font-DM-Sans, DM Sans);--weight:700;--ls:normal;--lh:150%;--size:14px;--size-tablet:14px;--size-mobile:13px;--c:#242424;--tt:uppercase"
+            >
+            {% if manual == "manual" %}
+              {% if available == false or inventory_quantity <= 0 %}
+                OUT OF STOCK
+              {% else %}
+                
+      <mark class='text-white py-1 px-2 mr-1 inline-block my-[1px]' style='background-color: #424242'>
+    HURRY!</mark> ONLY <span style='--c: #424242'>12</span> LEFT IN-STOCK
+              {% endif %}
+            {% else %}
+              {% if inventory_management == null or inventory_management != "shopify" and inventory_quantity <= 0 %} 
+                
+      <mark class='text-white py-1 px-2 mr-1 inline-block my-[1px]' style='background-color: #424242'>
+    HURRY!</mark> LET BUY NOW
+              {% elsif available == false %}
+                OUT OF STOCK
+              {% elsif available and inventory_policy == 'continue' and false and inventory_quantity <= 0 %}
+                Restock soon, PREORDER NOW!
+              {% else %}
+                
+      <mark class='text-white py-1 px-2 mr-1 inline-block my-[1px]' style='background-color: #424242'>
+    HURRY!</mark> ONLY <span style='--c: #424242'>12</span> LEFT IN-STOCK
+              {% endif %}
+            {% endif %}
+            </p>
+          </div>
+          
+          <div
+          data-slot-type="progress-bar"
+          data-visible="{{ show_progress_bar }}"
+            style="--h:10px;--bg:linear-gradient(90deg, #eee 50%, transparent 50%);--bgc:#EA3335;--bgp:57% center"
+            class="relative mt-2 w-full -scale-100 data-[visible=true]:block data-[visible=false]:hidden !bg-[length:200%]"
+          ></div>
+        </div>
+      </gp-product-stock-counter>
+  
+      </div>
+      
+      
+    <div
+      parentTag="Col" id="g2wtGUWAwL"
+        style="--b:solid;--bc:#121212;--bw:0px;--shadow:none;--d:grid;--d-mobile:grid;--d-tablet:grid;--op:100%;--radius:var(--g-radius-none);--mb:var(--g-s-l);--cg:var(--g-s-l);--pc:start;--gtc:minmax(0, 4fr) minmax(0, 8fr);--gtc-mobile:minmax(0, 12fr);--w:100%;--w-tablet:100%;--w-mobile:100%;--bgc:transparent;--bgi:url();--bgp:50% 50%;--bgs:cover;--bgr:no-repeat;--bga:scroll"
+        class="g2wtGUWAwL mx-auto mb-0 grid max-w-full gap-y-0 transition-colors duration-200 ease-in-out [&_*]:max-w-full"
+    >
+    <div
+      label="Block" tag="Col" type="component"
+      style="--jc:center"
+      class="gN8VdvloY- relative flex flex-col"
+    >
+      <div style="--b:solid;--bc:#121212;--bw:0px;--shadow:none;--d:block;--d-mobile:block;--d-tablet:block;--op:100%;--radius:var(--g-radius-none);--mb:var(undefined)" class="gNB-3PX546 ">
+      
+  <script src="https://d2ls1pfffhvy22.cloudfront.net/assets/gp-product-quantity.js" defer="defer"></script>
+    {%- liquid 
+      assign current_variant = product.selected_or_first_available_variant
+      assign available = current_variant.available | default: false
+    -%}
+      <gp-product-quantity
+        data-disabled="{%- if available -%} false {%- else -%} true {%- endif -%}"
+        class="relative inline-flex w-full bg-transparent transition-all duration-150 data-[disabled=true]:opacity-60 "
+        style="--h:60px;--jc:left"
+      >
+
+      
+          <button
+            title="Decrement"
+            aria-label="decrement"
+            {% if available == false %} disabled {% endif %}
+            class="hover:border-g-line-3 bg-g-bg-3 gp-minus flex aspect-square h-full cursor-pointer items-center justify-center outline-none disabled:cursor-not-allowed"
+            style="--w:56px;--bg:var(--g-c-bg-3, bg-3);--c:#242424;--bs:solid;--hvr-bs:solid;--bw:1px 1px 1px 1px;--hvr-bw:1px 1px 1px 1px;--bc:#E0E0E0;--hvr-bc:var(--g-c-line-3, line-3);--bblr:auto;--bbrr:auto;--btlr:auto;--btrr:auto"
+          >
+            <span class="inline-flex items-center justify-center" style="--w:24px">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-full w-full"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 12H6" />
+              </svg>
+            </span>
+          </button>
+      
+        <input
+          type="text"
+          name="product-quantity"  
+          {% if available == false %} disabled {% endif %}
+          class="hover:border-g-line-3 bg-g-bg-3 text-g-text-2 !border-x-0 px-4 flex shadow-none appearance-none items-center border-y text-center outline-none transition-all duration-150 hover:text-black disabled:pointer-events-none h-auto rounded-none shrink-[99999] w-full min-w-[45px]"
+          style="--maxw:100%;--maxw-tablet:100%;--maxw-mobile:100%;--bg:var(--g-c-bg-3, bg-3);--c:#242424;--fs:normal;--ff:var(--g-font-DM-Sans, DM Sans);--weight:700;--ls:normal;--lh:150%;--size:21px;--size-tablet:21px;--size-mobile:19px;--bs:solid;--hvr-bs:solid;--bw:1px 1px 1px 1px;--hvr-bw:1px 1px 1px 1px;--bc:#E0E0E0;--hvr-bc:var(--g-c-line-3, line-3)"
+          aria-label="Quantity"
+          inputmode="numeric"
+          min="{{ current_variant.quantity_rule.min }}"
+          step="{{ current_variant.quantity_rule.increment }}"
+          value="1"
+          autocomplete='off'
+        />
+
+        
+          <button
+            {% if available == false %} disabled {% endif %}
+            aria-label="increment"
+            title="Increment"
+            class="hover:border-g-line-3 bg-g-bg-3 gp-plus flex aspect-square h-full cursor-pointer items-center justify-center outline-none transition-all duration-150 disabled:pointer-events-none"
+            style="--w:56px;--bg:var(--g-c-bg-3, bg-3);--c:#242424;--bs:solid;--hvr-bs:solid;--bw:1px 1px 1px 1px;--hvr-bw:1px 1px 1px 1px;--bc:#E0E0E0;--hvr-bc:var(--g-c-line-3, line-3);--bblr:auto;--bbrr:auto;--btlr:auto;--btrr:auto"
+          >
+            <span class="inline-flex items-center justify-center" style="--w:24px">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-full w-full"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M12 6v6m0 0v6m0-6h6m-6 0H6"
+                />
+              </svg>
+            </span>
+          </button>
+        
+      </gp-product-quantity>
+      </div>
+    </div><div
+      label="Block" tag="Col" type="component"
+      style="--jc:center"
+      class="gtvBx3d2QP relative flex flex-col"
+    >
+      
+  <script src="https://d2ls1pfffhvy22.cloudfront.net/assets/gp-product-button.js" defer="defer"></script>
+  
+  
+  
+   {%- liquid 
+      assign inventory_quantity = variant.inventory_quantity | default: 0
+    -%}
+    <gp-product-button
+      gp-data='{"setting":{"actionEffect":"open-cart-drawer","errorMessage":"Cannot add product to cart","successMessage":"Add product to cart successfully","label":"Add to cart","outOfStockLabel":"Out of stocks","errorType":"built-in","customURL":{"link":"/cart","target":"_self"}},"styles":{"errorTypo":{"type":"paragraph-2"},"successTypo":{"type":"paragraph-2"}},"disabled":"{{variant.available}}","variantID":"{{variant.id}}","totalVariant":"{{product.variants.size}}"}'
+    >
+        <div
+    
+    style="--b:solid;--bc:#121212;--bw:0px;--shadow:none;--d:block;--d-mobile:block;--d-tablet:block;--op:100%;--radius:var(--g-radius-none);--ta:left"
+    class="{% unless variant.available %} !hidden {% endunless %} undefined"
+  >
+    <style>
+    .gGM7xhD5WD.gp-button-base::before {
+      content: "";
+      height: 100%;
+      width: 100%;
+      position: absolute;
+      pointer-events: none;
+      border-style: solid;
+  border-width: 1px 1px 1px 1px;
+  border-color: #242424;
+  
+      
+      
+      
+      
+      
+      
+    }
+
+    .gGM7xhD5WD:hover::before {
+      border-style: solid;
+  border-width: 1px 1px 1px 1px;
+  border-color: #242424;
+  
+      
+    }
+  </style>
+    <button
+      type="submit" data-id="gGM7xhD5WD" aria-label="Add to cart"
+      data-state="idle"
+      class="gGM7xhD5WD gp-button-base rounded-none max-w-full relative group inline-flex items-center justify-center no-underline transition-colors duration-300 disabled:btn-disabled disabled:opacity-30 disabled:pointer-events-none hover:text-g-bg-3 gp-button-atc"
+      style="--hvr-bg:#242424;--bg:transparent;--hvr-c:var(--g-c-bg-3, bg-3);--c:#242424;--pl:24px;--pr:24px;--pt:14px;--pb:14px;--pl-tablet:24px;--pr-tablet:24px;--pt-tablet:14px;--pb-tablet:14px;--pl-mobile:24px;--pr-mobile:24px;--pt-mobile:14px;--pb-mobile:14px;--w:100%;--w-tablet:100%;--w-mobile:100%;--h:Auto;--h-tablet:Auto;--h-mobile:Auto;--tt:default;--fs:normal;--ff:var(--g-font-DM-Sans, DM Sans);--weight:700;--ls:normal;--lh:150%;--size:21px;--size-tablet:21px;--size-mobile:19px"
+    >
+        <svg
+          class="invisible absolute h-5 w-5 animate-spin group-data-[state=loading]:visible"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+        >
+          <circle
+            class="opacity-25"
+            cx="12"
+            cy="12"
+            r="10"
+            stroke="currentColor"
+            stroke-width="4"
+          ></circle>
+          <path
+            class="opacity-75"
+            fill="currentColor"
+            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+          ></path>
+        </svg>
+
+    
+      <span
+        class="break-words group-data-[state=loading]:invisible [&_p]:whitespace-pre-line z-1 h-full flex items-center overflow-hidden "
+        style="--tt:default"
+      >
+        Add to cart
+      </span>
+    </button>
+  </div>
+        <div
+    
+    style="--b:solid;--bc:#121212;--bw:0px;--shadow:none;--d:block;--d-mobile:block;--d-tablet:block;--op:100%;--radius:var(--g-radius-none);--ta:left"
+    class="{% if variant.available %} !hidden {% endif %}"
+  >
+    <style>
+    .gGM7xhD5WD.gp-button-base::before {
+      content: "";
+      height: 100%;
+      width: 100%;
+      position: absolute;
+      pointer-events: none;
+      border-style: solid;
+  border-width: 1px 1px 1px 1px;
+  border-color: #242424;
+  
+      
+      
+      
+      
+      
+      
+    }
+
+    .gGM7xhD5WD:hover::before {
+      border-style: solid;
+  border-width: 1px 1px 1px 1px;
+  border-color: #242424;
+  
+      
+    }
+  </style>
+    <button
+      type="button" data-id="gGM7xhD5WD" aria-label="Out of stocks"
+      data-state="idle"
+      class="gGM7xhD5WD gp-button-base rounded-none max-w-full relative group inline-flex items-center justify-center no-underline transition-colors duration-300 disabled:btn-disabled disabled:opacity-30 disabled:pointer-events-none hover:text-g-bg-3 gp-button-sold-out btn-disabled opacity-30 pointer-events-none"
+      style="--hvr-bg:#242424;--bg:transparent;--hvr-c:var(--g-c-bg-3, bg-3);--c:#242424;--pl:24px;--pr:24px;--pt:14px;--pb:14px;--pl-tablet:24px;--pr-tablet:24px;--pt-tablet:14px;--pb-tablet:14px;--pl-mobile:24px;--pr-mobile:24px;--pt-mobile:14px;--pb-mobile:14px;--w:100%;--w-tablet:100%;--w-mobile:100%;--h:Auto;--h-tablet:Auto;--h-mobile:Auto;--tt:default;--fs:normal;--ff:var(--g-font-DM-Sans, DM Sans);--weight:700;--ls:normal;--lh:150%;--size:21px;--size-tablet:21px;--size-mobile:19px"
+    >
+        <svg
+          class="invisible absolute h-5 w-5 animate-spin group-data-[state=loading]:visible"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+        >
+          <circle
+            class="opacity-25"
+            cx="12"
+            cy="12"
+            r="10"
+            stroke="currentColor"
+            stroke-width="4"
+          ></circle>
+          <path
+            class="opacity-75"
+            fill="currentColor"
+            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+          ></path>
+        </svg>
+
+    
+      <span
+        class="break-words group-data-[state=loading]:invisible [&_p]:whitespace-pre-line z-1 h-full flex items-center overflow-hidden "
+        style="--tt:default"
+      >
+        Out of stocks
+      </span>
+    </button>
+  </div>
+    </gp-product-button>
+  
+    </div>
+    </div>
+  
+    
+  <script src="https://d2ls1pfffhvy22.cloudfront.net/assets/gp-product-button.js" defer="defer"></script>
+  
+  
+  
+   {%- liquid 
+      assign inventory_quantity = variant.inventory_quantity | default: 0
+    -%}
+    <gp-product-button
+      gp-data='{"setting":{"actionEffect":"buy-now","errorMessage":"Cannot add product to cart","successMessage":"Add product to cart successfully","label":"Buy Now","outOfStockLabel":"Out of stocks","errorType":"built-in","customURL":{"link":"/cart","target":"_self"}},"styles":{"errorTypo":{"type":"paragraph-2"},"successTypo":{"type":"paragraph-2"}},"disabled":"{{variant.available}}","variantID":"{{variant.id}}","totalVariant":"{{product.variants.size}}"}'
+    >
+        <div
+    
+    style="--b:solid;--bc:#121212;--bw:0px;--shadow:none;--d:block;--d-mobile:block;--d-tablet:block;--op:100%;--radius:var(--g-radius-none);--mb:var(--g-s-2xl);--ta:left"
+    class="{% unless variant.available %} !hidden {% endunless %} undefined"
+  >
+    <style>
+    .gB-B4TmTCZ.gp-button-base::before {
+      content: "";
+      height: 100%;
+      width: 100%;
+      position: absolute;
+      pointer-events: none;
+      border-style: none;
+  border-width: 0px 0px 0px 0px;
+  border-color: transparent;
+  
+      
+      
+      
+      
+      
+      
+    }
+
+    .gB-B4TmTCZ:hover::before {
+      border-style: none;
+  border-width: 0px 0px 0px 0px;
+  border-color: transparent;
+  
+      
+    }
+  </style>
+    <button
+      type="button" data-id="gB-B4TmTCZ" aria-label="Buy Now"
+      data-state="idle"
+      class="gB-B4TmTCZ gp-button-base rounded-none max-w-full relative group inline-flex items-center justify-center no-underline transition-colors duration-300 disabled:btn-disabled disabled:opacity-30 disabled:pointer-events-none text-g-bg-3 gp-button-atc"
+      style="--hvr-bg:#242424;--bg:#FAAD14;--c:var(--g-c-bg-3, bg-3);--pl:24px;--pr:24px;--pt:14px;--pb:14px;--pl-tablet:24px;--pr-tablet:24px;--pt-tablet:14px;--pb-tablet:14px;--pl-mobile:24px;--pr-mobile:24px;--pt-mobile:14px;--pb-mobile:14px;--w:100%;--w-tablet:100%;--w-mobile:100%;--h:Auto;--h-tablet:Auto;--h-mobile:Auto;--tt:default;--fs:normal;--ff:var(--g-font-DM-Sans, DM Sans);--weight:700;--ls:normal;--lh:150%;--size:21px;--size-tablet:21px;--size-mobile:19px"
+    >
+        <svg
+          class="invisible absolute h-5 w-5 animate-spin group-data-[state=loading]:visible"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+        >
+          <circle
+            class="opacity-25"
+            cx="12"
+            cy="12"
+            r="10"
+            stroke="currentColor"
+            stroke-width="4"
+          ></circle>
+          <path
+            class="opacity-75"
+            fill="currentColor"
+            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+          ></path>
+        </svg>
+
+    
+      <span
+        class="break-words group-data-[state=loading]:invisible [&_p]:whitespace-pre-line z-1 h-full flex items-center overflow-hidden "
+        style="--tt:default"
+      >
+        Buy Now
+      </span>
+    </button>
+  </div>
+        <div
+    
+    style="--b:solid;--bc:#121212;--bw:0px;--shadow:none;--d:block;--d-mobile:block;--d-tablet:block;--op:100%;--radius:var(--g-radius-none);--mb:var(--g-s-2xl);--ta:left"
+    class="{% if variant.available %} !hidden {% endif %}"
+  >
+    <style>
+    .gB-B4TmTCZ.gp-button-base::before {
+      content: "";
+      height: 100%;
+      width: 100%;
+      position: absolute;
+      pointer-events: none;
+      border-style: none;
+  border-width: 0px 0px 0px 0px;
+  border-color: transparent;
+  
+      
+      
+      
+      
+      
+      
+    }
+
+    .gB-B4TmTCZ:hover::before {
+      border-style: none;
+  border-width: 0px 0px 0px 0px;
+  border-color: transparent;
+  
+      
+    }
+  </style>
+    <button
+      type="button" data-id="gB-B4TmTCZ" aria-label="Out of stocks"
+      data-state="idle"
+      class="gB-B4TmTCZ gp-button-base rounded-none max-w-full relative group inline-flex items-center justify-center no-underline transition-colors duration-300 disabled:btn-disabled disabled:opacity-30 disabled:pointer-events-none text-g-bg-3 gp-button-sold-out btn-disabled opacity-30 pointer-events-none"
+      style="--hvr-bg:#242424;--bg:#FAAD14;--c:var(--g-c-bg-3, bg-3);--pl:24px;--pr:24px;--pt:14px;--pb:14px;--pl-tablet:24px;--pr-tablet:24px;--pt-tablet:14px;--pb-tablet:14px;--pl-mobile:24px;--pr-mobile:24px;--pt-mobile:14px;--pb-mobile:14px;--w:100%;--w-tablet:100%;--w-mobile:100%;--h:Auto;--h-tablet:Auto;--h-mobile:Auto;--tt:default;--fs:normal;--ff:var(--g-font-DM-Sans, DM Sans);--weight:700;--ls:normal;--lh:150%;--size:21px;--size-tablet:21px;--size-mobile:19px"
+    >
+        <svg
+          class="invisible absolute h-5 w-5 animate-spin group-data-[state=loading]:visible"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+        >
+          <circle
+            class="opacity-25"
+            cx="12"
+            cy="12"
+            r="10"
+            stroke="currentColor"
+            stroke-width="4"
+          ></circle>
+          <path
+            class="opacity-75"
+            fill="currentColor"
+            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+          ></path>
+        </svg>
+
+    
+      <span
+        class="break-words group-data-[state=loading]:invisible [&_p]:whitespace-pre-line z-1 h-full flex items-center overflow-hidden "
+        style="--tt:default"
+      >
+        Out of stocks
+      </span>
+    </button>
+  </div>
+    </gp-product-button>
+  <div
+    
+    role="presentation"
+    class="group/image gw53iZn_2M"
+    style="--b:solid;--bc:#121212;--bw:0px;--shadow:none;--d:block;--d-mobile:block;--d-tablet:block;--op:100%;--radius:var(--g-radius-none);--ta:center"
+    >
+    <figure
+      class="relative inline-block overflow-hidden align-middle pointer-events-none"
+      style="--w:332px;--w-tablet:332px;--w-mobile:100%;--h:auto;--h-tablet:auto;--h-mobile:auto;border-radius:inherit"
+    >
+      <div
+        class="pointer-events-auto h-full"
+        
+      >
+        <img
+    quality="70" title="Image Title"
+    draggable="false"
+    class="inline-block w-full h-full max-w-full flex gp_lazyload"
+    data-src="https://ucarecdn.com/6294777a-ef00-4033-bc99-b335b5fac8c1/-/format/auto/-/preview/960x960/-/quality/lighter/payment.png" data-srcset="https://ucarecdn.com/6294777a-ef00-4033-bc99-b335b5fac8c1/-/format/auto/-/preview/960x960/-/quality/lighter/payment.png 768w,https://ucarecdn.com/6294777a-ef00-4033-bc99-b335b5fac8c1/-/format/auto/-/preview/960x960/-/quality/lighter/payment.png 1024w,https://ucarecdn.com/6294777a-ef00-4033-bc99-b335b5fac8c1/-/format/auto/-/preview/960x960/-/quality/lighter/payment.png 1440w" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAA1JREFUGFdj+Pr1638ACaED3/nOThIAAAAASUVORK5CYII=" width="846" height="86" alt="Alt Image" priority
+    sizes="100vw"
+    style="--aspect:846/86;--aspect-tablet:846/86;--aspect-mobile:846/86;--objf:cover;--bs:none;--bw:0px;--bc:transparent;--radius:var(--g-radius-none);--w:100%"
+  />
+      </div>
+    </figure>
+  </div>
+    </div>
+    </div>
+  
+    
+          {%- endform -%}
+        </product-form>
+      </gp-product>
+      {%- assign product = gpBkProduct -%}
+    {% else %}
+      <div class="text-center">Product not found</div>
+    {%- endif -%}
+  

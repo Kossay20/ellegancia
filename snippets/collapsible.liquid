@@ -1,0 +1,26 @@
+<div class="collapsible__container">
+  {%- for block in section.blocks -%}
+    {%- if block.type == "collapsible" -%}
+      <div class="collapsible collapsible__style--{{ section.settings.collapsible_style }}" {{ block.shopify_attributes }}>
+        <details id="Details-{{ block.id }}-{{ section.id }}">
+          <summary id="Summary-{{ block.id }}-{{ section.id }}">
+            {% render 'icon-accordion', icon: block.settings.icon %}
+            <h3 class="collapsible__title h4">
+              {{ block.settings.heading | default: block.settings.page.title }}
+            </h3>
+            {% render 'icon-caret' %}
+          </summary>
+          <div
+            class="collapsible__content rte"
+            id="CollapsibleAccordion-{{ block.id }}-{{ section.id }}"
+            role="region"
+            aria-labelledby="Summary-{{ block.id }}-{{ section.id }}"
+          >
+            {{ block.settings.row_content }}
+            {{ block.settings.page.content }}
+          </div>
+        </details>
+      </div>
+    {%- endif -%} 
+  {%- endfor -%}
+</div>

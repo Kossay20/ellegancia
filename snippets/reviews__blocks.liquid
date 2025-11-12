@@ -1,0 +1,81 @@
+{%- liquid
+  assign text = false
+  if heading != blank or description != blank or name != blank
+    assign text = true
+  endif
+-%}
+
+{%- capture textBlock -%}
+  <div class="reviews__block-text">
+    {%- if enable_rating -%}
+      {%- render 'block-stars', unique: unique, rating: rating, style: stars_style -%}
+    {%- endif -%}
+    {%- if name != blank -%}
+      <p class="h4 reviews__block-text-name reviews__block-text-span-container">
+        {{ name }}
+        {%- if verified -%}
+          {% render 'icons', icon: 'check_mark' %}
+        {%- endif -%}
+      </p>
+    {%- endif -%}
+    {%- if heading != blank -%}
+      <h3 class="reviews__block-text-heading reviews__block-text-span-container">
+        {{ heading }}
+        {%- if verified and name == blank -%}
+          {% render 'icons', icon: 'check_mark' %}
+        {%- endif -%}
+      </h3>
+    {%- endif -%}
+    {%- if description != blank -%}
+      <p class="reviews__block-text-description">{{ description }}</p>
+    {%- endif -%}
+  </div>
+{%- endcapture -%}
+
+{%- case type -%}
+  {%- when 'image' -%}
+    <div
+      class="
+        reviews__block-media reviews__block-media--{{ height }}
+        {% if image != blank %} media
+        {% else %} reviews__block-placeholder placeholder{% endif %}
+      "
+      {% if section.settings.height == 'adapt' and image != blank %}
+        style="padding-bottom: {{ 1 | divided_by: image.aspect_ratio | times: 100 }}%;"
+      {% endif %}
+    >
+      {%- if image != blank -%}
+        {%- capture sizes -%}
+            (min-width: {{ settings.page_width }}px) {{ settings.page_width | minus: 100 | divided_by: 2 }}px,
+            (min-width: 750px) calc((100vw - 130px) / 2), calc((100vw - 50px) / 2)
+          {%- endcapture -%}
+        {{
+          image
+          | image_url: width: 1500
+          | image_tag: loading: 'lazy', class: 'media--image', sizes: sizes, widths: '165, 360, 535, 750, 1070, 1500'
+        }}
+      {%- else -%}
+        {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+      {%- endif -%}
+    </div>
+    {%- if text -%}
+      {{ textBlock }}
+    {%- endif -%}
+
+  {%- when 'video' -%}
+    <div
+      class="
+        reviews__block-media reviews__block-media--{{ height }}
+        {% if video != blank %} media media--video
+        {% else %} reviews__block-placeholder placeholder{% endif %}
+      "
+    >
+      {{ video | video_tag: image_size: '1100x', loop: true, controls: true, muted: false }}
+    </div>
+    {%- if text -%}
+      {{ textBlock }}
+    {%- endif -%}
+
+  {%- when 'text' -%}
+    {{ textBlock }}
+{%- endcase -%}

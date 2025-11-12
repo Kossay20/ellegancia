@@ -1,0 +1,72 @@
+{%- liquid
+  assign swiper = swiperVariant | append: sectionId
+  assign swiperFinalOptions = swiperOptions
+
+  if settings.swiper_pagination_style == 'scrollbar' and pagination != false
+    assign swiperScrollbar = "scrollbar:{el:'.scrollbar_" | append: sectionId | append: "',draggable:true},"
+    assign swiperFinalOptions = swiperFinalOptions | append: swiperScrollbar
+  endif
+
+  if settings.swiper_pagination_style == 'dots' and pagination != false
+    if numberOfBlocks > 5
+      assign swiperPagination = "pagination:{el:'.pagination_" | append: sectionId | append: "',clickable:true,dynamicBullets:true},"
+    else
+      assign swiperPagination = "pagination:{el:'.pagination_" | append: sectionId | append: "',clickable:true},"
+    endif
+    assign swiperFinalOptions = swiperFinalOptions | append: swiperPagination
+  endif
+
+  if settings.swiper_navigation_style != 'none' and navigation != false
+    assign swiperNavigation = "navigation:{prevEl:'.prev_" | append: sectionId | append: "',nextEl:'.next_" | append: sectionId | append: "'},"
+    assign swiperFinalOptions = swiperFinalOptions | append: swiperNavigation
+  endif
+-%}
+
+{%- render 'swiper-elements', unique: sectionId, pagination: pagination, navigation: navigation %}
+
+<script>
+  
+  const {{ swiper }} = new Swiper({{ swiperEl }}, { {{ swiperFinalOptions }} });
+
+  if (Shopify.designMode) {
+    const createOrUpdateSwiper = (swiperEl, swiperOptions) => {
+      if (swiperInstance && swiperInstance.destroy) swiperInstance.destroy();
+      swiperInstance = new Swiper(swiperEl, swiperOptions);
+    }    
+    const launchNewSlider = (event) => {
+      const sectionId = event.detail.sectionId;
+      const swiperEl = document.querySelector(`[data-section-id="${sectionId}"] .swiper`);
+    
+      const numberOfSlides = +swiperEl.dataset.numberOfSlides;
+      const preshot = swiperEl.dataset.preshot;
+      const slides_on_mobile = (preshot === "true" && +swiperEl.dataset.slidesOnMobile < numberOfSlides) ? +swiperEl.dataset.slidesOnMobile + 0.4 : +swiperEl.dataset.slidesOnMobile;
+      const slides_on_tablet = (preshot === "true" && +swiperEl.dataset.slidesOnTablet < numberOfSlides) ? +swiperEl.dataset.slidesOnTablet + 0.4 : +swiperEl.dataset.slidesOnTablet;
+      const slides_on_desktop = (preshot === "true" && +swiperEl.dataset.slidesOnDesktop < numberOfSlides) ? +swiperEl.dataset.slidesOnDesktop + 0.4 : +swiperEl.dataset.slidesOnDesktop;
+      const loop = swiperEl.dataset.loop;
+      const autoplay = swiperEl.dataset.autoplay;
+      const autoplayDelay = +swiperEl.dataset.autoplayDelay;
+
+      swiperFinalOptions = {
+        loop: loop,
+        mousewheel: { forceToAxis: true },
+        spaceBetween: 24,
+        slidesPerView: slides_on_mobile,
+        autoplay: {
+          pauseOnMouseEnter: true,
+          enabled: autoplay,
+          delay: autoplayDelay * 1000
+        },
+        breakpoints: {
+          750: { slidesPerView: slides_on_tablet },
+          990: { slidesPerView: slides_on_desktop }
+        }
+      };
+
+      console.log(swiperFinalOptions)
+      
+      if (swiperEl && swiperFinalOptions) createOrUpdateSwiper(swiperEl, swiperFinalOptions);
+    }
+    document.addEventListener("shopify:section:load", (event) => { launchNewSlider(event); });
+  }
+
+</script>

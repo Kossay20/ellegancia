@@ -1,0 +1,217 @@
+{%- if section.settings.show_sticky_atc -%}
+  {{ 'section-sticky-atc.css' | asset_url | stylesheet_tag }}
+
+  {%- capture rating -%}
+    <div class="sticky-atc__ratings">
+      {%- render 'block-stars', unique: section.id, style: section.settings.stars_style, rating: section.settings.stars_rating -%}
+    </div>
+  {%- endcapture -%}
+
+  <div class="sticky-atc color-{{ section.settings.color_palette }}">
+    <div class="container container--normal">
+      <div class="sticky-atc__wrapper{% if section.settings.hide_meta_mobile %} sticky-atc__wrapper--hide_meta{% endif %}">
+        <div class="sticky-atc__meta{% if section.settings.hide_meta_mobile %} sticky-atc__meta--desktop{% endif %}">
+          {%- if product.featured_image != blank and section.settings.enable_image -%}
+            <div class="sticky-atc__image global-media-settings media">
+              {%- capture sizes -%}
+                (min-width: {{ settings.page_width }}px) {{ settings.page_width | minus: 100 | divided_by: 2 }}px,
+                (min-width: 750px) calc((100vw - 130px) / 2), calc((100vw - 50px) / 2)
+              {%- endcapture -%}
+              {{
+                product.featured_image
+                | image_url: width: 150
+                | image_tag: loading: 'lazy', sizes: sizes, widths: '165, 360, 535, 750, 1070, 1500'
+              }}
+            </div>
+          {%- endif -%}
+          <div class="sticky-atc__text">
+            <p class="sticky-atc__title">{{ product.title }}</p>
+            {%- if product.has_only_default_variant -%}
+              <p class="sticky-atc__price">
+                {%- if product.compare_at_price > product.price -%}
+                  <span class="compare">{{ product.compare_at_price | money_without_trailing_zeros }}</span>
+                {%- endif -%}
+                <span class="regular">{{ product.price | money_without_trailing_zeros }}</span>
+              </p>
+            {%- else -%}
+              {%- if section.settings.enable_rating -%}
+                {{ rating }}
+              {%- endif -%}
+            {%- endif -%}
+          </div>
+        </div>
+        <script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
+        <product-form class="product-form">
+          <div class="product-form__error-message-wrapper" role="alert" hidden="">
+            {% render 'icon-error' %}
+            <span class="product-form__error-message"></span>
+          </div>
+          <form
+            method="post"
+            action="/cart/add"
+            id="product-form-{{ section.id }}"
+            accept-charset="UTF-8"
+            class="form sticky-atc__form"
+            enctype="multipart/form-data"
+            novalidate="novalidate"
+            data-type="add-to-cart-form"
+            data-editor-form-attribute=""
+          >
+            <input type="hidden" name="form_type" value="product">
+            <input type="hidden" name="utf8" value="✓">
+
+            {%- if section.settings.enable_rating and product.has_only_default_variant -%}
+              {{ rating }}
+            {%- endif -%}
+
+            <div class="sticky-atc__variants select{% if product.has_only_default_variant %} hidden{% endif %}">
+              <select class="select__select" name="id">
+                {%- for variant in product.variants -%}
+                  {%- if variant.available -%}
+                    <option value="{{ variant.id }}">
+                      {{ variant.title }}
+                      - {{ variant.price | money_without_trailing_zeros }}
+                    </option>
+                  {%- endif -%}
+                {%- endfor -%}
+              </select>
+              {% render 'icon-caret' %}
+            </div>
+
+            <div class="product-form__buttons">
+              <button
+                id="ProductSubmitButton-{{ section.id }}"
+                type="submit"
+                name="add"
+                class="button button__style--{{ section.settings.button_style }}"
+              >
+                <span>
+                  {{- section.settings.button_text }}
+                </span>
+                <div class="loading-overlay__spinner hidden">
+                  <svg
+                    aria-hidden="true"
+                    focusable="false"
+                    class="spinner"
+                    viewBox="0 0 66 66"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <circle class="path" fill="none" stroke-width="6" cx="33" cy="33" r="30"></circle>
+                  </svg>
+                </div>
+              </button>
+            </div>
+          </form>
+        </product-form>
+      </div>
+    </div>
+  </div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "t:sections.sticky-atc.name",
+  "tag": "section",
+  "class": "section section-sticky-atc",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_sticky_atc",
+      "label": "t:sections.sticky-atc.show_sticky_atc.label",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_image",
+      "label": "t:sections.image-with-text.settings.enable_image.label",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "hide_meta_mobile",
+      "label": "t:sections.sticky-atc.hide_meta_mobile.label",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_rating",
+      "label": "t:sections.image-with-text.settings.enable_rating.label",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "stars_style",
+      "options": [
+        {
+          "value": "mini",
+          "label": "t:settings_schema.stars.stars_style.options.mini"
+        },
+        {
+          "value": "full",
+          "label": "t:settings_schema.stars.stars_style.options.full"
+        },
+        {
+          "value": "stars",
+          "label": "t:settings_schema.stars.stars_style.options.stars"
+        }
+      ],
+      "default": "stars",
+      "label": "t:settings_schema.stars.stars_style.label"
+    },
+    {
+      "type": "range",
+      "id": "stars_rating",
+      "min": 2,
+      "max": 5,
+      "step": 0.1,
+      "unit": "/5",
+      "label": "t:sections.product.blocks.rating.rating.label",
+      "default": 4.8
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "t:sections.global.button_text.label",
+      "default": "Add"
+    },
+    {
+      "type": "select",
+      "id": "button_style",
+      "options": [
+        {
+          "value": "1",
+          "label": "t:sections.global.style.options.1"
+        },
+        {
+          "value": "2",
+          "label": "t:sections.global.style.options.2"
+        },
+        {
+          "value": "3",
+          "label": "t:sections.global.style.options.3"
+        }
+      ],
+      "default": "3",
+      "label": "t:sections.global.style.button"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.global.headers.colors"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_palette",
+      "default": "background",
+      "label": "t:sections.global.colors_palette.label"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.sticky-atc.name"
+    }
+  ]
+}
+{% endschema %}

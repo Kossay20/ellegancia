@@ -1,0 +1,20 @@
+.buttons .heading__section {
+  margin-bottom: 3rem;
+}
+
+.buttons__wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  column-gap: 3rem;
+  row-gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.buttons__alignment--left .buttons__wrapper {
+  justify-content: start;
+}
+
+.buttons__alignment--right .buttons__wrapper {
+  justify-content: end;
+}
